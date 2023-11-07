@@ -1,0 +1,4 @@
+pylogix
+paho-mqtt
+loguru
+
