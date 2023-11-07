@@ -1,4 +1,5 @@
 pylogix
 paho-mqtt
 loguru
+PyYAML
 
