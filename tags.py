@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 import time
+import json
+
 from loguru import logger
 
 class Tag(ABC):
@@ -36,11 +38,15 @@ class PingTag(Tag):
             value, error_flag = self.parent.read(self.address)
             if error_flag:
                 return
-            logger.info(self.format_output(timestamp, value[0].TagName))
+            topic, payload = self.format_output(int(timestamp), value[0].TagName)
+            logger.info(topic, payload)
+            from main import handle_update
+            handle_update(topic, payload)
 
     def format_output(self, timestamp, value):
-        output = f'Ping {self.name}({value}) @ {timestamp}'
-        return output
+        topic = f'/ping/{self.name}'
+        data = json.dumps({"timestamp":timestamp})
+        return topic, data
 
 
 class CounterTag(Tag):
@@ -87,16 +93,26 @@ class CounterTag(Tag):
                 return
 
             # create entry for new values
-            for part_count_entry in range(self.last_value + 1, count + 1):
-                logger.info(self.format_output(count, part, timestamp))
+            for part_count in range(self.last_value + 1, count + 1):
+                topic, payload = self.format_output(part_count, part, int(timestamp))
+                logger.info(topic, payload)
+                from main import handle_update
+                handle_update(topic, payload)
 
             self.last_value = count
 
     def format_output(self, count, part, timestamp):
         # create entry for new value
         machine = self.db_machine_data
-        output = f'Part Count {self.parent.name}({machine}:{part}:{count}) @ {timestamp}'
-        return output
+        topic = f'/{machine}/counter/'
+        payload = {
+            "asset": machine,
+            "part": part,
+            "timestamp": timestamp,
+            "perpetualcount": count,
+            "count": 1,
+        }
+        return topic, json.dumps(payload)
 
 
 

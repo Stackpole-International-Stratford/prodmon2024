@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 import time
 import collections
-from loguru import logger
-from pylogix import PLC
 
+from pylogix import PLC
+from loguru import logger
 from tags import PingTag, CounterTag, DataTag
+
 
 class Device(ABC):
 
@@ -28,6 +29,8 @@ class Device(ABC):
     @abstractmethod
     def read(self, tag):
         pass
+
+     
 
 
 class PylogixDevice(Device):
@@ -79,7 +82,7 @@ class PylogixDevice(Device):
             ret = (ret,)
         for value in ret:
             if value.Status != "Success":
-                logger.info(f'Failed to read {self.name}:{value.TagName} ({value.Status})')
+                logger.warning(f'Failed to read {self.name}:{value.TagName} ({value.Status})')
                 error_flag = True
             else:
                 logger.debug(f'Successfully read {self.name}:{value.TagName} ({value.Value})')
@@ -131,6 +134,6 @@ class ModbusDevice(Device):
         else:
             error_flag = True
             count = None
-            logger.info(f'Failed to read {self.name}:{tag.address}')
+            logger.warning(f'Failed to read {self.name}:{tag.address}')
 
         return count, error_flag

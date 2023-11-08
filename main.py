@@ -3,34 +3,13 @@ import yaml
 import sys
 import os
 import random
-
-from pylogix import PLC
-from loguru import logger
 from paho.mqtt import client as mqtt_client
 
 from devices import PylogixDevice
-from tags import PingTag
 
-# used by mqtt broker on_connect()
-broker = 'pmdsdata12'
-port = 1883
-topic = "python/mqtt"
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
-# username = 'emqx'
-# password = 'public'
-
-
-# used by mqtt broker on_disconnect()
-FIRST_RECONNECT_DELAY = 1
-RECONNECT_RATE = 2
-MAX_RECONNECT_COUNT = 12
-MAX_RECONNECT_DELAY = 60
-FLAG_EXIT = False
-
-
-
-TAG = 'Program:MainProgram.ProdCount.ACC'
-PLC_IP = '10.4.43.103'
+from loguru import logger
+logger.remove()
+logger.add(sys.stderr, level='INFO')
 
 def read_config_file(config_key=None):
     if len(sys.argv) == 2:
@@ -49,27 +28,29 @@ def read_config_file(config_key=None):
 
     return config
 
+def handle_update(topic, payload):
 
+    result = mqtt_client.publish(topic, payload)
 
-def handle_update(value, mqtt_client):
-    print('\n', value ,end = "")
-    msg = f"Value: {value}"
-    result = mqtt_client.publish(topic, msg)
-    # result: [0, 1]
     status = result[0]
+
     if status == 0:
-        logger.info(f"Send `{msg}` to topic `{topic}`")
+        logger.info(f"Sent {topic} : {payload}")
     else:
-        logger.info(f"Failed to send message to topic {topic}")
+        logger.warning(f"MQTT send failed {topic} {payload}")
 
 
 
+# used by mqtt broker on_disconnect()
+FIRST_RECONNECT_DELAY = 1
+RECONNECT_RATE = 2
+MAX_RECONNECT_COUNT = 12
+MAX_RECONNECT_DELAY = 60
+FLAG_EXIT = False
 
 def connect_mqtt():
-
     broker = 'pmdsdata12'
     port = 1883
-    topic = "test"
     client_id = f'python-mqtt-{random.randint(0, 1000)}'
     # username = 'emqx'
     # password = 'public'
@@ -105,11 +86,12 @@ def on_disconnect(client, userdata, rc):
         reconnect_delay *= RECONNECT_RATE
         reconnect_delay = min(reconnect_delay, MAX_RECONNECT_DELAY)
         reconnect_count += 1
-    logger.info("Reconnect failed after %s attempts. Exiting...", reconnect_count)
+    logger.error("Reconnect failed after %s attempts. Exiting...", reconnect_count)
     global FLAG_EXIT
     FLAG_EXIT = True
 
 
+mqtt_client = connect_mqtt()
 
 
 
@@ -144,6 +126,9 @@ def main():
         devices.append(device_entry)
 
 
+
+
+
     while True:
         for device in devices:
             device.poll_tags()
@@ -151,7 +136,6 @@ def main():
 
 
 
-    mqtt_client = connect_mqtt()
     
     next_read= time.time()
     frequency = 1

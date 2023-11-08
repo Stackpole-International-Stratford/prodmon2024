@@ -29,3 +29,10 @@ add the following config to `.vscode/launch.json`
     "args": ["configs/test.yml"],
 }
 ```
+
+### MQTT Topics
+
+`/ping/<asset>` all ping tags from all machines.   
+
+`/<asset>/counter/#` all counter tags for one asset
+
