@@ -34,7 +34,7 @@ PLC_IP = '10.4.43.103'
 
 def read_config_file(config_key=None):
     if len(sys.argv) == 2:
-        config_path = f'./configs/{sys.argv[1]}.yml'
+        config_path = f'{sys.argv[1]}'
     else:
         config_path = f'/etc/prodmon/{config_key}.config'
 
