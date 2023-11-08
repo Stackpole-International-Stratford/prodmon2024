@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 import time
+import collections
 from loguru import logger
 from pylogix import PLC
 
-from tags import PingTag
+from tags import PingTag, CounterTag, DataTag
 
 class Device(ABC):
 
@@ -45,11 +46,16 @@ class PylogixDevice(Device):
         parent = self
 
         if tag_type == 'counter':
-            raise NotImplementedError
-            # scale = tag.get('scale', 1)
-            # machine = tag.get('machine', None)
-            # part_number = tag.get('part_number', None)
-            # new_tag_object = CounterTag(parent, tag_name, scale, frequency, db_table, machine, part_number)
+            scale = tag.get('scale', 1)
+            machine = tag.get('machine', None)
+
+            part_number_text_tag = tag.get('part_number_text', None)
+            part_number_index_tag = tag.get('part_number_index', None)
+            part_dict = tag.get('part_dict', None)
+
+            new_tag_object = CounterTag(parent, tag_name, scale, frequency, machine, part_number_text_tag, part_number_index_tag, part_dict)
+
+
 
         elif tag_type == 'ping':
             name = tag.get('name', None)
@@ -66,16 +72,18 @@ class PylogixDevice(Device):
 
         super().add_data_point(new_tag_object)
 
-    def read(self, tag):
+    def read(self, tags):
         error_flag = False
-        ret = self.comm.Read(tag.address)
-
-        if ret.Status != "Success":
-            logger.info(f'Failed to read {self.name}:{tag.address} ({ret.Status})')
-            error_flag = True
-        else:
-            logger.debug(f'Successfully read {self.name}:{tag.address} ({ret.Value})')
-        return ret.Value, error_flag
+        ret = self.comm.Read(tags)
+        if not isinstance(ret, collections.Iterable):
+            ret = (ret,)
+        for value in ret:
+            if value.Status != "Success":
+                logger.info(f'Failed to read {self.name}:{value.TagName} ({value.Status})')
+                error_flag = True
+            else:
+                logger.debug(f'Successfully read {self.name}:{value.TagName} ({value.Value})')
+        return ret, error_flag
 
 
 class ModbusDevice(Device):

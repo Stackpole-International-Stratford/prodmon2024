@@ -4,11 +4,10 @@ from loguru import logger
 
 class Tag(ABC):
 
-    def __init__(self, parent, address, scale, frequency):
+    def __init__(self, parent, address, frequency):
         self.parent = parent
         self.address = address
         self.type = None
-        self.scale = scale
         self.frequency = frequency
         self.next_read = time.time()
         self.last_value = None
@@ -24,7 +23,7 @@ class Tag(ABC):
 
 class PingTag(Tag):
     def __init__(self, parent, name, address, frequency):
-        super().__init__(parent, address, 1, frequency)
+        super().__init__(parent, address, frequency)
         self.type = 'ping'
         self.name = name
 
@@ -34,11 +33,82 @@ class PingTag(Tag):
             # increment now so it doesn't get missed
             self.next_read = timestamp + self.frequency
 
-            value, error_flag = self.parent.read(self)
+            value, error_flag = self.parent.read(self.address)
             if error_flag:
                 return
-            logger.info(self.format_output(timestamp, value))
+            logger.info(self.format_output(timestamp, value[0].TagName))
 
     def format_output(self, timestamp, value):
         output = f'Ping {self.name}({value}) @ {timestamp}'
         return output
+
+
+class CounterTag(Tag):
+
+    def __init__(self, parent, address, scale, frequency, machine, part_number_text_tag, part_number_index_tag, part_dict):
+        super().__init__(parent, address, frequency)
+        self.type = 'counter'
+        self.db_machine_data = machine
+        self.scale = scale
+        if part_number_text_tag:
+            self.part_number_tag = part_number_text_tag
+        elif part_number_index_tag:
+            self.part_number_tag = part_number_index_tag
+            self.part_dict = part_dict
+
+    def poll(self):
+        timestamp = time.time()
+        if self.next_read < timestamp:
+            # increment now so it doesn't get missed
+            self.next_read = timestamp + self.frequency
+
+            tags, error_flag = self.parent.read([self.address, self.part_number_tag])
+            if error_flag:
+                return
+            count = tags[0].Value
+            count *= self.scale
+
+            part = tags[1].Value
+            if hasattr(self, 'part_dict'):
+                part = self.part_dict.get(part)
+            
+
+            # last_value is 0 or Null
+            if not self.last_value:
+                if self.last_value == 0:
+                    logger.info(f'Counter Rolled over: Successfully read {self.parent.name}:{self.address} ({count})')
+                else:
+                    logger.info(f'First pass through: Successfully read {self.parent.name}:{self.address} ({count})')
+                self.last_value = count
+                return
+
+            # no change
+            if not count > self.last_value:
+                return
+
+            # create entry for new values
+            for part_count_entry in range(self.last_value + 1, count + 1):
+                logger.info(self.format_output(count, part, timestamp))
+
+            self.last_value = count
+
+    def format_output(self, count, part, timestamp):
+        # create entry for new value
+        machine = self.db_machine_data
+        output = f'Part Count {self.parent.name}({machine}:{part}:{count}) @ {timestamp}'
+        return output
+
+
+
+
+
+class DataTag(Tag):
+
+    def __init__(self, parent, address, scale, frequency, db_table, machine, part_number):
+        raise NotImplementedError('Data Tags are not implemented')
+        super().__init__(parent, address, scale, frequency, db_table)
+        self.type = 'data'
+
+    def poll(self):
+        pass
+
