@@ -72,6 +72,8 @@ MAX_RECONNECT_COUNT = 12
 MAX_RECONNECT_DELAY = 60
 FLAG_EXIT = False
 
+
+
 def connect_mqtt():
     broker = 'pmdsdata12'
     port = 1883
@@ -115,6 +117,8 @@ def on_disconnect(client, userdata, rc):
 
 mqtt_client = connect_mqtt()
 
+
+
 @logger.catch
 def main():
     devices = read_config()
@@ -122,7 +126,6 @@ def main():
     while not FLAG_EXIT:
         for device in devices:
             device.poll_tags()
-
 
 if __name__ == "__main__":
 
