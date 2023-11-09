@@ -11,6 +11,32 @@ from loguru import logger
 logger.remove()
 logger.add(sys.stderr, level='INFO')
 
+
+def read_config():
+    devices = []
+    config = read_config_file()
+
+    for device in config.get('devices'):
+        name = device.get('name', None)
+        ip = device.get('ip', None)
+        frequency = device.get('frequency', 1)
+
+        driver = device.get('driver', None)
+
+        if driver == 'pylogix':
+            slot = device.get('processor_slot', 0)
+            device_entry = PylogixDevice(name, ip, frequency, slot)
+
+        elif driver == 'modbus':
+            raise NotImplementedError
+            # device_entry = ModbusDevice(name, ip, frequency)
+
+        for tag in device['tags']:
+            device_entry.add_data_point(tag)
+
+        devices.append(device_entry)
+    return devices
+
 def read_config_file(config_key=None):
     if len(sys.argv) == 2:
         config_path = f'{sys.argv[1]}'
@@ -30,7 +56,7 @@ def read_config_file(config_key=None):
 
 def handle_update(topic, payload):
 
-    result = mqtt_client.publish(topic, payload)
+    result = mqtt_client.publish(topic, payload, 2)
 
     status = result[0]
 
@@ -38,8 +64,6 @@ def handle_update(topic, payload):
         logger.info(f"Sent {topic} : {payload}")
     else:
         logger.warning(f"MQTT send failed {topic} {payload}")
-
-
 
 # used by mqtt broker on_disconnect()
 FIRST_RECONNECT_DELAY = 1
@@ -68,17 +92,16 @@ def connect_mqtt():
     client.connect(broker, port)
     return client
 
-
 def on_disconnect(client, userdata, rc):
-    logger.info("Disconnected with result code: %s", rc)
+    logger.warning("Disconnected with result code: %s", rc)
     reconnect_count, reconnect_delay = 0, FIRST_RECONNECT_DELAY
     while reconnect_count < MAX_RECONNECT_COUNT:
-        logger.info("Reconnecting in %d seconds...", reconnect_delay)
+        logger.warning("Reconnecting in %d seconds...", reconnect_delay)
         time.sleep(reconnect_delay)
 
         try:
             client.reconnect()
-            logger.info("Reconnected successfully!")
+            logger.warning("Reconnected successfully!")
             return
         except Exception as err:
             logger.error("%s. Reconnect failed. Retrying...", err)
@@ -90,75 +113,15 @@ def on_disconnect(client, userdata, rc):
     global FLAG_EXIT
     FLAG_EXIT = True
 
-
 mqtt_client = connect_mqtt()
-
-
-
-
 
 @logger.catch
 def main():
-    devices = []
-    config = read_config_file()
+    devices = read_config()
 
-    for device in config.get('devices'):
-        print(device)
-
-        name = device.get('name', None)
-        ip = device.get('ip', None)
-        frequency = device.get('frequency', 1)
-
-        driver = device.get('driver', None)
-
-        if driver == 'pylogix':
-            slot = device.get('processor_slot', 0)
-            device_entry = PylogixDevice(name, ip, frequency, slot)
-
-        elif driver == 'modbus':
-            raise NotImplementedError
-            # device_entry = ModbusDevice(name, ip, frequency)
-
-        for tag in device['tags']:
-            device_entry.add_data_point(tag)
-
-
-        devices.append(device_entry)
-
-
-
-
-
-    while True:
+    while not FLAG_EXIT:
         for device in devices:
             device.poll_tags()
-
-
-
-
-    
-    next_read= time.time()
-    frequency = 1
-    last_value = 0
-    with PLC() as comm:
-        comm.IPAddress = config.get('PLC_IP')
-        while True:
-            timestamp = time.time()
-            if timestamp >next_read :
-                # increment now so it doesn't get missed
-                next_read = timestamp + frequency
-                ret = comm.Read(TAG)
-                value = ret.Value
-                if value > last_value:
-                    handle_update(value, mqtt_client)
-                    last_value = value
-                next_read = timestamp + frequency
-            print('.' ,end = "")
-            time.sleep(.5)
-
-
-
-
 
 
 if __name__ == "__main__":

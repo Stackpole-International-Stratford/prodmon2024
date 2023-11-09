@@ -30,7 +30,7 @@ class PingTag(Tag):
         self.name = name
 
     def poll(self):
-        timestamp = time.time()
+        timestamp = int(time.time())
         if self.next_read < timestamp:
             # increment now so it doesn't get missed
             self.next_read = timestamp + self.frequency
@@ -38,8 +38,8 @@ class PingTag(Tag):
             value, error_flag = self.parent.read(self.address)
             if error_flag:
                 return
-            topic, payload = self.format_output(int(timestamp), value[0].TagName)
-            logger.info(topic, payload)
+            topic, payload = self.format_output(timestamp, value[0].TagName)
+            logger.debug(f'Create PING for {self.name} ({timestamp})')
             from main import handle_update
             handle_update(topic, payload)
 
@@ -82,9 +82,9 @@ class CounterTag(Tag):
             # last_value is 0 or Null
             if not self.last_value:
                 if self.last_value == 0:
-                    logger.info(f'Counter Rolled over: Successfully read {self.parent.name}:{self.address} ({count})')
+                    logger.info(f'Counter Rolled over: Successfully read {self.parent.name}:{self.address} ({part}:{count})')
                 else:
-                    logger.info(f'First pass through: Successfully read {self.parent.name}:{self.address} ({count})')
+                    logger.info(f'First pass through: Successfully read {self.parent.name}:{self.address} ({part}:{count})')
                 self.last_value = count
                 return
 
@@ -95,7 +95,7 @@ class CounterTag(Tag):
             # create entry for new values
             for part_count in range(self.last_value + 1, count + 1):
                 topic, payload = self.format_output(part_count, part, int(timestamp))
-                logger.info(topic, payload)
+                logger.debug(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
                 from main import handle_update
                 handle_update(topic, payload)
 
