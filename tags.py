@@ -104,7 +104,7 @@ class CounterTag(Tag):
     def format_output(self, count, part, timestamp):
         # create entry for new value
         machine = self.db_machine_data
-        topic = f'/{machine}/counter/'
+        topic = f'/counter/{machine}/'
         payload = {
             "asset": machine,
             "part": part,
