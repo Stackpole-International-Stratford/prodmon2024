@@ -1,5 +1,9 @@
-pylogix
-paho-mqtt
+# base requirements
 loguru
 PyYAML
-
+# machine comms
+pylogix
+pyModbusTCP
+# delivery methods
+paho-mqtt
+mysql-connector-python
