@@ -27,7 +27,7 @@ def read_config_file(config_key=None):
 def get_logger(process):
     
     log_level = "INFO"
-    if os.environ["DEBUG"]:
+    if os.environ.get("DEBUG", default=None):
         log_level = "DEBUG"
 
     log_level = os.environ.get("LOG_LEVEL", default=log_level)
