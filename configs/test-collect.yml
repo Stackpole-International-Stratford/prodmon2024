@@ -1,5 +1,3 @@
-TAG : 'Program:MainProgram.ProdCount.ACC'
-PLC_IP : '10.4.43.103'
 
 devices:
   - name: test-pylogix
@@ -10,7 +8,7 @@ devices:
 
     tags:
       - type: ping
-        name: 'test-ping'
+        name: 'test-pylogix-ping'
         tag: 'Program:MainProgram.ProdCount.ACC'
         frequency: 300 # optional
 
@@ -30,3 +28,40 @@ devices:
           1: '50-9341'
 
         frequency: 5        # optional, defaults to device freq
+
+  - name: test-modbus
+    frequency: 1
+    driver: modbus
+    ip: '10.4.45.53'
+    port: 502
+    unit_id: 0              
+
+    tags:
+      - type: ping
+        name: 'test-modbus-ping'
+        frequency: 300 # optional
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+
+      - type: ADAM_counter
+        name: 'test-count'  # name for data point
+        machine: 1530       # machine number for database entry
+        frequency: 5        # optional, defaults to device freq
+        scale: 1            # number of parts made per cycle
+
+        register:     # the counter register
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0  # 
+          length: 1   # number of registers to read
+
+        # use either part_type or part_type_register
+        part_type: "50-9341"
+        # part_type_register:
+        #   type: D  # Register type, H = Holding Reg, D = discrete input contact
+        #   address: 0
+        #   length: 1
+        #   part_dict:
+        #     0: '50-0455'
+        #     1: '50-9341'
+
