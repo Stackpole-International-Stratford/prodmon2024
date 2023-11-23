@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
+import sys
 import time
 import json
 
 from loguru import logger
+
+SQL_DIRECTORY = 'temp/'
 
 class Tag(ABC):
 
@@ -38,16 +41,19 @@ class PingTag(Tag):
             value, error_flag = self.parent.read(self.address)
             if error_flag:
                 return
-            topic, payload = self.format_output(timestamp, value[0].TagName)
-            logger.debug(f'Create PING for {self.name} ({timestamp})')
-            from main import handle_update
-            handle_update(topic, payload)
 
-    def format_output(self, timestamp, value):
-        topic = f'ping/{self.name}/'
-        data = json.dumps({"timestamp":timestamp})
-        return topic, data
+            entry = self.format_output(timestamp)
+            logger.debug(entry)
+            
+            sys.stdout.flush()
+            file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
+            with open(file_path, "a+") as file:
+                file.write(entry)
 
+    def format_output(self, timestamp):
+        data = {"timestamp":timestamp,
+                "name": self.name}
+        return f'PING:{json.dumps(data)}'
 
 class CounterTag(Tag):
 
@@ -63,7 +69,7 @@ class CounterTag(Tag):
             self.part_dict = part_dict
 
     def poll(self):
-        timestamp = time.time()
+        timestamp = int(time.time())
         if self.next_read < timestamp:
             # increment now so it doesn't get missed
             self.next_read = timestamp + self.frequency
@@ -76,9 +82,10 @@ class CounterTag(Tag):
 
             part = tags[1].Value
             if hasattr(self, 'part_dict'):
-                part = self.part_dict.get(part)
+                part = self.part_dict.get(part, None)
+                if not part:
+                    logger.error(f'Part not defined: {tags[1].Value}:{self.part_dict}')
             
-
             # last_value is 0 or Null
             if not self.last_value:
                 if self.last_value == 0:
@@ -93,28 +100,26 @@ class CounterTag(Tag):
                 return
 
             # create entry for new values
-            for part_count in range(self.last_value + 1, count + 1):
-                topic, payload = self.format_output(part_count, part, int(timestamp))
-                logger.debug(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
-                from main import handle_update
-                handle_update(topic, payload)
+            sys.stdout.flush()
+            file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
+            with open(file_path, "a+") as file:
 
-            self.last_value = count
+                for part_count in range(self.last_value + 1, count + 1):
+                    entry = self.format_output(part_count, part, int(timestamp))
+                    logger.debug(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
+                    file.write(entry)
+                    self.last_value = part_count
 
-    def format_output(self, count, part, timestamp):
+    def format_output(self, counter, part, timestamp):
         # create entry for new value
-        machine = self.db_machine_data
-        topic = f'counter/{machine}/'
-        payload = {
-            "asset": machine,
+        data = {
+            "asset": self.db_machine_data,
             "part": part,
             "timestamp": timestamp,
-            "perpetualcount": count,
+            "perpetualcount": counter,
             "count": 1,
         }
-        return topic, json.dumps(payload)
-
-
+        return f'COUNTER:{json.dumps(data)}'
 
 
 
