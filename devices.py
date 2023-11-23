@@ -1,17 +1,20 @@
 from abc import ABC, abstractmethod
+from ast import Raise
 import time
 import collections
 
 from pylogix import PLC
+from pyModbusTCP.client import ModbusClient
+
 from loguru import logger
 from tags import PingTag, CounterTag, DataTag
 
-
 class Device(ABC):
 
-    def __init__(self, name, ip, frequency):
+    def __init__(self, name, ip, port, frequency):
         self.name = name
         self.ip = ip
+        self.port = port
         self.frequency = frequency
         self.tag_list = []
 
@@ -30,16 +33,14 @@ class Device(ABC):
     def read(self, tag):
         pass
 
-     
-
-
 class PylogixDevice(Device):
 
-    def __init__(self, name, ip, frequency, slot):
-        super().__init__(name, ip, frequency)
+    def __init__(self, name, ip, frequency, slot=0, port=44818):
+        super().__init__(name, ip, port, frequency)
         self.driver = "pylogix"
         self.processor_slot = slot
-        self.comm = PLC(ip_address=self.ip, slot=self.processor_slot)
+        self.comm = PLC(ip_address=self.ip, slot=self.processor_slot, port=self.port)
+
 
     def add_data_point(self, tag):
         tag_type = tag.get('type', None)
@@ -58,14 +59,12 @@ class PylogixDevice(Device):
 
             new_tag_object = CounterTag(parent, tag_name, scale, frequency, machine, part_number_text_tag, part_number_index_tag, part_dict)
 
-
-
         elif tag_type == 'ping':
             name = tag.get('name', None)
             new_tag_object = PingTag(parent, name, tag_name, frequency)
 
-        elif tag_type == 'data':
-            raise NotImplementedError
+        # elif tag_type == 'data':
+        #     raise NotImplementedError
             # name = tag.get('name', None)
             # strategy = tag.get('strategy', None)
             # new_tag_object = DataTag(parent, tag_name, scale, db_table, name, strategy)
@@ -88,38 +87,42 @@ class PylogixDevice(Device):
                 logger.debug(f'Successfully read {self.name}:{value.TagName} ({value.Value})')
         return ret, error_flag
 
-
 class ModbusDevice(Device):
 
-    def __init__(self, name, ip, frequency):
-        super().__init__(name, ip, frequency)
+    def __init__(self, name, ip, frequency, port=502, unit_id=1):
+        super().__init__(name, ip, port, frequency)
         self.driver = "modbus"
-        # self.comm = ModbusClient(host=ip, auto_open=True, auto_close=True)
+        self.unit_id = unit_id
+        self.comm = ModbusClient(host=self.ip, port=self.port, auto_open=True, auto_close=True, unit_id=self.unit_id)
 
     def add_data_point(self, tag):
         tag_type = tag.get('type', None)
+        name = tag.get('name', None)
         register = tag.get('register', None)
-        scale = tag.get('scale', 1)
         frequency = tag.get('frequency', 0)
         frequency = max(self.frequency, frequency)
-        db_table = tag.get('table', None)
+        # db_table = tag.get('table', None)
         parent = self
 
-        if tag_type == 'ADAM_counter':
-            raise NotImplementedError
-            # machine = tag.get('machine', None)
-            # part_number = tag.get('part_number', None)
-            # tag_object = CounterTag(parent, register, scale, frequency, db_table, machine, part_number)
+        if tag_type == 'ping':
+            tag_object = PingTag(parent, name, register, frequency)
 
-        elif tag_type == 'ping':
-            name = tag.get('name', None)
-            tag_object = PingTag(parent, name, register, frequency, db_table)
+        elif tag_type == 'ADAM_counter':
+            machine = tag.get('machine', None)
+            part_type = tag.get('part_type', None)
+            part_type_register = tag.get('part_type_register', None)
+            scale = tag.get('scale', 1)
+            tag_object = CounterTag(parent, register, scale, frequency, machine, part_number)
 
-        elif tag_type == 'data':
-            raise NotImplementedError
+
+        # elif tag_type == 'data':
+        #     raise NotImplementedError
             # name = tag.get('name', None)
             # strategy = tag.get('strategy', None)
             # tag_object = DataTag(parent, None, frequency, db_table, strategy)
+        else:
+            raise NotImplementedError(f'Not Implemented: {self.driver}:{tag_type}')
+
 
         super().add_data_point(tag_object)
 
