@@ -7,7 +7,7 @@ from paho.mqtt import client as mqtt_client
 
 from shared import get_logger, read_config_file
 
-logger = get_logger()
+logger = get_logger('post')
 
 # used by mqtt broker on_disconnect()
 FIRST_RECONNECT_DELAY = 1

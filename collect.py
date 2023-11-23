@@ -9,7 +9,7 @@ from devices import PylogixDevice
 
 from shared import get_logger, read_config_file
 
-logger = get_logger()
+logger = get_logger('collect')
 
 def read_config():
     devices = []
