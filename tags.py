@@ -43,8 +43,7 @@ class PingTag(Tag):
                 return
 
             entry = self.format_output(timestamp)
-            logger.debug(entry)
-            
+            logger.info(f'PING {self.name}{timestamp}')
             sys.stdout.flush()
             file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
             with open(file_path, "a+") as file:
@@ -106,7 +105,7 @@ class CounterTag(Tag):
 
                 for part_count in range(self.last_value + 1, count + 1):
                     entry = self.format_output(part_count, part, int(timestamp))
-                    logger.debug(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
+                    logger.info(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
                     file.write(entry)
                     self.last_value = part_count
 
@@ -120,8 +119,6 @@ class CounterTag(Tag):
             "count": 1,
         }
         return f'COUNTER:{json.dumps(data)}'
-
-
 
 class DataTag(Tag):
 
