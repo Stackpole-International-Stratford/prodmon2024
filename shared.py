@@ -38,7 +38,7 @@ def get_logger():
 
     # configure file logger
     if os.environ.get("DEBUG", default=False):
-        logger.add('templogs/prodmon-collect.log', level=log_level)
+        logger.add('temp/logs/prodmon-collect.log', level=log_level)
     else:
         logger.add('/var/log/prodmon-collect.log', rotation="10 Mb", level=log_level)
 
