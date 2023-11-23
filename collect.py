@@ -1,3 +1,4 @@
+from subprocess import _USE_POSIX_SPAWN
 import time
 import yaml
 import sys
@@ -5,10 +6,9 @@ import os
 import random
 # from paho.mqtt import client as mqtt_client
 
-from devices import PylogixDevice
+from devices import PylogixDevice, ModbusDevice
 
 from shared import get_logger, read_config_file
-
 logger = get_logger('collect')
 
 def read_config():
@@ -24,11 +24,15 @@ def read_config():
 
         if driver == 'pylogix':
             slot = device.get('processor_slot', 0)
-            device_entry = PylogixDevice(name, ip, frequency, slot)
+            port = device.get('port', 44818)
+            device_entry = PylogixDevice(name, ip, frequency, slot=slot, port=port)
 
         elif driver == 'modbus':
-            raise NotImplementedError
-            # device_entry = ModbusDevice(name, ip, frequency)
+            # raise NotImplementedError
+            
+            port = device.get('port', 502)
+            unit_id = device.get('unit_id', 1)
+            device_entry = ModbusDevice(name, ip, frequency, port=port, unit_id=unit_id)
 
         for tag in device['tags']:
             device_entry.add_data_point(tag)
