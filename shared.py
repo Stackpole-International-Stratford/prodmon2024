@@ -37,8 +37,9 @@ def get_logger(process):
     logger.add(sys.stderr, level=log_level)
 
     # configure file logger
-    log_loc = os.environ.get("LOG_LOC", default='temp/logs/')
-    log_file = f'prodmon-{process}.log'
-    logger.add(f'{log_loc}{log_file}', rotation="10 Mb", level=log_level)
-    logger.info(f'Logging: {log_level}: {log_loc}{log_file}')
+    log_loc = os.environ.get("LOG_LOC", default=None)
+    if log_loc:
+        log_file = f'prodmon-{process}.log'
+        logger.add(f'{log_loc}{log_file}', rotation="10 Mb", level=log_level)
+        logger.info(f'Logging: {log_level}: {log_loc}{log_file}')
     return logger

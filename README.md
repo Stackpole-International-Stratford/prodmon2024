@@ -49,7 +49,7 @@ add the following config to `.vscode/launch.json`
 
 Set `LOG_LEVEL` to desired level.  Default is INFO
 
-Set `LOG_LOC` to log file directory.
+Set `LOG_LOC` to log file directory. If not set, no log files generated
 
 ### Changes
 #### 23/11/22
