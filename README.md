@@ -11,11 +11,9 @@ python main.py [config file]
 
 see `configs/example.yml` for config file options
 
-
-
 ### VSCode setup to run
 
-To reade the testing config file, 
+To debug with the testing config files, 
 add the following config to `.vscode/launch.json`
 
 ```        
@@ -27,7 +25,7 @@ add the following config to `.vscode/launch.json`
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": ["configs/test-collect.yml"],
-            "env": {"DEBUG": "true"}
+            "env": {"LOG_LEVEL": "DEBUG"}
         },
         {
             "name": "Post Process",
@@ -37,7 +35,7 @@ add the following config to `.vscode/launch.json`
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": ["configs/test-post.yml"],
-            "env": {"DEBUG": "true"}
+            "env": {"LOG_LEVEL": "DEBUG"}
         },
 ```
 
@@ -47,11 +45,16 @@ add the following config to `.vscode/launch.json`
 
 `/<asset>/counter/#` all counter tags for one asset
 
-### Changes
-## 23/11/22
-Moving to seperate collect and post processes.  This will allow using mqtt or direct db writes based on config files
+### Environment Variables
 
-collect.py will now write entries to files in a directory and post.py will poll it and push to the db.
+Set `LOG_LEVEL` to desired level.  Default is INFO
+
+Set `LOG_LOC` to log file directory.
+
+### Changes
+#### 23/11/22
+  - Moving to seperate collect and post processes.  This will allow using mqtt or direct db writes based on config files
+  - collect.py will now write entries to files in a directory and post.py will poll it and push to the db.
 
 
  
