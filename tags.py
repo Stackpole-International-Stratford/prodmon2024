@@ -38,12 +38,12 @@ class PingTag(Tag):
             # increment now so it doesn't get missed
             self.next_read = timestamp + self.frequency
 
-            value, error_flag = self.parent.read(self.address)
+            values, error_flag = self.parent.read(self.address)
             if error_flag:
                 return
 
             entry = self.format_output(timestamp)
-            logger.info(f'PING {self.name}{timestamp}')
+            logger.info(f'PING {self.name}@{timestamp}')
             sys.stdout.flush()
             file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
             with open(file_path, "a+") as file:
@@ -52,20 +52,21 @@ class PingTag(Tag):
     def format_output(self, timestamp):
         data = {"timestamp":timestamp,
                 "name": self.name}
-        return f'PING:{json.dumps(data)}'
+        return f'PING:{json.dumps(data)}\n'
 
 class CounterTag(Tag):
 
-    def __init__(self, parent, address, scale, frequency, machine, part_number_text_tag, part_number_index_tag, part_dict):
+    def __init__(self, parent, address, scale, frequency, machine, part=None, part_number_tag=None, part_dict=None):
         super().__init__(parent, address, frequency)
         self.type = 'counter'
         self.db_machine_data = machine
         self.scale = scale
-        if part_number_text_tag:
-            self.part_number_tag = part_number_text_tag
-        elif part_number_index_tag:
-            self.part_number_tag = part_number_index_tag
-            self.part_dict = part_dict
+        # used to set a fixed part number in config
+        self.part = part
+        # used to get the part number tag from the device (direct read)
+        self.part_number_tag = part_number_tag
+        # used to get the part number from a dictionary using a tag as an index 
+        self.part_dict = part_dict
 
     def poll(self):
         timestamp = int(time.time())
@@ -73,18 +74,31 @@ class CounterTag(Tag):
             # increment now so it doesn't get missed
             self.next_read = timestamp + self.frequency
 
-            tags, error_flag = self.parent.read([self.address, self.part_number_tag])
+            # build the listof tags to check
+            taglist = [self.address]
+            # if self.part is defined, part number is hard coded
+            # else, add the part_number_tag to the read list
+            if not self.part: 
+                taglist.append(self.part_number_tag)
+
+            values, error_flag = self.parent.read(taglist)
             if error_flag:
                 return
-            count = tags[0].Value
+            # first return is the counter
+            count = values[0]
             count *= self.scale
 
-            part = tags[1].Value
-            if hasattr(self, 'part_dict'):
-                part = self.part_dict.get(part, None)
-                if not part:
-                    logger.error(f'Part not defined: {tags[1].Value}:{self.part_dict}')
-            
+            # if a second value returned, it is the part number tag
+            if len(values) == 2:
+                part = values[1]
+                # if we have a part_dict, then dereference the part number
+                if self.part_dict:
+                    part = self.part_dict.get(part, None)
+                    if not part:
+                        logger.error(f'Part not defined: {values[1]}:{self.part_dict}')
+            else:
+                part = self.part
+
             # last_value is 0 or Null
             if not self.last_value:
                 if self.last_value == 0:
@@ -96,13 +110,13 @@ class CounterTag(Tag):
 
             # no change
             if not count > self.last_value:
+                self.last_value = count # if counter goes backward, reset last value 
                 return
 
             # create entry for new values
             sys.stdout.flush()
             file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
             with open(file_path, "a+") as file:
-
                 for part_count in range(self.last_value + 1, count + 1):
                     entry = self.format_output(part_count, part, int(timestamp))
                     logger.info(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
@@ -118,7 +132,7 @@ class CounterTag(Tag):
             "perpetualcount": counter,
             "count": 1,
         }
-        return f'COUNTER:{json.dumps(data)}'
+        return f'COUNTER:{json.dumps(data)}\n'
 
 class DataTag(Tag):
 

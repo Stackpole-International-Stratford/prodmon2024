@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from ast import Raise
 import time
 import collections
+from collections.abc import Iterable
 
 from pylogix import PLC
 from pyModbusTCP.client import ModbusClient
@@ -52,12 +53,11 @@ class PylogixDevice(Device):
         if tag_type == 'counter':
             scale = tag.get('scale', 1)
             machine = tag.get('machine', None)
-
-            part_number_text_tag = tag.get('part_number_text', None)
-            part_number_index_tag = tag.get('part_number_index', None)
+            part = tag.get('part', None)
+            part_number_tag = tag.get('part_number_tag', None)
             part_dict = tag.get('part_dict', None)
 
-            new_tag_object = CounterTag(parent, tag_name, scale, frequency, machine, part_number_text_tag, part_number_index_tag, part_dict)
+            new_tag_object = CounterTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
 
         elif tag_type == 'ping':
             name = tag.get('name', None)
@@ -76,6 +76,7 @@ class PylogixDevice(Device):
 
     def read(self, tags):
         error_flag = False
+        ret_values = []
         ret = self.comm.Read(tags)
         if not isinstance(ret, collections.Iterable):
             ret = (ret,)
@@ -85,7 +86,9 @@ class PylogixDevice(Device):
                 error_flag = True
             else:
                 logger.debug(f'Successfully read {self.name}:{value.TagName} ({value.Value})')
-        return ret, error_flag
+                ret_values.append(value.Value)
+
+        return ret_values, error_flag
 
 class ModbusDevice(Device):
 
@@ -109,10 +112,12 @@ class ModbusDevice(Device):
 
         elif tag_type == 'ADAM_counter':
             machine = tag.get('machine', None)
+            part = tag.get('part', None)
             part_type = tag.get('part_type', None)
             part_type_register = tag.get('part_type_register', None)
+            part_dict = tag.get('part_dict', None)
             scale = tag.get('scale', 1)
-            tag_object = CounterTag(parent, register, scale, frequency, machine, part_number)
+            tag_object = CounterTag(parent, register, scale, frequency, machine, part, part_type_register, part_dict)
 
 
         # elif tag_type == 'data':
@@ -126,17 +131,37 @@ class ModbusDevice(Device):
 
         super().add_data_point(tag_object)
 
-    def read(self, tag):
+    def read(self, tags):
         error_flag = False
-        count = None
-        regs = self.comm.read_holding_registers(tag.address, 2)
+        values = []
+        if not isinstance(tags, list):
+            tags = [tags]
 
-        if regs:
-            count = regs[0] + (regs[1] * 65536)
-            logger.debug(f'Successfully read {self.name}:{tag.address} ({count})')
-        else:
-            error_flag = True
-            count = None
-            logger.warning(f'Failed to read {self.name}:{tag.address}')
+        for tag in tags:
+            tag_type = tag.get('type', None)
+            tag_register = tag.get('address', None)
+            tag_length = tag.get('length', 1)
 
-        return count, error_flag
+            if tag_type == 'H':
+                regs = self.comm.read_holding_registers(tag_register, tag_length)
+            elif tag_type == "D":
+                regs = self.comm.read_discrete_inputs(tag_register, tag_length)
+            else:
+                raise NotImplementedError(f'Modbus register type {tag_type} not implemented')
+                return
+            if not regs:
+                error_flag = True
+                count = None
+                logger.warning(f'Failed to read {self.name}:{tag_register}')
+                return count, error_flag
+
+            if len(regs) == 1:
+                count = regs[0]
+            else:
+                count = regs[0] + (regs[1] * 65536)
+
+            logger.debug(f'Successfully read {self.name}:{tag_register} ({count})')
+            values.append(count)
+
+
+        return values, error_flag

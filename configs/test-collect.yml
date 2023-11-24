@@ -13,21 +13,68 @@ devices:
         frequency: 300 # optional
 
       - type: counter
-        name: 'test-count'  # name for data point
+        name: 'test-py-count-1'  # name for data point
+
         tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
-        machine: 1530       # machine number for database entry
+        frequency: 5        # optional, defaults to device freq
+
+        machine: 1530p1       # machine number for database entry
         scale: 1            # number of parts made per cycle
 
-        # to get the part type, specify either:
-        # a part_number_text tag
-        # part_number_text: 'Program:MainProgram.ProdCountpartText' 
-        # or an index tag and the part_dict
-        part_number_index: 'Program:MainProgram.ProdCountpartDINT'
+        # to get the part type specify one of the following:
+        part: "50-9341"   # a hard coded value
+
+        # a tag with the part number in a string
+        # part_number_tag: 'Program:MainProgram.ProdCountpartText' 
+
+        # a tag with a reference into part_dict and part_dict
+        # part_number_tag: 'Program:MainProgram.ProdCountpartDINT'
+        # part_dict:
+        #   0: '50-0455'
+        #   1: '50-9341'
+
+      - type: counter
+        name: 'test-py-count-2'  # test direct read part number
+
+        tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
+        frequency: 5        # optional, defaults to device freq
+
+        machine: 1530p2       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+
+        # to get the part type specify one of the following:
+        # part: "50-9341"   # a hard coded value
+
+        # a tag with the part number in a string
+        part_number_tag: 'Program:MainProgram.ProdCountpartText' 
+
+        # a tag with a reference into part_dict and part_dict
+        # part_number_tag: 'Program:MainProgram.ProdCountpartDINT'
+        # part_dict:
+        #   0: '50-0455'
+        #   1: '50-9341'
+
+      - type: counter
+        name: 'test-py-count-3'  # test direct read part number
+
+        tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
+        frequency: 5        # optional, defaults to device freq
+
+        machine: 1530p3       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+
+        # to get the part type specify one of the following:
+        # part: "50-9341"   # a hard coded value
+
+        # a tag with the part number in a string
+        # part_number_tag: 'Program:MainProgram.ProdCountpartText' 
+
+        # a tag with a reference into part_dict and part_dict
+        part_number_tag: 'Program:MainProgram.ProdCountpartDINT'
         part_dict:
           0: '50-0455'
           1: '50-9341'
 
-        frequency: 5        # optional, defaults to device freq
 
   - name: test-modbus
     frequency: 1
@@ -46,22 +93,88 @@ devices:
 
       - type: ADAM_counter
         name: 'test-count'  # name for data point
-        machine: 1530       # machine number for database entry
+        machine: 1530m1       # machine number for database entry
         frequency: 5        # optional, defaults to device freq
         scale: 1            # number of parts made per cycle
-
+        
         register:     # the counter register
           type: H     # Register type, H = Holding Reg, D = discrete input contact
           address: 0  # 
-          length: 1   # number of registers to read
+          length: 2   # number of registers to read
 
-        # use either part_type or part_type_register
-        part_type: "50-9341"
+        # to get the part type specify one of the following:
+        part: "50-9341"   # a hard coded value
+
+        # a tag with the part number in a string
         # part_type_register:
-        #   type: D  # Register type, H = Holding Reg, D = discrete input contact
-        #   address: 0
-        #   length: 1
-        #   part_dict:
-        #     0: '50-0455'
-        #     1: '50-9341'
+        #    type: D  # Register type, H = Holding Reg, D = discrete input contact
+        #    address: 0
+        #    length: 1
+
+        # a register with a reference into part_dict and part_dict
+        # part_type_register:
+        #    type: D  # Register type, H = Holding Reg, D = discrete input contact
+        #    address: 0
+        #    length: 1
+        # part_dict:
+        #   0: '50-0455'
+        #   1: '50-9341'
+
+      - type: ADAM_counter
+        name: 'test-count'  # name for data point
+        machine: 1530m2       # machine number for database entry
+        frequency: 5        # optional, defaults to device freq
+        scale: 1            # number of parts made per cycle
+        
+        register:     # the counter register
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0  # 
+          length: 2   # number of registers to read
+
+        # to get the part type specify one of the following:
+        # part: "50-9341"   # a hard coded value
+
+        a tag with the part number in a string
+        part_type_register:
+           type: D  # Register type, H = Holding Reg, D = discrete input contact
+           address: 0
+           length: 1
+
+        # a register with a reference into part_dict and part_dict
+        # part_type_register:
+        #    type: D  # Register type, H = Holding Reg, D = discrete input contact
+        #    address: 0
+        #    length: 1
+        # part_dict:
+        #   0: '50-0455'
+        #   1: '50-9341'
+
+      - type: ADAM_counter
+        name: 'test-count'  # name for data point
+        machine: 1530m3       # machine number for database entry
+        frequency: 5        # optional, defaults to device freq
+        scale: 1            # number of parts made per cycle
+        
+        register:     # the counter register
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0  # 
+          length: 2   # number of registers to read
+
+        # to get the part type specify one of the following:
+        # part: "50-9341"   # a hard coded value
+
+        # a tag with the part number in a string
+        # part_type_register:
+        #    type: D  # Register type, H = Holding Reg, D = discrete input contact
+        #    address: 0
+        #    length: 1
+
+        a register with a reference into part_dict and part_dict
+        part_type_register:
+          type: D  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+          length: 1
+        part_dict:
+          0: '50-0455'
+          1: '50-9341'
 
