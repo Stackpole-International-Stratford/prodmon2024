@@ -43,7 +43,7 @@ class PingTag(Tag):
                 return
 
             entry = self.format_output(timestamp)
-            logger.info(f'PING {self.name}@{timestamp}')
+            logger.info(f'PING {self.name} @ {timestamp}')
             sys.stdout.flush()
             file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
             with open(file_path, "a+") as file:

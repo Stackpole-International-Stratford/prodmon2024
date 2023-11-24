@@ -134,7 +134,7 @@ devices:
         # to get the part type specify one of the following:
         # part: "50-9341"   # a hard coded value
 
-        a tag with the part number in a string
+        # a tag with the part number in a string
         part_type_register:
            type: D  # Register type, H = Holding Reg, D = discrete input contact
            address: 0
@@ -169,7 +169,7 @@ devices:
         #    address: 0
         #    length: 1
 
-        a register with a reference into part_dict and part_dict
+        # a register with a reference into part_dict and part_dict
         part_type_register:
           type: D  # Register type, H = Holding Reg, D = discrete input contact
           address: 0
