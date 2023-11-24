@@ -1,10 +1,8 @@
-from subprocess import _USE_POSIX_SPAWN
 import time
 import yaml
 import sys
 import os
 import random
-# from paho.mqtt import client as mqtt_client
 
 from devices import PylogixDevice, ModbusDevice
 
@@ -28,8 +26,6 @@ def read_config():
             device_entry = PylogixDevice(name, ip, frequency, slot=slot, port=port)
 
         elif driver == 'modbus':
-            # raise NotImplementedError
-            
             port = device.get('port', 502)
             unit_id = device.get('unit_id', 1)
             device_entry = ModbusDevice(name, ip, frequency, port=port, unit_id=unit_id)
@@ -39,18 +35,6 @@ def read_config():
 
         devices.append(device_entry)
     return devices
-
-def handle_update(topic, payload):
-    print(payload)
-
-    # result = mqtt_client.publish(topic, payload, 2)
-
-    # status = result[0]
-
-    # if status == 0:
-    #     logger.info(f"Sent {topic} : {payload}")
-    # else:
-    #     logger.warning(f"MQTT send failed {topic} {payload}")
 
 
 @logger.catch
