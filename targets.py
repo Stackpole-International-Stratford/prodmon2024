@@ -26,9 +26,12 @@ class Target(ABC):
         for filepath in glob.iglob(self.data_dir + '*.dat'):
             self.logger.info(f'Found {filepath}')
             with open(filepath, "r", encoding="utf-8") as file:
+                result = True
                 for line in file:
-                    data = json.loads(line)
-                    self.handle_data(data)
+                    data = line #json.loads(line)
+                    result = result and self.handle_data(data) # all results must be true to delete file
+            if result:
+                os.remove(filepath)
 
     @abstractmethod
     def handle_data(self, data):
@@ -89,39 +92,86 @@ class Mqtt_Target(Target):
         self.logger.error(f'Reconnect failed after {self.reconnect_count} attempts. Exiting...')
 
     def handle_data(self, data):
-        self.logger.debug(f'{self.name}{data}')
+        self.logger.debug(f'{self.name}: {data}')
+        return True
 
 
 class MySQL_Target(Target):
-    def __init__(self, name, ip, data_dir, frequency, logger, port=None):
-        if not port:
-            port = 3306
-        super().__init__(name, ip, port, data_dir, frequency, logger)
+    def __init__(self, name, data_dir, dbconfig, frequency, logger):
+        super().__init__(name, None, None, data_dir, frequency, logger)
+        self.dbconfig = dbconfig
+        self.connection = False
+
+    def connected(self):
+        if self.connection:
+           if self.connection.is_connected():
+               return True
+
+        CONNECT_ATTEMPTS = 3
+        CONNECT_DELAY = 2
+
+        attempt = 1
+        # Implement a reconnection routine
+        while attempt < CONNECT_ATTEMPTS:
+            try:
+                self.connection= mysql.connector.connect(**self.dbconfig)
+                return True
+
+            except (mysql.connector.Error, IOError) as err:
+                if (CONNECT_ATTEMPTS is attempt):
+                    # Attempts to reconnect failed; returning None
+                    self.logger.info(f'Failed to connect, exiting without a connection: {err}')
+                    raise
+                self.logger.info(f'Connection failed: {err}. Retrying ({attempt}/{CONNECT_ATTEMPTS})...')
+                # progressive reconnect delay
+                time.sleep(CONNECT_DELAY ** attempt)
+                attempt += 1
+        
 
     def handle_data(self, data):
-        self.logger.debug(f'{self.name}{data}')
+        if self.connected():
+            self.logger.debug(f'{self.name}: {data}')
+            cursor = self.connection.cursor()
+            entry_type, entry = data.split(':',1)
+            entry = json.loads(entry)
 
+            if entry_type == 'PING':
+                sql =   'INSERT INTO prodmon_ping (Name, Timestamp) '
+                sql += f'VALUES("{entry.get("name")}", {entry.get("timestamp")}) '
+                sql +=  'ON DUPLICATE KEY UPDATE '
+                sql += f'Name="{entry.get("name")}", Timestamp={entry.get("timestamp")};'
+
+            elif entry_type == "COUNTER":
+                sql =   'INSERT INTO GFxPRoduction (Machine, Part, PerpetualCount, TimeStamp, Count) '
+                sql += f'VALUES ("{entry.get("asset")}", "{entry.get("part")}", {entry.get("perpetualcount")}, '
+                sql += f'{entry.get("timestamp")}, {entry.get("count")});'
+
+            else: 
+                raise NotImplementedError(f'Entry Type {entry_type} Not Implemented')
+
+            try:
+                cursor.execute(sql)
+                self.connection.commit()
+                return True
+
+            except Exception as e:
+       # By this way we can know about the type of error occurring
+                self.logger.error(f'The error is: {e}')
+                return False
 
     def execute_sql(self, post_config):
-        dbconfig = post_config['dbconfig']
-        sqldir = post_config['sqldir']
-
         # TODO:  Check if sql file exists before opening mysql connection
         # if not os.path.exists(sqldir + '*.sql'):
         #     return
 
-        cnx = mysql.connector.connect(**dbconfig)
-        cursor = cnx.cursor()
+        if self.connected():
 
-        for filepath in glob.iglob(sqldir + '*.sql'):
-            self.logger.info(f'Found {filepath}')
-            with open(filepath, "r", encoding="utf-8") as file:
-                for line in file:
-                    sql = line.strip()
-                    self.logger.debug(f'Posting {sql} to database')
-                    cursor.execute(sql)
-            cnx.commit()
-            os.remove(filepath)
 
-        cursor.close()
-        cnx.close()
+            for filepath in glob.iglob(self.data_dir + '*.dat'):
+                self.logger.info(f'Found {filepath}')
+                with open(filepath, "r", encoding="utf-8") as file:
+                    for line in file:
+                        sql = self.parse_line(line)
+                os.remove(filepath)
+
+            cursor.close()

@@ -32,9 +32,8 @@ def read_config(key):
             device_entry = Mqtt_Target(name, ip, data_dir, frequency, logger, port=port, client_id=client_id)
 
         elif driver == 'mysql':
-            ip = target.get('ip', None)
-            port = target.get('port', None)
-            device_entry = MySQL_Target(name, ip, data_dir, frequency, logger, port=port)
+            dbconfig = target.get('dbconfig', None)
+            device_entry = MySQL_Target(name, data_dir, dbconfig, frequency, logger)
 
         else:
             raise NotImplementedError(f'Target {name} driver ({driver}) not implemented')
@@ -54,63 +53,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-# used by mqtt broker on_disconnect()
-FIRST_RECONNECT_DELAY = 1
-RECONNECT_RATE = 2
-MAX_RECONNECT_COUNT = 12
-MAX_RECONNECT_DELAY = 60
-FLAG_EXIT = False
-
-
-
-def connect_mqtt():
-    broker = 'pmdsdata12'
-    port = 1883
-    client_id = f'python-mqtt-{random.randint(0, 1000)}'
-    # username = 'emqx'
-    # password = 'public'
-
-    def on_connect(client, userdata, flags, rc):
-        if rc == 0:
-            logger.info("Connected to MQTT Broker!")
-        else:
-            logger.info("Failed to connect, return code %d\n", rc)
-
-    # Set Connecting Client ID
-    client = mqtt_client.Client(client_id)
-    # client.username_pw_set(username, password)
-    client.on_connect = on_connect
-    client.connect(broker, port)
-    return client
-
-def on_disconnect(client, userdata, rc):
-    logger.warning("Disconnected with result code: %s", rc)
-    reconnect_count, reconnect_delay = 0, FIRST_RECONNECT_DELAY
-    while reconnect_count < MAX_RECONNECT_COUNT:
-        logger.warning("Reconnecting in %d seconds...", reconnect_delay)
-        time.sleep(reconnect_delay)
-
-        try:
-            client.reconnect()
-            logger.warning("Reconnected successfully!")
-            return
-        except Exception as err:
-            logger.error("%s. Reconnect failed. Retrying...", err)
-
-        reconnect_delay *= RECONNECT_RATE
-        reconnect_delay = min(reconnect_delay, MAX_RECONNECT_DELAY)
-        reconnect_count += 1
-    logger.error("Reconnect failed after %s attempts. Exiting...", reconnect_count)
-    global FLAG_EXIT
-    FLAG_EXIT = True
-
-mqtt_client = connect_mqtt()
