@@ -17,6 +17,7 @@ class Device(ABC):
         self.ip = ip
         self.port = port
         self.frequency = frequency
+        self.data_dir = None
         self.tag_list = []
 
     def add_data_point(self, tag):
@@ -48,6 +49,8 @@ class PylogixDevice(Device):
         frequency = tag.get('frequency', 0)
         frequency = max(self.frequency, frequency)
         tag_name = tag.get('tag', None)
+        data_dir = tag.get('data_dir', self.data_dir)
+
         parent = self
 
         if tag_type == 'counter':
@@ -71,7 +74,7 @@ class PylogixDevice(Device):
 
         else:
             raise NotImplementedError
-
+        new_tag_object.data_dir = data_dir
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
@@ -104,11 +107,11 @@ class ModbusDevice(Device):
         register = tag.get('register', None)
         frequency = tag.get('frequency', 0)
         frequency = max(self.frequency, frequency)
-        # db_table = tag.get('table', None)
+        data_dir = tag.get('data_dir', self.data_dir)
         parent = self
 
         if tag_type == 'ping':
-            tag_object = PingTag(parent, name, register, frequency)
+            new_tag_object = PingTag(parent, name, register, frequency)
 
         elif tag_type == 'ADAM_counter':
             machine = tag.get('machine', None)
@@ -117,7 +120,7 @@ class ModbusDevice(Device):
             part_type_register = tag.get('part_type_register', None)
             part_dict = tag.get('part_dict', None)
             scale = tag.get('scale', 1)
-            tag_object = CounterTag(parent, register, scale, frequency, machine, part, part_type_register, part_dict)
+            new_tag_object = CounterTag(parent, register, scale, frequency, machine, part, part_type_register, part_dict)
 
 
         # elif tag_type == 'data':
@@ -128,8 +131,8 @@ class ModbusDevice(Device):
         else:
             raise NotImplementedError(f'Not Implemented: {self.driver}:{tag_type}')
 
-
-        super().add_data_point(tag_object)
+        new_tag_object.data_dir = data_dir
+        super().add_data_point(new_tag_object)
 
     def read(self, tags):
         error_flag = False

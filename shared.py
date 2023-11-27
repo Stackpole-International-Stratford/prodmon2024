@@ -33,6 +33,7 @@ def get_logger(process):
     log_level = os.environ.get("LOG_LEVEL", default=log_level)
 
     # Remove and reconfigure default sys.error logger to use requested level
+    
     logger.remove(0)
     logger.add(sys.stderr, level=log_level)
 

@@ -5,6 +5,7 @@ devices:
     driver: pylogix
     ip: '10.4.43.103'
     slot: 0           # optional
+    data_dir: "./temp/mysql1/"
 
     tags:
       - type: ping
@@ -14,6 +15,7 @@ devices:
 
       - type: counter
         name: 'test-py-count-1'  # name for data point
+        data_dir: "./temp/mysql2/"
 
         tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
         frequency: 5        # optional, defaults to device freq
@@ -35,6 +37,7 @@ devices:
 
       - type: counter
         name: 'test-py-count-2'  # test direct read part number
+        data_dir: "./temp/mqtt1/"
 
         tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
         frequency: 5        # optional, defaults to device freq
@@ -82,6 +85,7 @@ devices:
     ip: '10.4.45.53'
     port: 502
     unit_id: 0              
+    data_dir: "./temp/mqtt/"
 
     tags:
       - type: ping

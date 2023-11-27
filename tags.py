@@ -5,8 +5,6 @@ import json
 
 from loguru import logger
 
-SQL_DIRECTORY = 'temp/'
-
 class Tag(ABC):
 
     def __init__(self, parent, address, frequency):
@@ -16,6 +14,7 @@ class Tag(ABC):
         self.frequency = frequency
         self.next_read = time.time()
         self.last_value = None
+        self.data_dir = None
 
     @abstractmethod
     def poll(self):
@@ -45,7 +44,7 @@ class PingTag(Tag):
             entry = self.format_output(timestamp)
             logger.info(f'PING {self.name} @ {timestamp}')
             sys.stdout.flush()
-            file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
+            file_path = f'{self.data_dir}{str(timestamp)}.dat'
             with open(file_path, "a+") as file:
                 file.write(entry)
 
@@ -115,7 +114,7 @@ class CounterTag(Tag):
 
             # create entry for new values
             sys.stdout.flush()
-            file_path = f'{SQL_DIRECTORY}{str(timestamp)}.dat'
+            file_path = f'{self.data_dir}{str(timestamp)}.dat'
             with open(file_path, "a+") as file:
                 for part_count in range(self.last_value + 1, count + 1):
                     entry = self.format_output(part_count, part, int(timestamp))
