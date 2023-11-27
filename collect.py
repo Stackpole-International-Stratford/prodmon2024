@@ -17,7 +17,7 @@ def read_config():
         name = device.get('name', None)
         ip = device.get('ip', None)
         frequency = device.get('frequency', 1)
-
+        data_dir = device.get('data_dir', None)
         driver = device.get('driver', None)
 
         if driver == 'pylogix':
@@ -29,6 +29,8 @@ def read_config():
             port = device.get('port', 502)
             unit_id = device.get('unit_id', 1)
             device_entry = ModbusDevice(name, ip, frequency, port=port, unit_id=unit_id)
+
+        device_entry.data_dir = data_dir
 
         for tag in device['tags']:
             device_entry.add_data_point(tag)
