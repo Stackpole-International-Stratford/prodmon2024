@@ -8,13 +8,14 @@ devices:
     data_dir: "./temp/mysql1/"
 
     tags:
-      - type: ping
-        name: 'test-pylogix-ping'
+      - name: 'test-pylogix-ping'
+        type: ping
+        
         tag: 'Program:MainProgram.ProdCount.ACC'
         frequency: 300 # optional
 
-      - type: counter
-        name: 'test-py-count-1'  # name for data point
+      - name: 'test-py-count-1'  # name for data point
+        type: counter
         data_dir: "./temp/mysql2/"
 
         tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
@@ -35,8 +36,8 @@ devices:
         #   0: '50-0455'
         #   1: '50-9341'
 
-      - type: counter
-        name: 'test-py-count-2'  # test direct read part number
+      - name: 'test-py-count-2'  # test direct read part number
+        type: counter
         data_dir: "./temp/mqtt1/"
 
         tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
@@ -57,9 +58,9 @@ devices:
         #   0: '50-0455'
         #   1: '50-9341'
 
-      - type: counter
-        name: 'test-py-count-3'  # test direct read part number
-
+      - name: 'test-py-count-3'  # test direct read part number
+        type: counter
+        
         tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
         frequency: 5        # optional, defaults to device freq
 
@@ -85,18 +86,18 @@ devices:
     ip: '10.4.45.53'
     port: 502
     unit_id: 0              
-    data_dir: "./temp/mqtt/"
+    data_dir: "./temp/mqtt1/"
 
     tags:
-      - type: ping
-        name: 'test-modbus-ping'
+      - name: 'test-modbus-ping'
+        type: ping
         frequency: 300 # optional
         register:
           type: H  # Register type, H = Holding Reg, D = discrete input contact
           address: 0
 
-      - type: ADAM_counter
-        name: 'test-count'  # name for data point
+      - name: 'test-modbus-count1'  # name for data point
+        type: ADAM_counter
         machine: 1530m1       # machine number for database entry
         frequency: 5        # optional, defaults to device freq
         scale: 1            # number of parts made per cycle
@@ -124,41 +125,44 @@ devices:
         #   0: '50-0455'
         #   1: '50-9341'
 
-      - type: ADAM_counter
-        name: 'test-count'  # name for data point
-        machine: 1530m2       # machine number for database entry
-        frequency: 5        # optional, defaults to device freq
-        scale: 1            # number of parts made per cycle
+        # using a name tag doesnt work wor the modbus units I have, no strings
+      # - name: 'test-modbus-count-2'  # name for data point
+      #   type: ADAM_counter
+      #   data_dir: "./temp/mqtt2/"
+      #   machine: 1530m2       # machine number for database entry
+      #   frequency: 5        # optional, defaults to device freq
+      #   scale: 1            # number of parts made per cycle
         
-        register:     # the counter register
-          type: H     # Register type, H = Holding Reg, D = discrete input contact
-          address: 0  # 
-          length: 2   # number of registers to read
+      #   register:     # the counter register
+      #     type: H     # Register type, H = Holding Reg, D = discrete input contact
+      #     address: 0  # 
+      #     length: 2   # number of registers to read
 
-        # to get the part type specify one of the following:
-        # part: "50-9341"   # a hard coded value
+      #   # to get the part type specify one of the following:
+      #   # part: "50-9341"   # a hard coded value
 
-        # a tag with the part number in a string
-        part_type_register:
-           type: D  # Register type, H = Holding Reg, D = discrete input contact
-           address: 0
-           length: 1
+      #   # a tag with the part number in a string
+      #   part_type_register:
+      #      type: D  # Register type, H = Holding Reg, D = discrete input contact
+      #      address: 0
+      #      length: 1
 
-        # a register with a reference into part_dict and part_dict
-        # part_type_register:
-        #    type: D  # Register type, H = Holding Reg, D = discrete input contact
-        #    address: 0
-        #    length: 1
-        # part_dict:
-        #   0: '50-0455'
-        #   1: '50-9341'
+      #   # a register with a reference into part_dict and part_dict
+      #   # part_type_register:
+      #   #    type: D  # Register type, H = Holding Reg, D = discrete input contact
+      #   #    address: 0
+      #   #    length: 1
+      #   # part_dict:
+      #   #   0: '50-0455'
+      #   #   1: '50-9341'
 
-      - type: ADAM_counter
-        name: 'test-count'  # name for data point
+      - name: 'test-modbus-count-2'  # name for data point
+        type: ADAM_counter
         machine: 1530m3       # machine number for database entry
         frequency: 5        # optional, defaults to device freq
         scale: 1            # number of parts made per cycle
-        
+
+        data_dir: "./temp/mqtt1/"
         register:     # the counter register
           type: H     # Register type, H = Holding Reg, D = discrete input contact
           address: 0  # 
