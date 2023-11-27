@@ -1,0 +1,20 @@
+targets:
+  - name: litmus-mqtt
+    driver: mqtt
+    frequency: 5
+    ip: "10.4.1.234"
+    port: 1883
+    client_id: f'mqtt-pub'
+    # username: 'emqx'
+    # password: 'public'
+    data_dir: ./temp/mqtt/
+
+  - name: pmdsdata3
+    frequency: 5
+    driver: mysql
+    dbconfig:
+      database: prodrptdb
+      user: stuser
+      password: stp383
+      host: 10.4.1.224
+    data_dir: ./temp/mysql/
