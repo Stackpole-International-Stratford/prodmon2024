@@ -19,19 +19,29 @@ class Target(ABC):
         self.ip=ip
         self.port = port
 
+        self.connected = False
         self.frequency = frequency
+        self.next_read = time.time()
         self.data_dir = data_dir
 
+
     def poll(self):
-        for filepath in glob.iglob(self.data_dir + '*.dat'):
-            self.logger.info(f'Found {filepath}')
-            with open(filepath, "r", encoding="utf-8") as file:
-                result = True
-                for line in file:
-                    data = line #json.loads(line)
-                    result = result and self.handle_data(data) # all results must be true to delete file
-            if result:
-                os.remove(filepath)
+        if not self.connected:
+            return
+
+        timestamp = int(time.time())
+        if self.next_read < timestamp:
+            # increment now so it doesn't get missed
+            self.next_read = timestamp + self.frequency
+
+            for filepath in glob.iglob(self.data_dir + '*.dat'):
+                self.logger.info(f'Found {filepath}')
+                with open(filepath, "r", encoding="utf-8") as file:
+                    result = True
+                    for line in file:
+                        result = result and self.handle_data(line) # all results must be true to delete file
+                if result:
+                    os.remove(filepath)
 
     @abstractmethod
     def handle_data(self, data):
@@ -62,18 +72,22 @@ class Mqtt_Target(Target):
             client.username_pw_set(username, password)
         client.on_connect = self.on_connect
         client.on_disconnect = self.on_disconnect
-        client.loop_start()
+        client.on_publish =  self.on_publish
         client.connect(self.ip, self.port)
+        client.loop_start()
         return client
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
+            self.connected = True
             self.logger.info('Connected to MQTT Broker!')
         else:
             self.logger.info(f'Failed to connect, return code {rc}\n')
 
     def on_disconnect(self, client, userdata, rc):
+
         self.logger.warning(f'Disconnected with result code: {rc}')
+        self.connected = False
         reconnect_count, reconnect_delay = 0, self.FIRST_RECONNECT_DELAY
         while reconnect_count < self.MAX_RECONNECT_COUNT:
             self.logger.warning(f'Reconnecting in {reconnect_delay} seconds...')
@@ -87,49 +101,58 @@ class Mqtt_Target(Target):
                 self.logger.error(f'{err}. Reconnect failed. Retrying...')
 
             reconnect_delay *= self.RECONNECT_RATE
-            reconnect_delay = min(self.RECONNECT_DELAY, self.MAX_RECONNECT_DELAY)
+            reconnect_delay = min(reconnect_delay, self.MAX_RECONNECT_DELAY)
             self.reconnect_count += 1
         self.logger.error(f'Reconnect failed after {self.reconnect_count} attempts. Exiting...')
 
     def handle_data(self, data):
-        self.logger.debug(f'{self.name}: {data}')
-        return True
+        if not self.client.is_connected():
+            return False
 
+        try:
+            entry_type, entry = data.split(':',1)
+            
+            topic = f'test/{entry_type}'
+
+            ret = self.client.publish(topic=topic, payload=entry, qos=2)
+            ret.wait_for_publish()
+            self.logger.debug(f'{self.name}: {data}')
+            return True
+        except Exception as err:
+            self.logger.error(f'{err}. Failed to send msg')
+
+    def on_publish(self, client, userdata, mid):
+        print(userdata, mid)
 
 class MySQL_Target(Target):
     def __init__(self, name, data_dir, dbconfig, frequency, logger):
         super().__init__(name, None, None, data_dir, frequency, logger)
         self.dbconfig = dbconfig
         self.connection = False
+        self.last_failed_connection_attempt = 0
+        self.connected = self.is_connected()
 
-    def connected(self):
+    def is_connected(self):
         if self.connection:
-           if self.connection.is_connected():
-               return True
-
-        CONNECT_ATTEMPTS = 3
-        CONNECT_DELAY = 2
-
-        attempt = 1
-        # Implement a reconnection routine
-        while attempt < CONNECT_ATTEMPTS:
-            try:
-                self.connection= mysql.connector.connect(**self.dbconfig)
+            if self.connection.is_connected():
                 return True
+        # otherwise we are not connected.
+        try:
+            now = time.time()
+            if self.last_failed_connection_attempt + 60 > now:
+                return
+            self.connection= mysql.connector.connect(**self.dbconfig)
+            self.last_failed_connection_attempt = 0
+            return True
 
-            except (mysql.connector.Error, IOError) as err:
-                if (CONNECT_ATTEMPTS is attempt):
-                    # Attempts to reconnect failed; returning None
-                    self.logger.info(f'Failed to connect, exiting without a connection: {err}')
-                    raise
-                self.logger.info(f'Connection failed: {err}. Retrying ({attempt}/{CONNECT_ATTEMPTS})...')
-                # progressive reconnect delay
-                time.sleep(CONNECT_DELAY ** attempt)
-                attempt += 1
+        except (mysql.connector.Error, IOError) as err:
+            self.logger.error(f'Mysql connection failed: {err}')
+            self.last_failed_connection_attempt = now
+            return False                
         
 
     def handle_data(self, data):
-        if self.connected():
+        if self.is_connected():
             self.logger.debug(f'{self.name}: {data}')
             cursor = self.connection.cursor()
             entry_type, entry = data.split(':',1)
@@ -159,19 +182,3 @@ class MySQL_Target(Target):
                 self.logger.error(f'The error is: {e}')
                 return False
 
-    def execute_sql(self, post_config):
-        # TODO:  Check if sql file exists before opening mysql connection
-        # if not os.path.exists(sqldir + '*.sql'):
-        #     return
-
-        if self.connected():
-
-
-            for filepath in glob.iglob(self.data_dir + '*.dat'):
-                self.logger.info(f'Found {filepath}')
-                with open(filepath, "r", encoding="utf-8") as file:
-                    for line in file:
-                        sql = self.parse_line(line)
-                os.remove(filepath)
-
-            cursor.close()
