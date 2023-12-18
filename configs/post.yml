@@ -1,0 +1,11 @@
+targets:
+  - name: pmdsdata3-1
+    frequency: 5
+    driver: mysql
+    dbconfig:
+      database: prodrptdb
+      user: stuser
+      password: stp383
+      host: 10.4.1.224
+      port: 3306
+    data_dir: ./data/mysql1/
