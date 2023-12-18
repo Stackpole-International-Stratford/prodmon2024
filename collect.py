@@ -9,9 +9,9 @@ from devices import PylogixDevice, ModbusDevice
 from shared import get_logger, read_config_file
 logger = get_logger('collect')
 
-def read_config():
+def read_config(key):
     devices = []
-    config = read_config_file()
+    config = read_config_file(key)
 
     for device in config.get('devices'):
         name = device.get('name', None)
@@ -41,7 +41,7 @@ def read_config():
 
 @logger.catch
 def main():
-    devices = read_config()
+    devices = read_config('collect')
 
     # while not FLAG_EXIT:
     while True:
