@@ -121,9 +121,6 @@ class Mqtt_Target(Target):
         except Exception as err:
             self.logger.error(f'{err}. Failed to send msg')
 
-
-
-
     def on_publish(self, client, userdata, mid):
         print(userdata, mid)
 
