@@ -37,11 +37,13 @@ class Device(ABC):
 
 class PylogixDevice(Device):
 
-    def __init__(self, name, ip, frequency, slot=0, port=44818):
+    def __init__(self, name, ip, frequency, slot=0, port=44818, route=None):
         super().__init__(name, ip, port, frequency)
         self.driver = "pylogix"
         self.processor_slot = slot
         self.comm = PLC(ip_address=self.ip, slot=self.processor_slot, port=self.port)
+        if route:
+            self.comm.Route = route
 
 
     def add_data_point(self, tag):

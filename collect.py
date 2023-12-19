@@ -22,8 +22,9 @@ def read_config(key):
 
         if driver == 'pylogix':
             slot = device.get('processor_slot', 0)
+            route = device.get('route', None)
             port = device.get('port', 44818)
-            device_entry = PylogixDevice(name, ip, frequency, slot=slot, port=port)
+            device_entry = PylogixDevice(name, ip, frequency, slot=slot, port=port, route=route)
 
         elif driver == 'modbus':
             port = device.get('port', 502)
