@@ -189,7 +189,7 @@ class MySQL_Target(Target):
             sql =   f'BEGIN;{sql}COMMIT;'
 
             try:
-                cursor.execute(sql)
+                cursor.execute(sql, multi=True)
                 # self.connection.commit()
                 return True
 
