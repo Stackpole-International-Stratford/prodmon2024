@@ -32,7 +32,11 @@ def read_config(key):
             device_entry = ModbusDevice(name, ip, frequency, port=port, unit_id=unit_id)
 
         device_entry.data_dir = data_dir
-
+        try:
+            os.mkdirs(data_dir)
+        except FileExistsError:
+            pass
+        
         for tag in device['tags']:
             device_entry.add_data_point(tag)
 
