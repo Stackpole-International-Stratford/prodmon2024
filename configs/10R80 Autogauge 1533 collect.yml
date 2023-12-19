@@ -4,8 +4,8 @@ devices:
     driver: pylogix
     ip: '192.168.1.2'
     slot: 3
-    route: 
-      - !!python/tuple [1,3]
+    # route: 
+    #   - !!python/tuple [1,3]
     data_dir: "./data/mysql1/"
 
     tags:
@@ -17,11 +17,30 @@ devices:
       - name: 'Good Part Count'  # name for data point
         type: counter
         data_dir: "./data/mysql1/"
-
         tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
         frequency: .5        # optional, defaults to device freq
-
         machine: 1533       # machine number for database entry
         scale: 1            # number of parts made per cycle
-
         part: "50-9341"   # a hard coded value
+
+      - name: 'Reject 10-4'  # name for data point
+        type: reject
+        reason: '10-4 Spline Hole Fail'
+        tag: 'Program:Stn010.Part_Count[4].Bad_Part_Count'
+        machine: 1533       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+
+      - name: 'Reject 10-5'  # name for data point
+        type: reject
+        reason: '10-5 Cross Hole Fail'
+        tag: 'Program:Stn010.Part_Count[5].Bad_Part_Count'
+        machine: 1533       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+
+
+# Program:Stn010.Part_Count[5].Bad_Part_Count: 10-5 Cross Hole Fail
+# Program:Stn010.Part_Count[4].Bad_Part_Count: 10-4 Spline Hole Fail
+
+

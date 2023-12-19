@@ -57,6 +57,7 @@ class PylogixDevice(Device):
         frequency = max(self.frequency, frequency)
         tag_name = tag.get('tag', None)
         data_dir = tag.get('data_dir', self.data_dir)
+        name = tag.get('name', None)
 
         parent = self
 
@@ -72,6 +73,9 @@ class PylogixDevice(Device):
         elif tag_type == 'ping':
             name = tag.get('name', None)
             new_tag_object = PingTag(parent, name, tag_name, frequency)
+
+        elif tag_type == 'reject':
+            name = tag.get()
 
         # elif tag_type == 'data':
         #     raise NotImplementedError

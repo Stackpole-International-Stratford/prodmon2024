@@ -53,6 +53,7 @@ class PingTag(Tag):
                 "name": self.name}
         return f'PING:{json.dumps(data)}\n'
 
+
 class CounterTag(Tag):
 
     def __init__(self, parent, address, scale, frequency, machine, part=None, part_number_tag=None, part_dict=None):
@@ -132,6 +133,28 @@ class CounterTag(Tag):
             "count": 1,
         }
         return f'COUNTER:{json.dumps(data)}\n'
+
+
+class RejectTag(CounterTag):
+    def __init__(self, parent, address, scale, frequency, machine, part=None, part_number_tag=None, part_dict=None):
+        machine = f'{machine}REJ'
+        super().__init__(self, parent, address, scale, frequency, machine, part, part_number_tag, part_dict)
+        self.type = 'reject'
+        self.reason = None
+
+    def format_output(self, counter, part, timestamp):
+        # create entry for new value
+        data = {
+            "asset": self.db_machine_data,
+            "part": part,
+            "timestamp": timestamp,
+            "perpetualcount": counter,
+            "count": 1,
+            "reason": self.reason,
+        }
+        return f'REJECT:{json.dumps(data)}\n'
+
+    
 
 class DataTag(Tag):
 
