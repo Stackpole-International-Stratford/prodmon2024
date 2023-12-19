@@ -21,7 +21,7 @@ devices:
         tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
         frequency: .5        # optional, defaults to device freq
 
-        machine: test       # machine number for database entry
+        machine: 1533       # machine number for database entry
         scale: 1            # number of parts made per cycle
 
         part: "50-9341"   # a hard coded value
