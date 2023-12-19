@@ -159,37 +159,38 @@ class MySQL_Target(Target):
             entry = json.loads(entry)
 
             if entry_type == 'PING':
-                sql =   'INSERT INTO prodmon_ping (Name, Timestamp) '
+                sql  =  'INSERT INTO prodmon_ping (Name, Timestamp) '
                 sql += f'VALUES("{entry.get("name")}", {entry.get("timestamp")}) '
                 sql +=  'ON DUPLICATE KEY UPDATE '
                 sql += f'Name="{entry.get("name")}", Timestamp={entry.get("timestamp")};'
 
             elif entry_type == "COUNTER":
-                sql =   'INSERT INTO GFxPRoduction (Machine, Part, PerpetualCount, TimeStamp, Count) '
+                sql  =  'INSERT INTO GFxPRoduction (Machine, Part, PerpetualCount, TimeStamp, Count) '
                 sql += f'VALUES ("{entry.get("asset")}", "{entry.get("part")}", {entry.get("perpetualcount")}, '
                 sql += f'{entry.get("timestamp")}, {entry.get("count")});'
 
             elif entry_type == "REJECT":
-                sql = 'BEGIN;'
-                sql += 'INSERT INTO GFxPRoduction '
-                sql += '(Machine, Part, PerpetualCount, TimeStamp, Count) '
+                sql  =  'INSERT INTO GFxPRoduction '
+                sql +=  '(Machine, Part, PerpetualCount, TimeStamp, Count) '
                 sql += f'VALUES("{entry.get("asset")}", '  
                 sql += f'"{entry.get("part")}", '
                 sql += f'{entry.get("perpetualcount")}, ' 
                 sql += f'{entry.get("timestamp")}, ' 
                 sql += f'{entry.get("count")});'
-                sql += 'INSERT INTO prodmon_prod_rejects '
-                sql += '(GFxPRoduction_id, Reject_Reason) '
-                sql += 'VALUES (LAST_INSERT_ID(), '
+                sql +=  'INSERT INTO prodmon_prod_rejects '
+                sql +=  '(GFxPRoduction_id, Reject_Reason) '
+                sql +=  'VALUES (LAST_INSERT_ID(), '
                 sql += f'{entry.get("reason")});'
-                sql += 'COMMIT;'
 
             else: 
                 raise NotImplementedError(f'Entry Type {entry_type} Not Implemented')
 
+
+            sql =   f'BEGIN;{sql}COMMIT;'
+
             try:
                 cursor.execute(sql)
-                self.connection.commit()
+                # self.connection.commit()
                 return True
 
             except Exception as e:

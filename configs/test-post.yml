@@ -7,7 +7,7 @@ targets:
   #   client_id: f'mqtt-pub1'
   #   # username: 'emqx'
   #   # password: 'public'
-  #   data_dir: ./temp/mqtt1/
+  #   data_dir: ./data/mqtt1/
 
   # - name: litmus-mqtt
   #   driver: mqtt
@@ -17,7 +17,7 @@ targets:
   #   client_id: f'mqtt-pub2'
   #   # username: 'emqx'
   #   # password: 'public'
-  #   data_dir: ./temp/mqtt2/
+  #   data_dir: ./data/mqtt2/
 
   - name: pmdsdata3-1
     frequency: 5
@@ -28,7 +28,7 @@ targets:
       password: stp383
       host: 10.4.1.224
       port: 3306
-    data_dir: ./temp/mysql1/
+    data_dir: ./data/mysql1/
 
   - name: pmdsdata3-2
     frequency: 5
@@ -39,4 +39,4 @@ targets:
       password: stp383
       host: 10.4.1.224
       port: 3306
-    data_dir: ./temp/mysql2/
+    data_dir: ./data/mysql2/
