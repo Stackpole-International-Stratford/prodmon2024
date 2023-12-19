@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from ast import Raise
+import os
 import time
 import collections
 from collections.abc import Iterable
@@ -21,6 +22,10 @@ class Device(ABC):
         self.tag_list = []
 
     def add_data_point(self, tag):
+        try:
+            os.makedirs(self.data_dir)
+        except FileExistsError:
+            pass
         self.tag_list.append(tag)
 
     def poll_tags(self):
@@ -76,7 +81,9 @@ class PylogixDevice(Device):
 
         else:
             raise NotImplementedError
+
         new_tag_object.data_dir = data_dir
+       
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
