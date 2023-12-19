@@ -9,7 +9,7 @@ from pylogix import PLC
 from pyModbusTCP.client import ModbusClient
 
 from loguru import logger
-from tags import PingTag, CounterTag, DataTag
+from tags import PingTag, CounterTag, DataTag, RejectTag
 
 class Device(ABC):
 
@@ -75,7 +75,14 @@ class PylogixDevice(Device):
             new_tag_object = PingTag(parent, name, tag_name, frequency)
 
         elif tag_type == 'reject':
-            name = tag.get()
+            scale = tag.get('scale', 1)
+            machine = tag.get('machine', None)
+            part = tag.get('part', None)
+            part_number_tag = tag.get('part_number_tag', None)
+            part_dict = tag.get('part_dict', None)
+
+            new_tag_object = RejectTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
+            new_tag_object.reason = tag.get('reason', None)
 
         # elif tag_type == 'data':
         #     raise NotImplementedError
