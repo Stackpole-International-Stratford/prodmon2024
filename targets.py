@@ -185,16 +185,14 @@ class MySQL_Target(Target):
             else: 
                 raise NotImplementedError(f'Entry Type {entry_type} Not Implemented')
 
-
-            sql =   f'BEGIN;{sql}COMMIT;'
-
             try:
                 cursor.execute(sql, multi=True)
-                # self.connection.commit()
+                self.connection.commit()
                 return True
 
             except Exception as e:
        # By this way we can know about the type of error occurring
+                
                 self.logger.error(f'The error is: {e}')
                 return False
 
