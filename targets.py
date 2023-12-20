@@ -180,7 +180,7 @@ class MySQL_Target(Target):
                 sql +=  'INSERT INTO prodmon_prod_rejects '
                 sql +=  '(GFxPRoduction_id, Reject_Reason) '
                 sql +=  'VALUES (LAST_INSERT_ID(), '
-                sql += f'{entry.get("reason")});'
+                sql += f'"{entry.get("reason")}");'
 
             else: 
                 raise NotImplementedError(f'Entry Type {entry_type} Not Implemented')
