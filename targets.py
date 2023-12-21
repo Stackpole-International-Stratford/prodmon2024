@@ -26,7 +26,7 @@ class Target(ABC):
 
 
     def poll(self):
-        if not self.connected:
+        if not self.is_connected():
             return
 
         timestamp = int(time.time())
