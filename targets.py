@@ -139,6 +139,7 @@ class MySQL_Target(Target):
         # otherwise we are not connected.
         try:
             now = time.time()
+            self.logger.info(f'Not connected to mysql server... reconnecting {now}')  
             if self.last_failed_connection_attempt + 60 > now:
                 return
             self.connection= mysql.connector.connect(**self.dbconfig)
