@@ -130,7 +130,6 @@ class MySQL_Target(Target):
         self.dbconfig = dbconfig
         self.connection = False
         self.last_failed_connection_attempt = 0
-        self.connected = self.is_connected()
 
     def is_connected(self):
         if self.connection:
@@ -140,8 +139,6 @@ class MySQL_Target(Target):
         try:
             now = time.time()
             self.logger.info(f'Not connected to mysql server... reconnecting {now}')  
-            if self.last_failed_connection_attempt + 60 > now:
-                return
             self.connection= mysql.connector.connect(**self.dbconfig)
             self.last_failed_connection_attempt = 0
             return True
@@ -176,6 +173,7 @@ class MySQL_Target(Target):
             try:
                 cursor.execute(sql)
                 self.connection.commit()
+                cursor.close()
                 return True
 
             except Exception as e:
