@@ -150,7 +150,6 @@ class MySQL_Target(Target):
         
 
     def handle_data(self, data):
-        import pdb;pdb.set_trace();
         if self.is_connected():
             self.logger.debug(f'{self.name}: {data}')
             cursor = self.connection.cursor()
