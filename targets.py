@@ -155,7 +155,7 @@ class MySQL_Target(Target):
             cursor = self.connection.cursor()
             entry_type, entry = data.split(':',1)
             entry = json.loads(entry)
-            self.logger.info(f'handle data {data}')
+            self.logger.debug(f'Handling data: {data}')
 
             if entry_type == 'PING':
                 sql =   'INSERT INTO prodmon_ping (Name, Timestamp) '
