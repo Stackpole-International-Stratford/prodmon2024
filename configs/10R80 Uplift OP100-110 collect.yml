@@ -1,0 +1,24 @@
+devices:
+  - name: 10R80_UpLift_OP100-110_1554_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.10'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 OP40_Cell2 1501'
+        type: ping
+        tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+
+        tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
+        frequency: 1        # optional, defaults to device freq
+
+        machine: 1554       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+
+        part: "50-9341"   # a hard coded value
