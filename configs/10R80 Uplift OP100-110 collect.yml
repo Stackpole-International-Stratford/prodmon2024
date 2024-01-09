@@ -22,3 +22,29 @@ devices:
         scale: 1            # number of parts made per cycle
 
         part: "50-9341"   # a hard coded value
+
+
+  - name: 10R80_UpLift_OP100-110_Robot_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.61'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 Uplift 751 Robot'
+        type: ping
+        tag: 'ProdCount751.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+
+        tag: 'ProdCount751.ACC'
+        frequency: 1        # optional, defaults to device freq
+
+        machine: 751       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+
+        part: "50-9341"   # a hard coded value
+        
