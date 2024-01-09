@@ -1,0 +1,30 @@
+devices:
+  - name: 10R80 Uplift OP70-80 
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.41'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 Uplift OP70-80'
+        type: ping
+        tag: 'ProdCount1551.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count 1551'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount1551.ACC'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1551       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+
+      - name: 'Good Part Count 594'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount594.ACC'
+        frequency: 1        # optional, defaults to device freq
+        machine: 594       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
