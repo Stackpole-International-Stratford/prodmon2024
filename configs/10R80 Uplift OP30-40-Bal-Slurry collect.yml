@@ -1,0 +1,65 @@
+devices:
+  - name: 10R80_UpLift_OP30-40_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 UpLift OP30-40'
+        type: ping
+        tag: 'ProdCount1546.ACC'
+        frequency: 300
+      - name: '1546 Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount1546.ACC'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1546       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+      - name: '1547 Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount1547.ACC'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1547       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+
+  - name: 10R80_UpLift_OP50-60_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.21'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 UpLift OP50-60'
+        type: ping
+        tag: 'ProdCount1548.ACC'
+        frequency: 300
+      - name: '1548 Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount1548.ACC'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1548       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+      # - name: '1548 Good Part Count'  # name for data point
+      #   type: counter
+      #   data_dir: "./data/mysql1/"
+      #   tag: 'ProdCount1548Rej.ACC'
+      #   frequency: 1        # optional, defaults to device freq
+      #   machine: 1548REJ       # machine number for database entry
+      #   scale: 1            # number of parts made per cycle
+      #   part: "50-9341"   # a hard coded value
+      - name: '1549 Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount1549.ACC'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1549       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"   # a hard coded value
+        

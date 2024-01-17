@@ -102,7 +102,7 @@ class CounterTag(Tag):
             # last_value is 0 or Null
             if not self.last_value:
                 if self.last_value == 0:
-                    logger.info(f'Counter Rolled over: Successfully read {self.parent.name}:{self.address} ({part}:{count})')
+                    logger.debug(f'Counter Rolled over: Successfully read {self.parent.name}:{self.address} ({part}:{count})')
                 else:
                     logger.info(f'First pass through: Successfully read {self.parent.name}:{self.address} ({part}:{count})')
                 self.last_value = count

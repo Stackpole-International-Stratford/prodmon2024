@@ -1,29 +1,32 @@
+
 devices:
   - name: test-pylogix
     frequency: 1
     driver: pylogix
-    ip: '10.4.43.5'
-    # slot: 3
+    ip: '10.4.43.103'
     route: 
       - !!python/tuple [1,3]
+    slot: 0           # optional
     data_dir: "./data/mysql1/"
 
     tags:
-      - name: '10R80 Autogauge 1533'
+      - name: 'test-pylogix-ping'
         type: ping
-        tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
-        frequency: 300
+        
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        frequency: 300 # optional
 
-      - name: 'Good Part Count'  # name for data point
+      - name: 'test-py-count-1'  # name for data point
         type: counter
-        data_dir: "./data/mysql1/"
+        data_dir: "./data/mysql2/"
 
-        tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
-        frequency: .5        # optional, defaults to device freq
+        tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
+        frequency: 5        # optional, defaults to device freq
 
-        machine: 1533       # machine number for database entry
+        machine: 1530p1       # machine number for database entry
         scale: 1            # number of parts made per cycle
 
+        # to get the part type specify one of the following:
         part: "50-9341"   # a hard coded value
 
         # a tag with the part number in a string
@@ -35,13 +38,27 @@ devices:
         #   0: '50-0455'
         #   1: '50-9341'
 
-      - name: 'Test Reject'  # name for data point
-        type: reject
-        reason: 'Test Reject'
-        tag: 'Program:MainProgram.ProdCount.ACC'
-        machine: 1533       # machine number for database entry
-        scale: 1            # number of parts made per cycle
-        part: "test"        # a hard coded value
+      # - name: 'test-py-count-2'  # test direct read part number
+      #   type: counter
+      #   data_dir: "./data/mqtt1/"
+
+      #   tag: 'Program:MainProgram.ProdCount.ACC'  # PLC tag name
+      #   frequency: 5        # optional, defaults to device freq
+
+      #   machine: 1530p2       # machine number for database entry
+      #   scale: 1            # number of parts made per cycle
+
+      #   # to get the part type specify one of the following:
+      #   # part: "50-9341"   # a hard coded value
+
+      #   # a tag with the part number in a string
+      #   part_number_tag: 'Program:MainProgram.ProdCountpartText' 
+
+      #   # a tag with a reference into part_dict and part_dict
+      #   # part_number_tag: 'Program:MainProgram.ProdCountpartDINT'
+      #   # part_dict:
+      #   #   0: '50-0455'
+      #   #   1: '50-9341'
 
       - name: 'test-py-count-3'  # test direct read part number
         type: counter

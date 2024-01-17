@@ -26,7 +26,7 @@ class Target(ABC):
 
 
     def poll(self):
-        if not self.connected:
+        if not self.is_connected():
             return
 
         timestamp = int(time.time())
@@ -130,7 +130,6 @@ class MySQL_Target(Target):
         self.dbconfig = dbconfig
         self.connection = False
         self.last_failed_connection_attempt = 0
-        self.connected = self.is_connected()
 
     def is_connected(self):
         if self.connection:
@@ -139,8 +138,7 @@ class MySQL_Target(Target):
         # otherwise we are not connected.
         try:
             now = time.time()
-            if self.last_failed_connection_attempt + 60 > now:
-                return
+            self.logger.info(f'Not connected to mysql server... reconnecting {now}')  
             self.connection= mysql.connector.connect(**self.dbconfig)
             self.last_failed_connection_attempt = 0
             return True
@@ -157,6 +155,7 @@ class MySQL_Target(Target):
             cursor = self.connection.cursor()
             entry_type, entry = data.split(':',1)
             entry = json.loads(entry)
+            self.logger.debug(f'Handling data: {data}')
 
             if entry_type == 'PING':
                 sql  =  'INSERT INTO prodmon_ping (Name, Timestamp) '
@@ -188,6 +187,7 @@ class MySQL_Target(Target):
             try:
                 cursor.execute(sql, multi=True)
                 self.connection.commit()
+                cursor.close()
                 return True
 
             except Exception as e:

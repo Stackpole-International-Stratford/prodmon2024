@@ -50,7 +50,6 @@ class PylogixDevice(Device):
         if route:
             self.comm.Route = route
 
-
     def add_data_point(self, tag):
         tag_type = tag.get('type', None)
         frequency = tag.get('frequency', 0)
@@ -142,7 +141,6 @@ class ModbusDevice(Device):
             scale = tag.get('scale', 1)
             new_tag_object = CounterTag(parent, register, scale, frequency, machine, part, part_type_register, part_dict)
 
-
         # elif tag_type == 'data':
         #     raise NotImplementedError
             # name = tag.get('name', None)
@@ -185,6 +183,5 @@ class ModbusDevice(Device):
 
             logger.debug(f'Successfully read {self.name}:{tag_register} ({count})')
             values.append(count)
-
 
         return values, error_flag
