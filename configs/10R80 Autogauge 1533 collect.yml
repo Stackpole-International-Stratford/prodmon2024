@@ -94,12 +94,12 @@ devices:
         machine: 1533
 
       - type: reject
-        tag: 'Spline1Fail'
+        tag: 'Spline1Fail.ACC'
         reason: '50-1 Spline Gauge Fail Cell 1'
         machine: 1533
 
       - type: reject
-        tag: 'Spline2Fail'
+        tag: 'Spline2Fail.ACC'
         reason: '50-1 Spline Gauge Fail Cell 2'
         machine: 1533
 
