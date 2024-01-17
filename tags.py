@@ -119,7 +119,7 @@ class CounterTag(Tag):
             with open(file_path, "a+") as file:
                 for part_count in range(self.last_value + 1, count + 1):
                     entry = self.format_output(part_count, part, int(timestamp))
-                    logger.info(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
+                    logger.info(f'Create enrty for {self.db_machine_data}:{self.name} ({part}:{part_count})')
                     file.write(entry)
                     self.last_value = part_count
 
