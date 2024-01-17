@@ -7,8 +7,6 @@ devices:
     route: 
       - !!python/tuple [1,3]
     data_dir: "./data/mysql1/"
-
-    ### TODO: allow part type spec in device to prevent repeating on each tag
     part: '50-9341'
 
     tags:
