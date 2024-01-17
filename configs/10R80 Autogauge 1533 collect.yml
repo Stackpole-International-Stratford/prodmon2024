@@ -15,13 +15,13 @@ devices:
         tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
         frequency: 300
 
-      - name: 'Good Part Count'  # name for data point
+      - name: 'Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
-        frequency: .5        # optional, defaults to device freq
-        machine: 1533       # machine number for database entry
-        scale: 1            # number of parts made per cycle
+        frequency: .5
+        machine: 1533
+        scale: 1
 
       - type: reject
         reason: '10-1 Orientation Fail'
