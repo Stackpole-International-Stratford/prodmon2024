@@ -31,6 +31,7 @@ def read_config(key):
             unit_id = device.get('unit_id', 1)
             device_entry = ModbusDevice(name, ip, frequency, port=port, unit_id=unit_id)
 
+        device_entry.part = device.get('part', None)
         device_entry.data_dir = data_dir
 
         for tag in device['tags']:

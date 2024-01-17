@@ -63,7 +63,7 @@ class PylogixDevice(Device):
         if tag_type == 'counter':
             scale = tag.get('scale', 1)
             machine = tag.get('machine', None)
-            part = tag.get('part', None)
+            part = tag.get('part', self.part)
             part_number_tag = tag.get('part_number_tag', None)
             part_dict = tag.get('part_dict', None)
 
@@ -76,7 +76,7 @@ class PylogixDevice(Device):
         elif tag_type == 'reject':
             scale = tag.get('scale', 1)
             machine = tag.get('machine', None)
-            part = tag.get('part', None)
+            part = tag.get('part', self.part)
             part_number_tag = tag.get('part_number_tag', None)
             part_dict = tag.get('part_dict', None)
 

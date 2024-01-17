@@ -191,8 +191,6 @@ class MySQL_Target(Target):
                 return True
 
             except Exception as e:
-       # By this way we can know about the type of error occurring
-                
-                self.logger.error(f'The error is: {e}')
+                self.logger.error(f'An error occured writing to the database:{e}')
                 return False
 
