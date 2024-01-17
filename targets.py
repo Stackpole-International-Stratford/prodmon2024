@@ -156,6 +156,8 @@ class MySQL_Target(Target):
             entry_type, entry = data.split(':',1)
             entry = json.loads(entry)
             self.logger.debug(f'Handling data: {data}')
+            sql = ''
+            sql2 = ''
 
             if entry_type == 'PING':
                 sql  =  'INSERT INTO prodmon_ping (Name, Timestamp) '
@@ -176,16 +178,18 @@ class MySQL_Target(Target):
                 sql += f'{entry.get("perpetualcount")}, ' 
                 sql += f'{entry.get("timestamp")}, ' 
                 sql += f'{entry.get("count")});'
-                sql +=  'INSERT INTO prodmon_prod_rejects '
-                sql +=  '(GFxPRoduction_id, Reject_Reason) '
-                sql +=  'VALUES (LAST_INSERT_ID(), '
-                sql += f'"{entry.get("reason")}");'
+                sql2  =  'INSERT INTO prodmon_prod_rejects '
+                sql2 +=  '(GFxPRoduction_id, Reject_Reason) '
+                sql2 +=  'VALUES (LAST_INSERT_ID(), '
+                sql2 += f'"{entry.get("reason")}");'
 
             else: 
                 raise NotImplementedError(f'Entry Type {entry_type} Not Implemented')
 
             try:
-                cursor.execute(sql, multi=True)
+                cursor.execute(sql)
+                if sql2:
+                    cursor.execute(sql2)
                 self.connection.commit()
                 cursor.close()
                 return True
