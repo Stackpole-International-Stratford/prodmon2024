@@ -14,24 +14,24 @@ devices:
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'ProductionCountCell1_10R80.ACC'
-        machine: 1516-1
+        machine: 1516C1
         part: '50-9341'
       - name: 'Cell 1 Good 10R60 Part Count'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'ProductionCountCell1_10R60.ACC'
-        machine: 1516-1
+        machine: 1516C1
         part: '50-0455'
       - name: 'Cell 2 Good 10R80 Part Count'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'ProductionCountCell2_10R80.ACC'
-        machine: 1516-2
+        machine: 1516C2
         part: '50-9341'
       - name: 'Cell 2 Good 10R60 Part Count'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'ProductionCountCell2_10R60.ACC'
-        machine: 1516-2
+        machine: 1516C2
         part: '50-0455'
 
