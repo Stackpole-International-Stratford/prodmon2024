@@ -4,34 +4,42 @@ devices:
     driver: pylogix
     ip: '192.168.1.1'
     data_dir: "./data/mysql1/"
+    part: '50-9341'
+
+    part_number_tag: 'Cell_1.PartType'
+    part_dict:
+      0: '50-0455'
+      1: '50-9341'
 
     tags:
       - name: '10R Assembler 1516'
         type: ping
-        tag: 'ProductionCountCell1_10R80.ACC'
+        tag: 'ProductionCountCell1.ACC'
         frequency: 300
-      - name: 'Cell 1 Good 10R80 Part Count'
+
+      - name: 'Cell 1 Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell1_10R80.ACC'
+        tag: 'ProductionCountCell1.ACC'
         machine: 1516C1
-        part: '50-9341'
-      - name: 'Cell 1 Good 10R60 Part Count'
+
+      - name: 'Cell 2 Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell1_10R60.ACC'
+        tag: 'ProductionCountCell2.ACC'
+        machine: 1516C2
+
+      - name: 'Cell 1 Vision Reject Part Count'
+        type: reject
+        data_dir: "./data/mysql1/"
+        tag: 'ProductionCountCell1_VisionReject.ACC'
         machine: 1516C1
-        part: '50-0455'
-      - name: 'Cell 2 Good 10R80 Part Count'
-        type: counter
+        reason: 'Vision'
+
+      - name: 'Cell 2 Vision Reject Part Count'
+        type: reject
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell2_10R80.ACC'
+        tag: 'ProductionCountCell2_VisionReject.ACC'
         machine: 1516C2
-        part: '50-9341'
-      - name: 'Cell 2 Good 10R60 Part Count'
-        type: counter
-        data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell2_10R60.ACC'
-        machine: 1516C2
-        part: '50-0455'
+        reason: 'Vision'
 
