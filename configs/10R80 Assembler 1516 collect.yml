@@ -14,32 +14,32 @@ devices:
     tags:
       - name: '10R Assembler 1516'
         type: ping
-        tag: 'ProductionCountCell1.ACC'
+        tag: 'ProdCountCell1.ACC'
         frequency: 300
 
       - name: 'Cell 1 Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell1.ACC'
+        tag: 'ProdCountCell1.ACC'
         machine: 1516C1
 
       - name: 'Cell 2 Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell2.ACC'
+        tag: 'ProdCountCell2.ACC'
         machine: 1516C2
 
       - name: 'Cell 1 Vision Reject Part Count'
         type: reject
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell1_VisionReject.ACC'
+        tag: 'ProdCountCell1_VisionReject.ACC'
         machine: 1516C1
         reason: 'Vision'
 
       - name: 'Cell 2 Vision Reject Part Count'
         type: reject
         data_dir: "./data/mysql1/"
-        tag: 'ProductionCountCell2_VisionReject.ACC'
+        tag: 'ProdCountCell2_VisionReject.ACC'
         machine: 1516C2
         reason: 'Vision'
 
