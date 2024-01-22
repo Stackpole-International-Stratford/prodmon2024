@@ -9,6 +9,12 @@ devices:
     data_dir: "./data/mysql1/"
     part: '50-9341'
 
+    # part_number_tag: 'Program:MainProgram.ProdCountpartDINT'
+    # part_dict:
+    #   0: '50-0455'
+    #   1: '50-9341'
+
+
     tags:
       - name: '10R80 Autogauge 1533'
         type: ping
