@@ -25,6 +25,32 @@ devices:
           length: 2   # number of registers to read
         part: "compact"
 
+  - name: Press 280
+    frequency: 1
+    driver: modbus
+    ip: '10.4.45.50'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: 'Press 280'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+        frequency: 300
+      - name: 'test-modbus-count1'  # name for data point
+        type: ADAM_counter
+        machine: 280        # machine number for database entry
+        frequency: 1        # optional, defaults to device freq
+        scale: 1            # number of parts made per cycle
+        register:     # the counter register
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0  # 
+          length: 2   # number of registers to read
+        part: "compact"
+
 
 
   # - name: Press 245
