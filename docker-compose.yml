@@ -1,0 +1,18 @@
+version: "3"
+services:
+  collect:
+    build: .
+    volumes:
+     - data:/app/data
+    restart: unless-stopped
+    command: python collect.py 'configs/modbus collect.yml'
+
+  post:
+    build: .
+    volumes:
+     - data:/app/data
+    restart: unless-stopped
+    command: python post.py 'configs/post.yml'
+
+volumes:
+  data:
