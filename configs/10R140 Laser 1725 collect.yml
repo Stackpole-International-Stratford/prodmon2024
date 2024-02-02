@@ -15,7 +15,7 @@ devices:
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'S01.Prod_GoodCount.ACC'
-        machine: 1725A
+        machine: 1725
         part_number_tag: 'S01.CurrPartSelected'
         part_dict:
           1: '50-5404'

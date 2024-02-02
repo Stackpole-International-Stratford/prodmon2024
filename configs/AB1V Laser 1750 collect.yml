@@ -15,40 +15,41 @@ devices:
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_0450_Laser_1750.Count'
-        machine: 1750A
+        machine: 1750
         part: "50-0450"     
 
       - name: 'Good Part Count 0477'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_0477_Laser_1750.Count'
-        machine: 1750A
+        machine: 1750
         part: "50-0477"     
 
       - name: 'Good Part Count 0519'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_0519_Laser_1750.Count'
-        machine: 1750A
+        machine: 1750
         part: "50-0519"     
 
       - name: 'Good Part Count 5401'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_05401_Laser_1750.Count'
-        machine: 1750A
+        machine: 1750
         part: "50-5401"     
 
       - name: 'Good Part Count 5404'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_5404_Laser_1750.Count'
-        machine: 1750A
+        machine: 1750
         part: "50-5404"     
       
       - name: 'Good Part Count 8670'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_8670_Laser_1750.Count'
-        machine: 1750A
+        machine: 1750
         part: "50-8670"     
+
