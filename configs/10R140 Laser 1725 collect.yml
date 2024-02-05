@@ -8,13 +8,13 @@ devices:
     tags:
       - type: ping
         name: '10R140 Laser 1725'
-        tag: 'S01.Prod_GoodCount.ACC'
+        tag: 'S01.Prod.GoodCount.ACC'
         frequency: 300
 
       - name: 'Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'S01.Prod_GoodCount.ACC'
+        tag: 'S01.Prod.GoodCount.ACC'
         machine: 1725
         part_number_tag: 'S01.CurrPartSelected'
         part_dict:
