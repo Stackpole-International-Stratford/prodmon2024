@@ -24,4 +24,4 @@ devices:
         data_dir: "./data/mysql1/"
         tag: 'Program:Production.ProdCount2.ACC'
         machine: 1617       # machine number for database entry
-        part: "50-5081"     
+        part: "50-4865"     
