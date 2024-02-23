@@ -6,7 +6,7 @@ devices:
     data_dir: "./data/mysql1/"
 
     tags:
-      - name: '10R80 OP40_Cell2 1501'
+      - name: '10R80 Uplift OP110 1554'
         type: ping
         tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
         frequency: 300
