@@ -1,0 +1,32 @@
+devices:
+  - name: 10R80_Main_OP100_PLC
+    frequency: 1
+    driver: pylogix
+    ip: 192.168.1.40
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 Main OP100 1503' # 1528
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.acc'
+        frequency: 300
+
+      - name: '1503 Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:MainProgram.ProdCount.acc'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1503       # machine number for database entry
+        scale: 2            # number of parts made per cycle
+        part: "50-9341"     # a hard coded value
+
+      - name: '1503 Reject Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:MainProgram.ProdCountReject.acc'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1503REJ       # machine number for database entry
+        scale: 2            # number of parts made per cycle
+        part: "50-9341"     # a hard coded value
+
+
