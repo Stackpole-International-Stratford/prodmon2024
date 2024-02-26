@@ -4,6 +4,7 @@ devices:
     driver: pylogix
     ip: '192.168.1.10'
     data_dir: "./data/mysql1/"
+    part: "50-9341"
 
     tags:
       - name: '10R80 UpLift BushPress 1552'
@@ -11,23 +12,12 @@ devices:
         tag: 'ProdCount.ACC'
         frequency: 300
 
-      - name: 'Good Part Count'  # name for data point
+      - name: 'Good Part Count'
         type: counter
-        data_dir: "./data/mysql1/"
         tag: 'ProdCount.ACC'
-        frequency: 1        # optional, defaults to device freq
-        machine: 1552       # machine number for database entry
-        scale: 1            # number of parts made per cycle
-        part: "50-9341"   # a hard coded value
+        machine: 1552
 
-      # - name: 'Reject Part Count'  # name for data point
-      #   type: counter
-      #   data_dir: "./data/mysql1/"
-
-      #   tag: 'ProdCountReject.ACC'
-      #   frequency: 1        # optional, defaults to device freq
-
-      #   machine: 1552REJ       # machine number for database entry
-      #   scale: 1            # number of parts made per cycle
-
-      #   part: "50-9341"   # a hard coded value
+      - type: reject
+        reason: 'All rejects'
+        tag: 'ProdCountReject.ACC'
+        machine: 1552
