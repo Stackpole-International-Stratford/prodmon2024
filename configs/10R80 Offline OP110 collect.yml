@@ -1,0 +1,21 @@
+devices:
+  - name: 10R80_Offline_OP110_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.180'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 Offline OP110' # 1528
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.acc'
+        frequency: 300
+      - name: '1511 Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:MainProgram.ProdCount.acc'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1528       # machine number for database entry
+        scale: 1            # number of parts made per cycle
+        part: "50-9341"     # a hard coded value
+
