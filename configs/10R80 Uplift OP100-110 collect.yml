@@ -11,17 +11,12 @@ devices:
         tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
         frequency: 300
 
-      - name: 'Good Part Count'  # name for data point
+      - name: 'Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-
         tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
-        frequency: 1        # optional, defaults to device freq
-
-        machine: 1554       # machine number for database entry
-        scale: 1            # number of parts made per cycle
-
-        part: "50-9341"   # a hard coded value
+        machine: 1554
+        part: "50-9341"
 
 
   - name: 10R80_UpLift_OP100-110_Robot_PLC
@@ -36,15 +31,10 @@ devices:
         tag: 'ProdCount751.ACC'
         frequency: 300
 
-      - name: 'Good Part Count'  # name for data point
+      - name: 'Good Part Count'
         type: counter
         data_dir: "./data/mysql1/"
-
         tag: 'ProdCount751.ACC'
-        frequency: 1        # optional, defaults to device freq
-
-        machine: 751       # machine number for database entry
-        scale: 1            # number of parts made per cycle
-
-        part: "50-9341"   # a hard coded value
+        machine: 751
+        part: "50-9341"
         
