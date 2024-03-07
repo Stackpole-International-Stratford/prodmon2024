@@ -35,7 +35,7 @@ devices:
       - name: 'Good Part Count 5401'
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'AOI_05401_Laser_1750.Count'
+        tag: 'AOI_5401_Laser_1750.Count'
         machine: 1750
         part: "50-5401"     
 
