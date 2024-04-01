@@ -26,110 +26,55 @@ devices:
         part: "compact"
 
 
+  - name: Optimized Machining
+    frequency: 1
+    driver: modbus
+    ip: '10.4.42.123'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql1/"
 
-  # - name: Press 245
-  #   frequency: 1
-  #   driver: modbus
-  #   ip: '10.4.42.122'
-  #   port: 502
-  #   unit_id: 0              
-  #   data_dir: "./data/mysql1/"
+    tags:
+      - name: 'Optim1zed Machining'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+        frequency: 300
 
-  #   tags:
-  #     - name: 'test-modbus-ping'
-  #       type: ping
-  #       frequency: 300 # optional
-  #       register:
-  #         type: H  # Register type, H = Holding Reg, D = discrete input contact
-  #         address: 0
+      - name: 'Maching 624'
+        type: ADAM_counter
+        machine: 624
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0 
+          length: 2
+        part: "magna"
 
-  #     - name: 'test-modbus-count1'  # name for data point
-  #       type: ADAM_counter
-  #       machine: 1530m1       # machine number for database entry
-  #       frequency: 5        # optional, defaults to device freq
-  #       scale: 1            # number of parts made per cycle
-        
-  #       register:     # the counter register
-  #         type: H     # Register type, H = Holding Reg, D = discrete input contact
-  #         address: 0  # 
-  #         length: 2   # number of registers to read
+      - name: 'Maching 619'
+        type: ADAM_counter
+        machine: 619
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 2 
+          length: 2
+        part: "magna"
 
-  #       # # to get the part type specify one of the following:
-  #       # part: "50-9341"   # a hard coded value
+      - name: 'Maching 618'
+        type: ADAM_counter
+        machine: 618
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 4 
+          length: 2
+        part: "magna"
 
-  #       # a tag with the part number in a string
-  #       # part_type_register:
-  #       #    type: D  # Register type, H = Holding Reg, D = discrete input contact
-  #       #    address: 0
-  #       #    length: 1
-
-  #       # a register with a reference into part_dict and part_dict
-  #       part_type_register:
-  #          type: D  # Register type, H = Holding Reg, D = discrete input contact
-  #          address: 0
-  #          length: 1
-  #       part_dict:
-  #         0: '50-0455'
-  #         1: '50-9341'
-
-  #       # using a name tag doesnt work wor the modbus units I have, no strings
-  #     # - name: 'test-modbus-count-2'  # name for data point
-  #     #   type: ADAM_counter
-  #     #   data_dir: "./data/mqtt2/"
-  #     #   machine: 1530m2       # machine number for database entry
-  #     #   frequency: 5        # optional, defaults to device freq
-  #     #   scale: 1            # number of parts made per cycle
-        
-  #     #   register:     # the counter register
-  #     #     type: H     # Register type, H = Holding Reg, D = discrete input contact
-  #     #     address: 0  # 
-  #     #     length: 2   # number of registers to read
-
-  #     #   # to get the part type specify one of the following:
-  #     #   # part: "50-9341"   # a hard coded value
-
-  #     #   # a tag with the part number in a string
-  #     #   part_type_register:
-  #     #      type: D  # Register type, H = Holding Reg, D = discrete input contact
-  #     #      address: 0
-  #     #      length: 1
-
-  #     #   # a register with a reference into part_dict and part_dict
-  #     #   # part_type_register:
-  #     #   #    type: D  # Register type, H = Holding Reg, D = discrete input contact
-  #     #   #    address: 0
-  #     #   #    length: 1
-  #     #   # part_dict:
-  #     #   #   0: '50-0455'
-  #     #   #   1: '50-9341'
-
-  #     # - name: 'test-modbus-count-2'  # name for data point
-  #     #   type: ADAM_counter
-  #     #   machine: 1530m3       # machine number for database entry
-  #     #   frequency: 5        # optional, defaults to device freq
-  #     #   scale: 1            # number of parts made per cycle
-
-  #     #   data_dir: "./data/mqtt1/"
-  #     #   register:     # the counter register
-  #     #     type: H     # Register type, H = Holding Reg, D = discrete input contact
-  #     #     address: 0  # 
-  #     #     length: 2   # number of registers to read
-
-  #     #   # to get the part type specify one of the following:
-  #     #   # part: "50-9341"   # a hard coded value
-
-  #     #   # a tag with the part number in a string
-  #     #   # part_type_register:
-  #     #   #    type: D  # Register type, H = Holding Reg, D = discrete input contact
-  #     #   #    address: 0
-  #     #   #    length: 1
-
-  #     #   # a register with a reference into part_dict and part_dict
-  #     #   part_type_register:
-  #     #     type: D  # Register type, H = Holding Reg, D = discrete input contact
-  #     #     address: 0
-  #     #     length: 1
-  #     #   part_dict:
-  #     #     0: '50-0455'
-  #     #     1: '50-9341'
+      - name: 'Maching 575'
+        type: ADAM_counter
+        machine: 575
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 6 
+          length: 2
+        part: "magna"
 
