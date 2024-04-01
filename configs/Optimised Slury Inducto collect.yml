@@ -31,19 +31,19 @@ devices:
 
       - name: 'Good Part Count 3050-769'
         type: counter
-        tag: 'Program:Broach_Cell.CountPart31.ACC'
+        tag: 'Program:Deburr_Cell.CountPart31.ACC'
         machine: 769
         part: "50-3050"
 
       - name: 'Good Part Count 1467-769'
         type: counter
-        tag: 'Program:Broach_Cell.CountPart32.ACC'
+        tag: 'Program:Deburr_Cell.CountPart32.ACC'
         machine: 769
         part: "50-1467"
 
       - name: 'Good Part Count 5710-769'
         type: counter
-        tag: 'Program:Broach_Cell.CountPart33.ACC'
+        tag: 'Program:Deburr_Cell.CountPart33.ACC'
         machine: 769
         part: "50-5710"
 
