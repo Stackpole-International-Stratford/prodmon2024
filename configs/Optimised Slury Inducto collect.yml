@@ -1,0 +1,50 @@
+devices:
+  - name: Optimized_769_770
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: 'Optimized 769 770'
+        type: ping
+        tag: 'Program:Broach_Cell.CountPart23.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count 3050-770'
+        type: counter
+        tag: 'Program:Broach_Cell.CountPart21.ACC'
+        machine: 770
+        part: "50-3050"
+
+      - name: 'Good Part Count 1467-770'
+        type: counter
+        tag: 'Program:Broach_Cell.CountPart22.ACC'
+        machine: 770
+        part: "50-1467"
+
+      - name: 'Good Part Count 5710-770'
+        type: counter
+        tag: 'Program:Broach_Cell.CountPart23.ACC'
+        machine: 770
+        part: "50-5710"
+
+      - name: 'Good Part Count 3050-769'
+        type: counter
+        tag: 'Program:Broach_Cell.CountPart31.ACC'
+        machine: 769
+        part: "50-3050"
+
+      - name: 'Good Part Count 1467-769'
+        type: counter
+        tag: 'Program:Broach_Cell.CountPart32.ACC'
+        machine: 769
+        part: "50-1467"
+
+      - name: 'Good Part Count 5710-769'
+        type: counter
+        tag: 'Program:Broach_Cell.CountPart33.ACC'
+        machine: 769
+        part: "50-5710"
+
+
