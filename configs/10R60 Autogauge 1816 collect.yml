@@ -3,21 +3,20 @@ devices:
     frequency: 1
     driver: pylogix
     ip: '192.168.1.2'
-    slot: 3
-    route: 
-      - !!python/tuple [1,3]
+    processor_slot: 2
     data_dir: "./data/mysql1/"
 
     tags:
       - name: '10R60 Autogauge 1816'
         type: ping
-        tag: 'AOI_0455_Op130_1816.Count'
+        tag: 'Line.PartType'
         frequency: 300
 
       - name: 'Good Part Count 0455'  # name for data point
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'AOI_0455_Op130_1816.Count'
+        tag: 'Program:Production.ProdCount2.ACC'
+        # tag: 'AOI_0455_Op130_1816.Count'
         frequency: 1        # optional, defaults to device freq
         machine: 1816       # machine number for database entry
         part: "50-0455"   # a hard coded value
@@ -25,7 +24,8 @@ devices:
       - name: 'Good Part Count 9341'  # name for data point
         type: counter
         data_dir: "./data/mysql1/"
-        tag: 'AOI_9341_Op130_1816.Count'
+        tag: 'Program:Production.ProdCount1.ACC'
+        # tag: 'AOI_9341_Op130_1816.Count'
         frequency: 1        # optional, defaults to device freq
         machine: 1816       # machine number for database entry
         part: "50-9341"   # a hard coded value
@@ -34,13 +34,10 @@ devices:
     frequency: 1
     driver: pylogix
     ip: '192.168.1.10'
-    slot: 3
-    route: 
-      - !!python/tuple [1,3]
     data_dir: "./data/mysql1/"
 
     tags:
-      - name: '10R60 Autogauge 1816'
+      - name: '10R60 Laser 1811'
         type: ping
         tag: 'PRODUCTION_GOOD_PARTS_TOTAL'
         frequency: 300
@@ -51,27 +48,10 @@ devices:
         tag: 'PRODUCTION_GOOD_PARTS_TOTAL'
         frequency: 1
         machine: 1811
-        part_number_index: 'PART_10R80_SELECTED'
-        part_dict:
-          0: '50-0455'
-          1: '50-9341'
+        part_number_tag: 'RunningPartNumber'
 
-      - name: 'Reject Part Count'
-        type: counter
-        data_dir: "./data/mysql1/"
+      - type: reject
+        reason: 'Laser Failed'
         tag: 'PRODUCTION_FAILED_PARTS_TOTAL'
-        frequency: 1
+        part_number_tag: 'RunningPartNumber'
         machine: 1811
-        part_number_index: 'PART_10R80_SELECTED'
-        part_dict:
-          0: '50-0455'
-          1: '50-9341'
-
-
-      - name: 'Good Part Count 9341'  # name for data point
-        type: counter
-        data_dir: "./data/mysql1/"
-        tag: 'AOI_9341_Op130_1816.Count'
-        frequency: 1        # optional, defaults to device freq
-        machine: 1816       # machine number for database entry
-        part: "50-9341"   # a hard coded value
