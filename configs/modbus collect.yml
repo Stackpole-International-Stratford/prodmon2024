@@ -96,3 +96,52 @@ devices:
           length: 2   # number of registers to read
         part: "compact"
 
+  - name: Press 272
+    frequency: .5
+    driver: modbus
+    ip: '10.4.45.55'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: 'Press 272'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 12
+          length: 2
+        frequency: 300
+      - name: 'Press 272 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 272
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 12 
+          length: 2
+        part: "compact"
+
+  - name: Press 273
+    frequency: .5
+    driver: modbus
+    ip: '10.4.45.56'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: 'Press 273'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 12
+          length: 2
+        frequency: 300
+      - name: 'Press 273 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 273
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 12 
+          length: 2
+        part: "compact"
