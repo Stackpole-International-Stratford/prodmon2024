@@ -3,6 +3,7 @@ import yaml
 import sys
 import os
 import random
+import time
 
 from devices import PylogixDevice, ModbusDevice
 
@@ -49,6 +50,8 @@ def main():
     while True:
         for device in devices:
             device.poll_tags()
+
+        time.sleep(.5)
 
 if __name__ == "__main__":
 

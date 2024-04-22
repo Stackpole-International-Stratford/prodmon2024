@@ -56,5 +56,5 @@ Set `LOG_LOC` to log file directory. If not set, no log files generated
   - Moving to seperate collect and post processes.  This will allow using mqtt or direct db writes based on config files
   - collect.py will now write entries to files in a directory and post.py will poll it and push to the db.
 
-
- 
+#### 24/01/26
+  - Added Dockerfile and docker-compose files.  Can now run on server for modbus applications
