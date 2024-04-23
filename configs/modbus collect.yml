@@ -1,6 +1,6 @@
 devices:
   - name: Press 245
-    frequency: 1
+    frequency: .5
     driver: modbus
     ip: '10.4.42.122'
     port: 502
@@ -15,6 +15,7 @@ devices:
           address: 0
           length: 2
         frequency: 300
+
       - name: 'Press 245 Counter'  # name for data point
         type: ADAM_counter
         machine: 245
@@ -25,7 +26,7 @@ devices:
         part: "compact"
 
   - name: Press 280
-    frequency: 1
+    frequency: .5
     driver: modbus
     ip: '10.4.45.50'
     port: 502
@@ -39,11 +40,10 @@ devices:
           type: H  # Register type, H = Holding Reg, D = discrete input contact
           address: 0
         frequency: 300
+
       - name: 'Press 280 counter'  # name for data point
         type: ADAM_counter
         machine: 280        # machine number for database entry
-        frequency: 1        # optional, defaults to device freq
-        scale: 1            # number of parts made per cycle
         register:     # the counter register
           type: H     # Register type, H = Holding Reg, D = discrete input contact
           address: 0  # 
@@ -51,7 +51,7 @@ devices:
         part: "compact"
 
   - name: Press 261 262 263
-    frequency: 1
+    frequency: .5
     driver: modbus
     ip: '10.4.42.125'
     port: 502
@@ -65,31 +65,28 @@ devices:
           type: H  # Register type, H = Holding Reg, D = discrete input contact
           address: 0
         frequency: 300
+
       - name: 'Press 261'  # name for data point
         type: ADAM_counter
         machine: 261        # machine number for database entry
-        frequency: 1        # optional, defaults to device freq
-        scale: 1            # number of parts made per cycle
         register:     # the counter register
           type: H     # Register type, H = Holding Reg, D = discrete input contact
           address: 0  # 
           length: 2   # number of registers to read
         part: "compact"
+
       - name: 'Press 262'  # name for data point
         type: ADAM_counter
         machine: 262        # machine number for database entry
-        frequency: 1        # optional, defaults to device freq
-        scale: 1            # number of parts made per cycle
         register:     # the counter register
           type: H     # Register type, H = Holding Reg, D = discrete input contact
           address: 2  # 
           length: 2   # number of registers to read
         part: "compact"
+
       - name: 'Press 263'  # name for data point
         type: ADAM_counter
         machine: 263        # machine number for database entry
-        frequency: 1        # optional, defaults to device freq
-        scale: 1            # number of parts made per cycle
         register:     # the counter register
           type: H     # Register type, H = Holding Reg, D = discrete input contact
           address: 4  # 
@@ -109,15 +106,16 @@ devices:
         type: ping
         register:
           type: H  # Register type, H = Holding Reg, D = discrete input contact
-          address: 12
+          address: 14
           length: 2
         frequency: 300
+
       - name: 'Press 272 Counter'  # name for data point
         type: ADAM_counter
         machine: 272
         register:
           type: H     # Register type, H = Holding Reg, D = discrete input contact
-          address: 12 
+          address: 14 
           length: 2
         part: "compact"
 
@@ -134,14 +132,15 @@ devices:
         type: ping
         register:
           type: H  # Register type, H = Holding Reg, D = discrete input contact
-          address: 12
+          address: 14
           length: 2
         frequency: 300
+
       - name: 'Press 273 Counter'  # name for data point
         type: ADAM_counter
         machine: 273
         register:
           type: H     # Register type, H = Holding Reg, D = discrete input contact
-          address: 12 
+          address: 14 
           length: 2
         part: "compact"
