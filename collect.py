@@ -5,6 +5,7 @@ import os
 import random
 
 import asyncio
+from asyncua import Server
 
 from devices import PylogixDevice, ModbusDevice
 

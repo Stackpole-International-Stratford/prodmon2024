@@ -7,3 +7,6 @@ pyModbusTCP
 # delivery methods
 paho-mqtt
 mysql-connector-python
+
+#opcua
+asyncua
