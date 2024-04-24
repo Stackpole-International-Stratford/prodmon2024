@@ -4,6 +4,8 @@ import sys
 import os
 import random
 
+import asyncio
+
 from devices import PylogixDevice, ModbusDevice
 
 from shared import get_logger, read_config_file
@@ -42,7 +44,7 @@ def read_config(key):
 
 
 @logger.catch
-def main():
+async def main():
     devices = read_config('collect')
 
     # while not FLAG_EXIT:
@@ -52,6 +54,7 @@ def main():
 
 if __name__ == "__main__":
 
-    main()
+    asyncio.run(main(), debug=True)
+
 
 
