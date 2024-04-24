@@ -1,6 +1,7 @@
 # base requirements
 loguru
 PyYAML
+
 # machine comms
 pylogix
 pyModbusTCP
@@ -10,3 +11,4 @@ mysql-connector-python
 
 #opcua
 asyncua
+python-slugify      #for building namespace
