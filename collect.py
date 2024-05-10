@@ -7,6 +7,8 @@ import random
 import asyncio
 from asyncua import Server
 
+from slugify import slugify
+
 from devices import PylogixDevice, ModbusDevice
 
 from shared import get_logger, read_config_file
@@ -48,10 +50,36 @@ def read_config(key):
 async def main():
     devices = read_config('collect')
 
+    # setup opc-ua server
+    server = Server()
+    logger.info('Starting OPC-UA server... may take a moment')
+    await server.init()
+    logger.info('OPC-UA server initalized')
+    server.set_endpoint("opc.tcp://0.0.0.0:4840/test/async/")
+
+    # set up our own namespace, not really necessary but should as spec
+    uri = "http://pmdsdata12/test/"
+    idx = await server.register_namespace(uri)
+
+
+    for device in devices:
+        device_name = slugify(device.name)
+        print(device_name)
+        device.opcua_object = await server.nodes.objects.add_object(idx, device_name)
+        for tag in device.tag_list:
+            if not tag.type == 'ping':
+                node_name = slugify(getattr(tag, 'name', 'NoName'))
+                tag.opcua_node = await device.opcua_object.add_variable(idx, node_name, 0)
+
     # while not FLAG_EXIT:
-    while True:
-        for device in devices:
-            device.poll_tags()
+    async with server:
+        while True:
+            await asyncio.sleep(.1)
+            for device in devices:
+                device.poll_tags()
+                for tag in device.tag_list:
+                    if tag.update_opcua:
+                        await tag.opcua_node.write_value(tag.last_value)
 
 if __name__ == "__main__":
 

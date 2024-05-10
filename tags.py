@@ -15,6 +15,7 @@ class Tag(ABC):
         self.next_read = time.time()
         self.last_value = None
         self.data_dir = None
+        self.update_opcua = False
 
     @abstractmethod
     def poll(self):
@@ -23,7 +24,7 @@ class Tag(ABC):
     @abstractmethod
     def format_output(self):
         pass
-
+    
 
 class PingTag(Tag):
     def __init__(self, parent, name, address, frequency):
@@ -106,6 +107,7 @@ class CounterTag(Tag):
                 else:
                     logger.info(f'First pass through: Successfully read {self.parent.name}:{self.address} ({part}:{count})')
                 self.last_value = count
+                self.update_opcua = True
                 return
 
             # no change
@@ -122,6 +124,9 @@ class CounterTag(Tag):
                     logger.info(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
                     file.write(entry)
                     self.last_value = part_count
+            
+            # update opcua server value
+            self.update_opcua = True
 
     def format_output(self, counter, part, timestamp):
         # create entry for new value
