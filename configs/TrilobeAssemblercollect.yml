@@ -1,0 +1,28 @@
+devices:
+  - name: test-pylogix
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.2'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: 'Trilobe Assembler'
+        type: ping
+        tag: ''
+        frequency: 300
+
+      - name: 'Good Part Count'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_0455_Op130_1816.Count'
+        frequency: 1        # optional, defaults to device freq
+        machine: 859       # machine number for database entry
+        part: "part"   # a hard coded value
+
+      - name: 'Good Part Count 9341'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_9341_Op130_1816.Count'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1816       # machine number for database entry
+        part: "50-9341"   # a hard coded value
