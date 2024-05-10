@@ -68,6 +68,7 @@ class PylogixDevice(Device):
             part_dict = tag.get('part_dict', None)
 
             new_tag_object = CounterTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
+            new_tag_object.name = name
 
         elif tag_type == 'ping':
             name = tag.get('name', None)
@@ -82,6 +83,7 @@ class PylogixDevice(Device):
 
             new_tag_object = RejectTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
             new_tag_object.reason = tag.get('reason', None)
+            new_tag_object.name = name
 
         # elif tag_type == 'data':
         #     raise NotImplementedError
@@ -140,6 +142,7 @@ class ModbusDevice(Device):
             part_dict = tag.get('part_dict', None)
             scale = tag.get('scale', 1)
             new_tag_object = CounterTag(parent, register, scale, frequency, machine, part, part_type_register, part_dict)
+            new_tag_object.name = name
 
         # elif tag_type == 'data':
         #     raise NotImplementedError
