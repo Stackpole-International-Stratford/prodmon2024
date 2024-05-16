@@ -4,6 +4,8 @@ devices:
     driver: pylogix
     ip: '192.168.1.180'
     data_dir: "./data/mysql1/"
+    machine: 1528
+    part: "50-9341"
 
     tags:
       - name: '10R80 Offline OP110'
@@ -18,3 +20,8 @@ devices:
         machine: 1528
         part: "50-9341"
 
+      - type: reject
+        reason: 'Air Sensing'
+        tag: 'ProdCountRej.acc'
+        machine: 1528
+        
