@@ -25,6 +25,8 @@ class Tag(ABC):
         pass
 
 
+
+
 class PingTag(Tag):
     def __init__(self, parent, name, address, frequency):
         super().__init__(parent, address, frequency)
@@ -113,15 +115,22 @@ class CounterTag(Tag):
                 self.last_value = count # if counter goes backward, reset last value 
                 return
 
+            self.updated_timestamp = timestamp
+            self.updated_value = count
+            self.update_value(part)
+
+    def update_value(self, part):
             # create entry for new values
             sys.stdout.flush()
-            file_path = f'{self.data_dir}{str(timestamp)}.dat'
+            file_path = f'{self.data_dir}{str(self.updated_timestamp)}.dat'
             with open(file_path, "a+") as file:
-                for part_count in range(self.last_value + 1, count + 1):
-                    entry = self.format_output(part_count, part, int(timestamp))
+                for part_count in range(self.last_value + 1, self.updated_value + 1):
+                    entry = self.format_output(part_count, part, int(self.updated_timestamp))
                     logger.info(f'Create enrty for {self.db_machine_data} ({part}:{part_count})')
                     file.write(entry)
                     self.last_value = part_count
+
+            
 
     def format_output(self, counter, part, timestamp):
         # create entry for new value
