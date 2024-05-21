@@ -4,6 +4,7 @@ devices:
     frequency: 1
     driver: pylogix
     ip: '10.4.43.103'
+    slot: 3
     data_dir: "./data/mysql1/"
 
     tags:
