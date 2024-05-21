@@ -23,7 +23,7 @@ class Device(ABC):
 
     def add_data_point(self, tag):
         try:
-            os.makedirs(self.data_dir)
+            os.makedirs(tag.data_dir)
         except FileExistsError:
             pass
         self.tag_list.append(tag)
@@ -69,6 +69,7 @@ class PylogixDevice(Device):
 
         elif tag_type == 'ping':
             name = tag.get('name', None)
+
             new_tag_object = PingTag(parent, name, tag_name, frequency)
 
         # elif tag_type == 'data':
