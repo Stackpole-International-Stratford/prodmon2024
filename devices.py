@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from ast import Raise
 import time
+import os
 import collections
 from collections.abc import Iterable
 
@@ -21,6 +22,10 @@ class Device(ABC):
         self.tag_list = []
 
     def add_data_point(self, tag):
+        try:
+            os.makedirs(self.data_dir)
+        except FileExistsError:
+            pass
         self.tag_list.append(tag)
 
     def poll_tags(self):
