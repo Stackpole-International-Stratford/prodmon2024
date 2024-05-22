@@ -5,5 +5,5 @@ PyYAML
 pylogix
 pyModbusTCP
 # delivery methods
-paho-mqtt
+paho-mqtt == 1.6.1
 mysql-connector-python
