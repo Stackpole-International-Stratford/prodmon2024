@@ -5,13 +5,13 @@ devices:
     driver: pylogix
     ip: '10.4.43.103'
     slot: 3
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
-      # - name: 'test-pylogix-ping'
-      #   type: ping
-      #   tag: 'Program:MainProgram.ProdCount.ACC'
-      #   frequency: 300
+      - name: 'test-pylogix-ping'
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        frequency: 300
 
       # - name: 'test-py-count-1'
       #   type: counter
@@ -21,7 +21,7 @@ devices:
 
       - name: 'test-py-count-2'
         type: counter
-        data_dir: "./data/mqtt1/"
+        data_dir: "./data/mqtt/"
         tag: 'Program:MainProgram.ProdCount.ACC'
         machine: 1530p2
         part: "50-9341"

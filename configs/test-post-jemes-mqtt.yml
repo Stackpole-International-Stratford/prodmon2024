@@ -5,7 +5,7 @@ targets:
     ip: "10.4.1.232"
     port: 1883
     client_id: f'mqtt-pub1'
-    data_dir: ./data/mqtt1/
+    data_dir: ./data/mqtt/
 
   - name: pmdsdata3-1
     frequency: 5
@@ -16,5 +16,5 @@ targets:
       password: stp383
       host: 10.4.1.224
       port: 3306
-    data_dir: ./data/mysql1/
+    data_dir: ./data/mysql/
 
