@@ -8,16 +8,16 @@ devices:
     data_dir: "./data/mysql1/"
 
     tags:
-      - name: 'test-pylogix-ping'
-        type: ping
-        tag: 'Program:MainProgram.ProdCount.ACC'
-        frequency: 300
+      # - name: 'test-pylogix-ping'
+      #   type: ping
+      #   tag: 'Program:MainProgram.ProdCount.ACC'
+      #   frequency: 300
 
-      - name: 'test-py-count-1'
-        type: counter
-        tag: 'Program:MainProgram.ProdCount.ACC'
-        machine: 1530p1
-        part: "50-9341"
+      # - name: 'test-py-count-1'
+      #   type: counter
+      #   tag: 'Program:MainProgram.ProdCount.ACC'
+      #   machine: 1530p1
+      #   part: "50-9341"
 
       - name: 'test-py-count-2'
         type: counter
