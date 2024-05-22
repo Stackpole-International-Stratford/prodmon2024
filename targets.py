@@ -152,10 +152,10 @@ class Mqtt_Target(Target):
                 'OKData': {
                     'Quantity': raw_data.get('perpetualcount', None),
                 },
-                'NOKData': {
-                    'Quantity': 123,
-                    'Reason': 'Reject Reason'
-                },
+                # 'NOKData': {
+                #     'Quantity': 123,
+                #     'Reason': 'Reject Reason'
+                # },
             }
 
             payload = json.dumps(payload_obj)
