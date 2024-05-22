@@ -47,6 +47,9 @@ class Target(ABC):
     def handle_data(self, data):
         pass
 
+    @abstractmethod
+    def is_connected(self):
+        pass
 
 class Mqtt_Target(Target):
     def __init__(self, name, ip, data_dir, frequency, logger, port=None, client_id=None):
@@ -76,6 +79,9 @@ class Mqtt_Target(Target):
         client.connect(self.ip, self.port)
         client.loop_start()
         return client
+
+    def is_connected(self):
+        return self.connected
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
