@@ -24,3 +24,17 @@ devices:
         tag: 'ProdCountRight.ACC'
         machine: 650R
         part: "50-1467"
+
+      - name: 'Leftside Good Part Count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountLeft.ACC'
+        machine: 650
+        part: "50-1467"
+
+      - name: 'Rightside Good Part Count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountRight.ACC'
+        machine: 650
+        part: "50-1467"
