@@ -105,6 +105,30 @@ class Mqtt_Target(Target):
             self.reconnect_count += 1
         self.logger.error(f'Reconnect failed after {self.reconnect_count} attempts. Exiting...')
 
+
+
+# public class ProductionMQTT
+#     {
+#         public string Site { get; set; }
+#         public string Line { get; set; }
+#         public string AssetNumber { get; set; }
+#         public string ProjectName { get; set; }
+#         public OKData OK { get; set; }
+#         public List<NOKData> NOK { get; set; }
+ 
+#         public class OKData
+#         {
+#             public int Quantity { get; set; }
+#         }
+ 
+#         public class NOKData
+#         {
+#             public string Reason { get; set; }
+#             public int Quantity { get; set; }
+#         }
+#     }
+
+
     def handle_data(self, data):
         if not self.client.is_connected():
             return False
@@ -114,7 +138,29 @@ class Mqtt_Target(Target):
             
             topic = f'test/{entry_type}'
 
-            ret = self.client.publish(topic=topic, payload=entry, qos=2)
+            topic = f'JEC/Stratford/10R80/1533'
+
+            org, site, line, asset = topic.split('/')
+            raw_data = json.loads(entry)
+            
+            payload_obj = {
+                'TimeStamp': raw_data.get('timestamp', None),
+                'Site': site, # from topic
+                'Line': line, # from topic
+                'AssetNumber': asset, # asset from topic
+                'ProjectName': raw_data.get('part', None), # part number
+                'OKData': {
+                    'Quantity': raw_data.get('perpetualcount', None),
+                },
+                'NOKData': {
+                    'Quantity': 123,
+                    'Reason': 'Reject Reason'
+                },
+            }
+
+            payload = json.dumps(payload_obj)
+
+            ret = self.client.publish(topic=topic, payload=payload, qos=2)
             ret.wait_for_publish()
             self.logger.debug(f'{self.name}: {data}')
             return True
