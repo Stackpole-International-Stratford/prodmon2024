@@ -1,0 +1,57 @@
+devices:
+  - name: 10R60 Autogauge
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.2'
+    processor_slot: 2
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R60 Autogauge 1816'
+        type: ping
+        tag: 'Line.PartType'
+        frequency: 300
+
+      - name: 'Good Part Count 0455'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:Production.ProdCount2.ACC'
+        # tag: 'AOI_0455_Op130_1816.Count'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1816       # machine number for database entry
+        part: "50-0455"   # a hard coded value
+
+      - name: 'Good Part Count 9341'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:Production.ProdCount1.ACC'
+        # tag: 'AOI_9341_Op130_1816.Count'
+        frequency: 1        # optional, defaults to device freq
+        machine: 1816       # machine number for database entry
+        part: "50-9341"   # a hard coded value
+
+  - name: 1811 Laser Marker
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.10'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R60 Laser 1811'
+        type: ping
+        tag: 'PRODUCTION_GOOD_PARTS_TOTAL'
+        frequency: 300
+
+      - name: 'Good Part Count'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'PRODUCTION_GOOD_PARTS_TOTAL'
+        frequency: 1
+        machine: 1811
+        part_number_tag: 'RunningPartNumber'
+
+      - type: reject
+        reason: 'Laser Failed'
+        tag: 'PRODUCTION_FAILED_PARTS_TOTAL'
+        part_number_tag: 'RunningPartNumber'
+        machine: 1811

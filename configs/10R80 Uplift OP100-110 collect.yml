@@ -1,0 +1,40 @@
+devices:
+  - name: 10R80_UpLift_OP100-110_1554_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.10'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 Uplift OP110 1554'
+        type: ping
+        tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'HMI_ProductionCounter.UnitsDayPart1.ACC'
+        machine: 1554
+        part: "50-9341"
+
+
+  - name: 10R80_UpLift_OP100-110_Robot_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.61'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 Uplift 751 Robot'
+        type: ping
+        tag: 'ProdCount751.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCount751.ACC'
+        machine: 751
+        part: "50-9341"
+        

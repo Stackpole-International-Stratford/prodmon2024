@@ -1,0 +1,55 @@
+devices:
+  - name: 10R80_UpLift_OP30-40_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 UpLift OP30-40'
+        type: ping
+        tag: 'ProdCount1546.ACC'
+        frequency: 300
+
+      - name: '1546 Good Part Count'
+        type: counter
+        tag: 'ProdCount1546.ACC'
+        machine: 1546
+        part: "50-9341"
+
+      - name: '1547 Good Part Count'
+        type: counter
+        tag: 'ProdCount1547.ACC'
+        machine: 1547
+        part: "50-9341"
+
+  - name: 10R80_UpLift_OP50-60_PLC
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.21'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 UpLift OP50-60'
+        type: ping
+        tag: 'ProdCount1548.ACC'
+        frequency: 300
+
+      - name: '1548 Good Part Count'
+        type: counter
+        tag: 'ProdCount1548.ACC'
+        machine: 1548
+        part: "50-9341"
+
+        type: reject
+        reason: 'Balancer Rejects'
+        tag: 'ProdCount1548Rej.ACC'
+        machine: 1548
+        part: "50-9341"
+
+      - name: '1549 Good Part Count'
+        type: counter
+        tag: 'ProdCount1549.ACC'
+        machine: 1549
+        part: "50-9341"
+        

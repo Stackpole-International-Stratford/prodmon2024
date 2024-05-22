@@ -1,0 +1,13 @@
+[Unit]
+# Human readable name of the unit
+Description=prodmon-collect: PLC monitoring
+
+[Service]
+# Command to execute when the service is started
+WorkingDirectory= /srv/prodmon/
+ExecStart=/srv/prodmon/venv/bin/python3 /srv/prodmon/collect.py
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=default.target

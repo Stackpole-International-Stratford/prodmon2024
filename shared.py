@@ -29,6 +29,7 @@ def get_logger(process):
     log_level = "INFO"
     if os.environ.get("DEBUG", default=None):
         log_level = "DEBUG"
+    
 
     log_level = os.environ.get("LOG_LEVEL", default=log_level)
 
@@ -36,6 +37,7 @@ def get_logger(process):
     
     logger.remove(0)
     logger.add(sys.stderr, level=log_level)
+    logger.info(f'Logging: {log_level}')
 
     # configure file logger
     log_loc = os.environ.get("LOG_LOC", default=None)

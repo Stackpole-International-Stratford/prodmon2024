@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from ast import Raise
+import os
 import time
 import os
 import collections
@@ -9,7 +10,7 @@ from pylogix import PLC
 from pyModbusTCP.client import ModbusClient
 
 from loguru import logger
-from tags import PingTag, CounterTag, DataTag
+from tags import PingTag, CounterTag, DataTag, RejectTag
 
 class Device(ABC):
 
@@ -42,12 +43,13 @@ class Device(ABC):
 
 class PylogixDevice(Device):
 
-    def __init__(self, name, ip, frequency, slot=0, port=44818):
+    def __init__(self, name, ip, frequency, slot=0, port=44818, route=None):
         super().__init__(name, ip, port, frequency)
         self.driver = "pylogix"
         self.processor_slot = slot
         self.comm = PLC(ip_address=self.ip, slot=self.processor_slot, port=self.port)
-
+        if route:
+            self.comm.Route = route
 
     def add_data_point(self, tag):
         tag_type = tag.get('type', None)
@@ -55,13 +57,14 @@ class PylogixDevice(Device):
         frequency = max(self.frequency, frequency)
         tag_name = tag.get('tag', None)
         data_dir = tag.get('data_dir', self.data_dir)
+        name = tag.get('name', None)
 
         parent = self
 
         if tag_type == 'counter':
             scale = tag.get('scale', 1)
             machine = tag.get('machine', None)
-            part = tag.get('part', None)
+            part = tag.get('part', self.part)
             part_number_tag = tag.get('part_number_tag', None)
             part_dict = tag.get('part_dict', None)
 
@@ -72,6 +75,16 @@ class PylogixDevice(Device):
 
             new_tag_object = PingTag(parent, name, tag_name, frequency)
 
+        elif tag_type == 'reject':
+            scale = tag.get('scale', 1)
+            machine = tag.get('machine', None)
+            part = tag.get('part', self.part)
+            part_number_tag = tag.get('part_number_tag', None)
+            part_dict = tag.get('part_dict', None)
+
+            new_tag_object = RejectTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
+            new_tag_object.reason = tag.get('reason', None)
+
         # elif tag_type == 'data':
         #     raise NotImplementedError
             # name = tag.get('name', None)
@@ -80,7 +93,9 @@ class PylogixDevice(Device):
 
         else:
             raise NotImplementedError
+
         new_tag_object.data_dir = data_dir
+       
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
@@ -128,7 +143,6 @@ class ModbusDevice(Device):
             scale = tag.get('scale', 1)
             new_tag_object = CounterTag(parent, register, scale, frequency, machine, part, part_type_register, part_dict)
 
-
         # elif tag_type == 'data':
         #     raise NotImplementedError
             # name = tag.get('name', None)
@@ -171,6 +185,5 @@ class ModbusDevice(Device):
 
             logger.debug(f'Successfully read {self.name}:{tag_register} ({count})')
             values.append(count)
-
 
         return values, error_flag

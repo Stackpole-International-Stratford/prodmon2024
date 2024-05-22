@@ -26,7 +26,7 @@ class Target(ABC):
 
 
     def poll(self):
-        if not self.connected:
+        if not self.is_connected():
             return
 
         timestamp = int(time.time())
@@ -176,7 +176,6 @@ class MySQL_Target(Target):
         self.dbconfig = dbconfig
         self.connection = False
         self.last_failed_connection_attempt = 0
-        self.connected = self.is_connected()
 
     def is_connected(self):
         if self.connection:
@@ -185,8 +184,7 @@ class MySQL_Target(Target):
         # otherwise we are not connected.
         try:
             now = time.time()
-            if self.last_failed_connection_attempt + 60 > now:
-                return
+            self.logger.info(f'Not connected to mysql server... reconnecting {now}')  
             self.connection= mysql.connector.connect(**self.dbconfig)
             self.last_failed_connection_attempt = 0
             return True
@@ -203,28 +201,46 @@ class MySQL_Target(Target):
             cursor = self.connection.cursor()
             entry_type, entry = data.split(':',1)
             entry = json.loads(entry)
+            self.logger.debug(f'Handling data: {data}')
+            sql = ''
+            sql2 = ''
 
             if entry_type == 'PING':
-                sql =   'INSERT INTO prodmon_ping (Name, Timestamp) '
+                sql  =  'INSERT INTO prodmon_ping (Name, Timestamp) '
                 sql += f'VALUES("{entry.get("name")}", {entry.get("timestamp")}) '
                 sql +=  'ON DUPLICATE KEY UPDATE '
                 sql += f'Name="{entry.get("name")}", Timestamp={entry.get("timestamp")};'
 
             elif entry_type == "COUNTER":
-                sql =   'INSERT INTO GFxPRoduction (Machine, Part, PerpetualCount, TimeStamp, Count) '
+                sql  =  'INSERT INTO GFxPRoduction (Machine, Part, PerpetualCount, TimeStamp, Count) '
                 sql += f'VALUES ("{entry.get("asset")}", "{entry.get("part")}", {entry.get("perpetualcount")}, '
                 sql += f'{entry.get("timestamp")}, {entry.get("count")});'
+
+            elif entry_type == "REJECT":
+                sql  =  'INSERT INTO GFxPRoduction '
+                sql +=  '(Machine, Part, PerpetualCount, TimeStamp, Count) '
+                sql += f'VALUES("{entry.get("asset")}", '  
+                sql += f'"{entry.get("part")}", '
+                sql += f'{entry.get("perpetualcount")}, ' 
+                sql += f'{entry.get("timestamp")}, ' 
+                sql += f'{entry.get("count")});'
+                sql2  =  'INSERT INTO prodmon_prod_rejects '
+                sql2 +=  '(GFxPRoduction_id, Reject_Reason) '
+                sql2 +=  'VALUES (LAST_INSERT_ID(), '
+                sql2 += f'"{entry.get("reason")}");'
 
             else: 
                 raise NotImplementedError(f'Entry Type {entry_type} Not Implemented')
 
             try:
                 cursor.execute(sql)
+                if sql2:
+                    cursor.execute(sql2)
                 self.connection.commit()
+                cursor.close()
                 return True
 
             except Exception as e:
-       # By this way we can know about the type of error occurring
-                self.logger.error(f'The error is: {e}')
+                self.logger.error(f'An error occured writing to the database:{e}')
                 return False
 

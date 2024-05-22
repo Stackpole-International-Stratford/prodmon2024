@@ -1,0 +1,45 @@
+devices:
+  - name: 10R Assembler 1516
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql1/"
+    part: '50-9341'
+
+    part_number_tag: 'Cell_1.PartType'
+    part_dict:
+      0: '50-0455'
+      1: '50-9341'
+
+    tags:
+      - name: '10R Assembler 1516'
+        type: ping
+        tag: 'ProdCountCell1.ACC'
+        frequency: 300
+
+      - name: 'Cell 1 Good Part Count'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCountCell1.ACC'
+        machine: 1516C1
+
+      - name: 'Cell 2 Good Part Count'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCountCell2.ACC'
+        machine: 1516C2
+
+      - name: 'Cell 1 Vision Reject Part Count'
+        type: reject
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCountCell1_VisionReject.ACC'
+        machine: 1516C1
+        reason: 'Vision'
+
+      - name: 'Cell 2 Vision Reject Part Count'
+        type: reject
+        data_dir: "./data/mysql1/"
+        tag: 'ProdCountCell2_VisionReject.ACC'
+        machine: 1516C2
+        reason: 'Vision'
+

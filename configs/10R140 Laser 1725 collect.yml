@@ -1,0 +1,29 @@
+devices:
+  - name: 'AB1V Laser 1725'
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.10.1'
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - type: ping
+        name: '10R140 Laser 1725'
+        tag: 'S01.Prod.GoodCount.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'S01.Prod.GoodCount.ACC'
+        machine: 1725
+        part_number_tag: 'S01.CurrPartSelected'
+        part_dict:
+          1: '50-5404'
+          2: '50-0519'
+          3: '50-0447'
+          4: '50-5401'
+          5: '50-5214'
+          6: '50-3214'
+          7: '50-8670'
+          8: '50-0450'
+

@@ -1,0 +1,27 @@
+devices:
+  - name: 'GFx Gauge'
+    frequency: .4
+    driver: pylogix
+    ip: '192.168.1.1'
+    processor_slot: 3
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - type: ping
+        name: 'GFx Auto Gauge'
+        tag: 'Program:Production.ProdCount1.ACC'
+        frequency: 300
+
+      - name: 'Good Part Count 5081'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:Production.ProdCount1.ACC'
+        machine: 1617       # machine number for database entry
+        part: "50-5081"     
+
+      - name: 'Good Part Count 4865'  # name for data point
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'Program:Production.ProdCount2.ACC'
+        machine: 1617       # machine number for database entry
+        part: "50-4865"     
