@@ -1,0 +1,26 @@
+devices:
+  - name: Trilobe Slurry 650
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql/"
+
+    tags:
+      - name: 'Trilobe Slurry 650'
+        type: ping
+        tag: 'ProdCountRight.ACC'
+        frequency: 300
+
+      - name: 'Leftside Good Part Count'
+        type: counter
+        data_dir: "./data/mysql/"
+        tag: 'ProdCountLeft.ACC'
+        machine: 650L
+        part: "50-1467"
+
+      - name: 'Rightside Good Part Count'
+        type: counter
+        data_dir: "./data/mysql/"
+        tag: 'ProdCountRight.ACC'
+        machine: 650R
+        part: "50-1467"
