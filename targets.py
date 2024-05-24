@@ -141,28 +141,32 @@ class Mqtt_Target(Target):
 
         try:
             entry_type, entry = data.split(':',1)
-            
-            topic = f'test/{entry_type}'
 
-            topic = f'JEC/Stratford/10R80/1533'
-
-            org, site, line, asset = topic.split('/')
             raw_data = json.loads(entry)
-            
+
+            topic = f'JEC/Stratford/{raw_data.get("line","NoLine")}/{raw_data.get("asset", "NoAsset")}/{entry_type}'
+
+            org, site, line, asset, entry_type = topic.split('/')
+
             payload_obj = {
                 'TimeStamp': raw_data.get('timestamp', None),
                 'Site': site, # from topic
                 'Line': line, # from topic
                 'AssetNumber': asset, # asset from topic
                 'ProjectName': raw_data.get('part', None), # part number
-                'OKData': {
-                    'Quantity': raw_data.get('perpetualcount', None),
-                },
-                # 'NOKData': {
-                #     'Quantity': 123,
-                #     'Reason': 'Reject Reason'
-                # },
             }
+
+            if entry_type == "COUNTER":
+                payload_obj['OKData'] = {
+                    'Quantity': raw_data.get('perpetualcount', None),
+                }
+
+            if entry_type == "REJECT":
+                payload_obj['NOKData']= {
+                    'Quantity': raw_data.get('perpetualcount', None),
+                    'Reason': raw_data.get('reason', None),
+                }
+
 
             payload = json.dumps(payload_obj)
 

@@ -15,6 +15,7 @@ class Tag(ABC):
         self.next_read = time.time()
         self.last_value = None
         self.data_dir = None
+        self.line = 'default'
 
     @abstractmethod
     def poll(self):
@@ -126,6 +127,7 @@ class CounterTag(Tag):
     def format_output(self, counter, part, timestamp):
         # create entry for new value
         data = {
+            "line": self.line,
             "asset": self.db_machine_data,
             "part": part,
             "timestamp": timestamp,
@@ -145,6 +147,7 @@ class RejectTag(CounterTag):
     def format_output(self, counter, part, timestamp):
         # create entry for new value
         data = {
+            "line": self.line,
             "asset": self.db_machine_data,
             "part": part,
             "timestamp": timestamp,

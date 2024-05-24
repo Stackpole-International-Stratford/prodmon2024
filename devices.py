@@ -84,7 +84,7 @@ class PylogixDevice(Device):
 
             new_tag_object = RejectTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
             new_tag_object.reason = tag.get('reason', None)
-
+    
         # elif tag_type == 'data':
         #     raise NotImplementedError
             # name = tag.get('name', None)
@@ -95,7 +95,8 @@ class PylogixDevice(Device):
             raise NotImplementedError
 
         new_tag_object.data_dir = data_dir
-       
+        new_tag_object.line = tag.get('line', None)
+   
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
@@ -152,6 +153,7 @@ class ModbusDevice(Device):
             raise NotImplementedError(f'Not Implemented: {self.driver}:{tag_type}')
 
         new_tag_object.data_dir = data_dir
+        new_tag_object.line = tag.get('line', None)
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
