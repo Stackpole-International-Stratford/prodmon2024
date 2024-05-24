@@ -2,7 +2,7 @@ targets:
   - name: emqx-mqtt
     driver: mqtt
     frequency: 5
-    ip: "10.4.1.232"
+    ip: "10.4.10.176"
     port: 1883
     client_id: f'mqtt-pub1'
     data_dir: ./data/mqtt/
@@ -16,5 +16,5 @@ targets:
       password: stp383
       host: 10.4.1.224
       port: 3306
-    data_dir: ./data/mysql/
+    data_dir: ./data/mysql1/
 
