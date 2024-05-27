@@ -8,7 +8,7 @@ devices:
     tags:
       - name: 'Trilobe Slurry 650'
         type: ping
-        tag: 'ProdCountRight.ACC'
+        tag: 'ProdCount.ACC'
         frequency: 300
 
       - name: 'Leftside Good Part Count'
@@ -25,16 +25,9 @@ devices:
         machine: 650R
         part: "50-1467"
 
-      - name: 'Leftside Good Part Count'
+      - name: 'Good Part Count'
         type: counter
         data_dir: "./data/mqtt/"
-        tag: 'ProdCountLeft.ACC'
-        machine: 650
-        part: "50-1467"
-
-      - name: 'Rightside Good Part Count'
-        type: counter
-        data_dir: "./data/mqtt/"
-        tag: 'ProdCountRight.ACC'
+        tag: 'ProdCount.ACC'
         machine: 650
         part: "50-1467"
