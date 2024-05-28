@@ -6,7 +6,7 @@ devices:
     data_dir: "./data/mysql/"
     organization: 'JEC'
     site: 'Stratford'
-    line: '10R80'
+    line: 'Trilobe'
     machine: '742'
 
 
