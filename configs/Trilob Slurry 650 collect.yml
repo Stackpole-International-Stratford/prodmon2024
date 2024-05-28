@@ -1,26 +1,48 @@
 devices:
-  - name: Trilobe Slurry 650
+  - name: 'Trilobe Slurry 650'
     frequency: 1
     driver: pylogix
     ip: '192.168.1.1'
     data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: '742'
+
 
     tags:
+#MYSQL
       - name: 'Trilobe Slurry 650'
         type: ping
-        tag: 'ProdCountRight.ACC'
+        tag: 'ProdCount.ACC'
         frequency: 300
 
-      - name: 'Leftside Good Part Count'
+      - name: 'Good Part Count'
         type: counter
         data_dir: "./data/mysql/"
-        tag: 'ProdCountLeft.ACC'
-        machine: 650L
+        tag: 'ProdCount.ACC'
+        machine: 742
         part: "50-1467"
 
-      - name: 'Rightside Good Part Count'
+
+# MQTT
+      - name: 'Trilobe Slurry 650'
+        type: ping
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCount.ACC'
+        frequency: 5
+
+      - name: 'Good Part Count'
         type: counter
-        data_dir: "./data/mysql/"
-        tag: 'ProdCountRight.ACC'
-        machine: 650R
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCount.ACC'
+        machine: 742
         part: "50-1467"
+
+      - name: 'Reject Part Count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountRej.ACC'
+        machine: 742
+        part: "50-1467"
+        reason: "Vision Reject"
