@@ -174,8 +174,7 @@ class Mqtt_Target(Target):
             }
 
             if entry_type == "HEARTBEAT":
-                name = raw_data.get("name", "NoName")
-                payload_obj['HeartBeat'] = name
+                payload_obj['HeartBeat'] = f'{line}-{asset}'
 
             if entry_type == "COUNTER":
                 payload_obj['PartNumber'] =  part
