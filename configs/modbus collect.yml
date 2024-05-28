@@ -144,3 +144,56 @@ devices:
           address: 14 
           length: 2
         part: "compact"
+
+  - name: Optimized Machining
+    frequency: 1
+    driver: modbus
+    ip: '10.4.42.123'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: 'Optimized Machining'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+          length: 2
+        frequency: 300
+
+      - name: '624 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 624
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0 
+          length: 2
+        part: "Magna"
+
+      - name: '624 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 619
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 2 
+          length: 2
+        part: "Magna"
+
+      - name: '624 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 618
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 4 
+          length: 2
+        part: "Magna"
+
+      - name: '624 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 575
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 6 
+          length: 2
+        part: "Magna"
