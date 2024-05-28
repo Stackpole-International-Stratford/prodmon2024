@@ -61,8 +61,8 @@ class Mqtt_Target(Target):
         super().__init__(name, ip, port, data_dir, frequency, logger)
 
         if not client_id:
-            client_id = 'mqtt-client-'
-            client_id.join(random.choices(string.ascii_uppercase + string.digits,k=10))
+            ran= ''.join(random.choices(string.ascii_uppercase + string.digits,k=10))
+            client_id = f'mqtt-client-{ran}'
         self.client_id = client_id
 
         self.reconnect_count = 0
