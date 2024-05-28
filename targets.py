@@ -153,7 +153,7 @@ class Mqtt_Target(Target):
                 'Site': site, # from topic
                 'Line': line, # from topic
                 'AssetNumber': asset, # asset from topic
-                'ProjectName': raw_data.get('part', None), # part number
+                'PartNumber': raw_data.get('part', None), # part number
             }
 
             if entry_type == "COUNTER":
