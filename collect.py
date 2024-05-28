@@ -27,6 +27,7 @@ def read_config(key):
             port = device.get('port', 44818)
             device_entry = PylogixDevice(name, ip, frequency, slot=slot, port=port, route=route)
 
+
         elif driver == 'modbus':
             port = device.get('port', 502)
             unit_id = device.get('unit_id', 1)
@@ -34,7 +35,11 @@ def read_config(key):
 
         device_entry.part = device.get('part', None)
         device_entry.data_dir = data_dir
-
+        device_entry.organization = device.get('organization', None)
+        device_entry.site = device.get('site', None)
+        device_entry.line = device.get('line', None)
+        device_entry.machine = device.get('machine', None)
+        
         for tag in device['tags']:
             device_entry.add_data_point(tag)
 

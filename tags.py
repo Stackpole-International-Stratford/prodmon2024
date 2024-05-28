@@ -50,8 +50,13 @@ class PingTag(Tag):
                 file.write(entry)
 
     def format_output(self, timestamp):
-        data = {"timestamp":timestamp,
-                "name": self.name}
+        data = {
+            'organization': self.organization,
+            'site': self.site,
+            'line': self.line,
+            'asset': self.machine,
+            'timestamp' :timestamp,
+            }
         return f'PING:{json.dumps(data)}\n'
 
 
@@ -127,12 +132,14 @@ class CounterTag(Tag):
     def format_output(self, counter, part, timestamp):
         # create entry for new value
         data = {
+            'organization': self.organization,
+            'site': self.site,
             "line": self.line,
-            "asset": self.db_machine_data,
-            "part": part,
-            "timestamp": timestamp,
-            "perpetualcount": counter,
-            "count": 1,
+            'asset': self.db_machine_data,
+            'part': part,
+            'timestamp': timestamp,
+            'perpetualcount': counter,
+            'count': 1,
         }
         return f'COUNTER:{json.dumps(data)}\n'
 
@@ -147,6 +154,8 @@ class RejectTag(CounterTag):
     def format_output(self, counter, part, timestamp):
         # create entry for new value
         data = {
+            'organization': self.organization,
+            'site': self.site,
             "line": self.line,
             "asset": self.db_machine_data,
             "part": part,

@@ -20,6 +20,11 @@ class Device(ABC):
         self.port = port
         self.frequency = frequency
         self.data_dir = None
+        self.organization = None
+        self.site = None
+        self.line = None
+        self.machine = None
+
         self.tag_list = []
 
     def add_data_point(self, tag):
@@ -53,17 +58,23 @@ class PylogixDevice(Device):
 
     def add_data_point(self, tag):
         tag_type = tag.get('type', None)
+
         frequency = tag.get('frequency', 0)
         frequency = max(self.frequency, frequency)
+
         tag_name = tag.get('tag', None)
         data_dir = tag.get('data_dir', self.data_dir)
-        name = tag.get('name', None)
 
+        name = tag.get('name', None)
+        organization = tag.get('organization', self.organization)
+        site = tag.get('site', self.site)
+        line = tag.get('line', self.line)
+        machine = tag.get('machine', self.machine)
+        
         parent = self
 
         if tag_type == 'counter':
             scale = tag.get('scale', 1)
-            machine = tag.get('machine', None)
             part = tag.get('part', self.part)
             part_number_tag = tag.get('part_number_tag', None)
             part_dict = tag.get('part_dict', None)
@@ -71,13 +82,11 @@ class PylogixDevice(Device):
             new_tag_object = CounterTag(parent, tag_name, scale, frequency, machine, part, part_number_tag, part_dict)
 
         elif tag_type == 'ping':
-            name = tag.get('name', None)
-
+            name = name
             new_tag_object = PingTag(parent, name, tag_name, frequency)
 
         elif tag_type == 'reject':
             scale = tag.get('scale', 1)
-            machine = tag.get('machine', None)
             part = tag.get('part', self.part)
             part_number_tag = tag.get('part_number_tag', None)
             part_dict = tag.get('part_dict', None)
@@ -95,8 +104,11 @@ class PylogixDevice(Device):
             raise NotImplementedError
 
         new_tag_object.data_dir = data_dir
-        new_tag_object.line = tag.get('line', None)
-   
+        new_tag_object.organization = organization
+        new_tag_object.site = site
+        new_tag_object.line = line
+        new_tag_object.machine = machine
+
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
@@ -125,11 +137,20 @@ class ModbusDevice(Device):
 
     def add_data_point(self, tag):
         tag_type = tag.get('type', None)
-        name = tag.get('name', None)
-        register = tag.get('register', None)
+
         frequency = tag.get('frequency', 0)
         frequency = max(self.frequency, frequency)
+
+        #modbus specific
+        register = tag.get('register', None)
         data_dir = tag.get('data_dir', self.data_dir)
+
+        name = tag.get('name', None)
+        organization = tag.get('organization', self.organization)
+        site = tag.get('site', self.site)
+        line = tag.get('line', self.line)
+        machine = tag.get('machine', self.machine)
+
         parent = self
 
         if tag_type == 'ping':
@@ -153,7 +174,11 @@ class ModbusDevice(Device):
             raise NotImplementedError(f'Not Implemented: {self.driver}:{tag_type}')
 
         new_tag_object.data_dir = data_dir
-        new_tag_object.line = tag.get('line', None)
+        new_tag_object.organization = tag.get('organization', self.organization)
+        new_tag_object.site = tag.get('site', self.site)
+        new_tag_object.line = tag.get('line', self.line)
+        new_tag_object.machine = tag.get('machine', self.machine)
+
         super().add_data_point(new_tag_object)
 
     def read(self, tags):

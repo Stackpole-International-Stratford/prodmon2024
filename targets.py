@@ -3,6 +3,9 @@ import glob
 import os
 import time
 import json
+import string
+import random
+
 
 from paho.mqtt import client as mqtt_client
 import mysql.connector
@@ -144,29 +147,47 @@ class Mqtt_Target(Target):
 
             raw_data = json.loads(entry)
 
-            topic = f'JEC/Stratford/{raw_data.get("line","NoLine")}/{raw_data.get("asset", "NoAsset")}/{entry_type}'
+            timestamp = raw_data.get('timestamp', 'NoTimeStamp')
+            organization = raw_data.get('organization', 'NoOrg')
+            site = raw_data.get('site', 'NoSite')
+            line = raw_data.get('line', 'NoLine')
+            asset = raw_data.get('asset', 'NoAsset')
+            part = raw_data.get('part', 'N/A'),
+            if isinstance(part, list):
+                part = part[0]
+            if isinstance(part, tuple):
+                part = part[0]
+    
+            # for JEMES
+            if entry_type == "PING": 
+                entry_type = 'HEARTBEAT'
 
-            org, site, line, asset, entry_type = topic.split('/')
+            topic = f'{organization}/{site}/{line}/{asset}/{entry_type}'
 
             payload_obj = {
-                'TimeStamp': raw_data.get('timestamp', None),
-                'Site': site, # from topic
-                'Line': line, # from topic
-                'AssetNumber': asset, # asset from topic
-                'PartNumber': raw_data.get('part', None), # part number
+                'Organization': organization,
+                'Site': site, 
+                'Line': line, 
+                'TimeStamp': timestamp,
+                'AssetNumber': asset, 
             }
 
+            if entry_type == "HEARTBEAT":
+                name = raw_data.get("name", "NoName")
+                payload_obj['HeartBeat'] = name
+
             if entry_type == "COUNTER":
+                payload_obj['PartNumber'] =  part
                 payload_obj['OKData'] = {
                     'Quantity': raw_data.get('perpetualcount', None),
                 }
 
             if entry_type == "REJECT":
+                payload_obj['PartNumber'] =  part
                 payload_obj['NOKData']= {
                     'Quantity': raw_data.get('perpetualcount', None),
                     'Reason': raw_data.get('reason', None),
                 }
-
 
             payload = json.dumps(payload_obj)
 

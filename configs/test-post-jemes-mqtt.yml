@@ -16,5 +16,5 @@ targets:
       password: stp383
       host: 10.4.1.224
       port: 3306
-    data_dir: ./data/mysql1/
+    data_dir: ./data/mysql/
 

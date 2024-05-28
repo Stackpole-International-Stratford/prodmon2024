@@ -26,10 +26,10 @@ def read_config(key):
             ip = target.get('ip', None)
             port = target.get('port', None)
     
-            client_id = target.get('client_id', None)
+            # client_id = target.get('client_id', None)
 
             # def __init__(self, name, ip, data_dir, frequency, port=None, client_id=None):
-            device_entry = Mqtt_Target(name, ip, data_dir, frequency, logger, port=port, client_id=client_id)
+            device_entry = Mqtt_Target(name, ip, data_dir, frequency, logger, port=port) #, client_id=client_id)
 
         elif driver == 'mysql':
             dbconfig = target.get('dbconfig', None)
