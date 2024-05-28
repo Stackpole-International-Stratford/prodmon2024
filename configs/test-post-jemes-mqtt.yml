@@ -4,7 +4,7 @@ targets:
     frequency: 5
     ip: "10.4.10.176"
     port: 1883
-    client_id: f'mqtt-pub1'
+    client_id: f'mqtt-10-4-10-176'
     data_dir: ./data/mqtt/
 
   - name: pmdsdata3-1
