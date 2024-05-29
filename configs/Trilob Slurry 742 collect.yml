@@ -26,7 +26,7 @@ devices:
 
 
 # MQTT
-      - name: 'Trilobe Slurry 6742'
+      - name: 'Trilobe Slurry 742'
         type: ping
         data_dir: "./data/mqtt/"
         tag: 'ProdCount.ACC'
