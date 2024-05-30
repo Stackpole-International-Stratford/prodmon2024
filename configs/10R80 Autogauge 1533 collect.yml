@@ -140,6 +140,16 @@ devices:
         tag: 'ProdCountReject.ACC'
         part_number_tag: 'RunningPartNumber'
 
+      - name: 'Laser 1505'
+        type: ping
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountGood.ACC'
+        frequency: 5
+
+      - name: 'Good part count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountGood.ACC'
 
   - name: 1534 Laser
     frequency: 1
@@ -167,4 +177,14 @@ devices:
         tag: 'ProdCountReject.ACC'
         part_number_tag: 'RunningPartNumber'
 
+      - name: 'Laser 1534'
+        type: ping
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountGood.ACC'
+        frequency: 5
+
+      - name: 'Good part count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'ProdCountGood.ACC'
 
