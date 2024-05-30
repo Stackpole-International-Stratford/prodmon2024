@@ -177,8 +177,13 @@ devices:
     tags:
       - name: '1505 Laser'
         type: ping
-        tag: 'ProdCountGood.ACC'
         frequency: 300
+
+      - name: '10R80 Laser 1505'
+        type: ping
+        data_dir: "./data/Tmqtt/"
+        tag: 'ProdCountGood.ACC'
+        frequency: 5
 
       - name: 'Good Part Count'
         type: counter
@@ -205,6 +210,12 @@ devices:
         type: ping
         tag: 'ProdCountGood.ACC'
         frequency: 300
+
+      # - name: '10R80 Autogauge 1533'
+      #   type: ping
+      #   data_dir: "./data/mqtt/"
+      #   tag: 'Program:Production.ProductionData.DailyCounts.DailyGoodTotal'
+      #   frequency: 5
 
       - name: 'Good Part Count'
         type: counter
