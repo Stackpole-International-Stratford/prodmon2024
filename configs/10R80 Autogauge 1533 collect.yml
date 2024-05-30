@@ -79,70 +79,70 @@ devices:
         tag: 'Spline2Fail.ACC'
         reason: '50-2 Spline Gauge Fail Cell 2'
 
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   reason: '10-1 Orientation Fail'
-      #   tag: 'Program:Stn010.Part_Count[1].Bad_Part_Count'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   reason: '10-3 Window Height Fail'
-      #   tag: 'Program:Stn010.Part_Count[3].Bad_Part_Count'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   reason: '10-3 Window Height Fail'
-      #   tag: 'Program:Stn010.Part_Count[3].Bad_Part_Count'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   reason: '10-4 Spline Hole Fail'
-      #   tag: 'Program:Stn010.Part_Count[4].Bad_Part_Count'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   reason: '10-5 Cross Hole Fail'
-      #   tag: 'Program:Stn010.Part_Count[5].Bad_Part_Count'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn020.Part_Count[1].Bad_Part_Count'
-      #   reason: '20-1 Media Inspection Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn020.Part_Count[3].Bad_Part_Count'
-      #   reason: '20-2 Resonance Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn020.Part_Count[2].Bad_Part_Count'
-      #   reason: '20-3 2D Presence Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn030.Part_Count[1].Bad_Part_Count'
-      #   reason: '30-1 Probe 1 Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn030.Part_Count[2].Bad_Part_Count'
-      #   reason: '30-2 Probe 2 Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn040.Part_Count[1].Bad_Part_Count'
-      #   reason: '40-1 Bearing ID Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn040.Part_Count[2].Bad_Part_Count'
-      #   reason: '40-2 Spline OD Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn040.Part_Count[3].Bad_Part_Count'
-      #   reason: '40-3 Pinion Fail'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Program:Stn040.Part_Count[9].Bad_Part_Count'
-      #   reason: '40-4 Fail to Lower'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Spline1Fail.ACC'
-      #   reason: '50-1 Spline Gauge Fail Cell 1'
-      # - type: reject
-      #   data_dir: "./data/mqtt1/"
-      #   tag: 'Spline2Fail.ACC'
-      #   reason: '50-2 Spline Gauge Fail Cell 2'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        reason: '10-1 Orientation Fail'
+        tag: 'Program:Stn010.Part_Count[1].Bad_Part_Count'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        reason: '10-3 Window Height Fail'
+        tag: 'Program:Stn010.Part_Count[3].Bad_Part_Count'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        reason: '10-3 Window Height Fail'
+        tag: 'Program:Stn010.Part_Count[3].Bad_Part_Count'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        reason: '10-4 Spline Hole Fail'
+        tag: 'Program:Stn010.Part_Count[4].Bad_Part_Count'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        reason: '10-5 Cross Hole Fail'
+        tag: 'Program:Stn010.Part_Count[5].Bad_Part_Count'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn020.Part_Count[1].Bad_Part_Count'
+        reason: '20-1 Media Inspection Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn020.Part_Count[3].Bad_Part_Count'
+        reason: '20-2 Resonance Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn020.Part_Count[2].Bad_Part_Count'
+        reason: '20-3 2D Presence Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn030.Part_Count[1].Bad_Part_Count'
+        reason: '30-1 Probe 1 Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn030.Part_Count[2].Bad_Part_Count'
+        reason: '30-2 Probe 2 Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn040.Part_Count[1].Bad_Part_Count'
+        reason: '40-1 Bearing ID Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn040.Part_Count[2].Bad_Part_Count'
+        reason: '40-2 Spline OD Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn040.Part_Count[3].Bad_Part_Count'
+        reason: '40-3 Pinion Fail'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Program:Stn040.Part_Count[9].Bad_Part_Count'
+        reason: '40-4 Fail to Lower'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Spline1Fail.ACC'
+        reason: '50-1 Spline Gauge Fail Cell 1'
+      - type: reject
+        data_dir: "./data/mqtt/"
+        tag: 'Spline2Fail.ACC'
+        reason: '50-2 Spline Gauge Fail Cell 2'
 
   - name: '1505 Laser'
     frequency: 1
@@ -180,7 +180,7 @@ devices:
         type: counter
         data_dir: "./data/mqtt/"
         tag: 'ProdCountGood.ACC'
-        part_number_tag: 'RunningPartNumber'
+        part: '50-9341'
 
   - name: 1534 Laser
     frequency: 1
@@ -218,5 +218,5 @@ devices:
         type: counter
         data_dir: "./data/mqtt/"
         tag: 'ProdCountGood.ACC'
-        part_number_tag: 'RunningPartNumber'
+        part: '50-9341'
 
