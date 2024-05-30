@@ -184,10 +184,10 @@ class Mqtt_Target(Target):
 
             if entry_type == "REJECT":
                 payload_obj['PartNumber'] =  part
-                payload_obj['NOKData']= {
+                payload_obj['NOKData']= [{
                     'Quantity': raw_data.get('perpetualcount', None),
                     'Reason': raw_data.get('reason', None),
-                }
+                }]
 
             payload = json.dumps(payload_obj)
 
