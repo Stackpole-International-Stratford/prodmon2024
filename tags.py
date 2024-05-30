@@ -146,7 +146,7 @@ class CounterTag(Tag):
 
 class RejectTag(CounterTag):
     def __init__(self, parent, address, scale, frequency, machine, part=None, part_number_tag=None, part_dict=None):
-        machine = f'{machine}REJ'
+        machine = f'{machine}'
         super().__init__(parent, address, scale, frequency, machine, part, part_number_tag, part_dict)
         self.type = 'reject'
         self.reason = None

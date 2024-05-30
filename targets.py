@@ -250,7 +250,7 @@ class MySQL_Target(Target):
             elif entry_type == "REJECT":
                 sql  =  'INSERT INTO GFxPRoduction '
                 sql +=  '(Machine, Part, PerpetualCount, TimeStamp, Count) '
-                sql += f'VALUES("{entry.get("asset")}", '  
+                sql += f'VALUES("{entry.get("asset")}REJ", '  
                 sql += f'"{entry.get("part")}", '
                 sql += f'{entry.get("perpetualcount")}, ' 
                 sql += f'{entry.get("timestamp")}, ' 
