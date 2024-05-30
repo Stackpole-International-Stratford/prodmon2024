@@ -10,6 +10,7 @@ devices:
     site: 'Stratford'
     line: '10R80'
     machine: '1505'
+    part: "50-9341"
 
     tags:
       - name: 'Laser 1505'
@@ -27,9 +28,6 @@ devices:
         type: counter
         data_dir: "./data/mqtt/"
         tag: 'ProdCountGood.ACC'
-        line: "10R80"
-        part: "50-9341"
-        machine: 1505
 
 
   - name: laser_1534
@@ -37,6 +35,11 @@ devices:
     driver: pylogix
     ip: '10.4.43.201'
     data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: 1534
+    part: "50-9341"
 
     tags:
       - name: 'Laser 1534'
@@ -49,19 +52,9 @@ devices:
         data_dir: "./data/mqtt/"
         tag: 'ProdCountGood.ACC'
         frequency: 5
-        organization: 'JEC'
-        site: 'Stratford'
-        line: '10R80'
-        machine: 1534
-
 
       - name: 'Good part count'
         type: counter
         data_dir: "./data/mqtt/"
         tag: 'ProdCountGood.ACC'
-        organization: 'JEC'
-        site: 'Stratford'
-        line: '10R80'
-        part: "50-9341"
-        machine: 1534
 
