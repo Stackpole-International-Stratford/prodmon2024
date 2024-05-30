@@ -85,8 +85,8 @@ devices:
         tag: 'Program:Stn010.Part_Count[1].Bad_Part_Count'
       - type: reject
         data_dir: "./data/mqtt/"
-        reason: '10-3 Window Height Fail'
-        tag: 'Program:Stn010.Part_Count[3].Bad_Part_Count'
+        reason: '10-2 Balance and Pellet Hole Fail'
+        tag: 'Program:Stn010.Part_Count[2].Bad_Part_Count'
       - type: reject
         data_dir: "./data/mqtt/"
         reason: '10-3 Window Height Fail'
