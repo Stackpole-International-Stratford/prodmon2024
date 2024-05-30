@@ -7,6 +7,10 @@ devices:
     route: 
       - !!python/tuple [1,3]
     data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: '1505'
     part: '50-9341'
 
     # part_number_tag: 'Program:MainProgram.ProdCountpartDINT'
@@ -114,6 +118,10 @@ devices:
     driver: pylogix
     ip: '192.168.1.67'
     data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: '1505'
 
     tags:
       - name: '1505 Laser'
@@ -125,13 +133,11 @@ devices:
         type: counter
         tag: 'ProdCountGood.ACC'
         frequency: .5
-        machine: 1505
         part_number_tag: 'RunningPartNumber'
 
       - type: reject
         reason: 'Laser Failed'
         tag: 'ProdCountReject.ACC'
-        machine: 1505
         part_number_tag: 'RunningPartNumber'
 
 
@@ -140,6 +146,10 @@ devices:
     driver: pylogix
     ip: '192.168.1.61'
     data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: '1534'
 
     tags:
       - name: '1534 Laser'
@@ -150,14 +160,11 @@ devices:
       - name: 'Good Part Count'
         type: counter
         tag: 'ProdCountGood.ACC'
-        frequency: .5
-        machine: 1534
         part_number_tag: 'RunningPartNumber'
 
       - type: reject
         reason: 'Laser Failed'
         tag: 'ProdCountReject.ACC'
-        machine: 1534
         part_number_tag: 'RunningPartNumber'
 
 
