@@ -3,7 +3,10 @@ devices:
     frequency: 1
     driver: pylogix
     ip: '192.168.1.180'
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
     machine: 1528
     part: "50-9341"
 
@@ -15,13 +18,27 @@ devices:
 
       - name: '1528 Good Part Count'
         type: counter
-        data_dir: "./data/mysql1/"
         tag: 'Program:MainProgram.ProdCount.acc'
-        machine: 1528
-        part: "50-9341"
 
       - type: reject
         reason: 'Air Sensing'
         tag: 'ProdCountRej.acc'
-        machine: 1528
         
+      # MATT Configs
+      - name: '10R80 Offline OP110'
+        type: ping
+        data_dir: "./data/mqtt/"
+        tag: 'Program:MainProgram.ProdCount.acc'
+        frequency: 5
+
+      - name: '1528 Good Part Count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'Program:MainProgram.ProdCount.acc'
+
+      - name: '1528 Airsensing Reject'
+        type: reject
+        data_dir: "./data/mqtt/"
+        reason: 'Air Sensing'
+        tag: 'ProdCountRej.acc'
+ 
