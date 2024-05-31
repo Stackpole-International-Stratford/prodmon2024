@@ -20,6 +20,7 @@ devices:
         type: counter
         tag: 'ProdCount.ACC'
   
+      - name: '1513 Reject Count'
         type: reject
         reason: 'All Rejects'
         tag: 'ProdCountReject.ACC'
@@ -36,6 +37,7 @@ devices:
         tag: 'ProdCount.ACC'
         data_dir: "./data/mqtt/"
   
+      - name: '1513 Reject Count'
         type: reject
         reason: 'All Rejects'
         tag: 'ProdCountReject.ACC'
