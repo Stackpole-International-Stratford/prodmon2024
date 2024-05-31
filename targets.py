@@ -42,6 +42,7 @@ class Target(ABC):
                 with open(filepath, "r", encoding="utf-8") as file:
                     result = True
                     for line in file:
+                        self.logger.info(line)
                         result = result and self.handle_data(line) # all results must be true to delete file
                 if result:
                     os.remove(filepath)
