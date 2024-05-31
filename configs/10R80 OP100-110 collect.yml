@@ -4,9 +4,12 @@ devices:
     driver: pylogix
     ip: '192.168.1.50'
     data_dir: "./data/mysql/"
-    part: "50-9341"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
     machine: 1511
-
+    part: "50-9341"
+  
     tags:
       - name: '10R80 Main OP110' # 1511
         type: ping
@@ -15,6 +18,17 @@ devices:
 
       - name: '1511 Good Part Count'
         type: counter
+        tag: 'Program:MainProgram.ProdCount.ACC'
+
+      - name: '10R80 Main OP110' # 1511
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        data_dir: "./data/mqtt/"
+        frequency: 5
+
+      - name: '1511 Good Part Count'
+        type: counter
+        data_dir: "./data/mqtt/"
         tag: 'Program:MainProgram.ProdCount.ACC'
 
   - name: 10R80_Off_OP100_PLC
@@ -35,4 +49,16 @@ devices:
         type: counter
         tag: 'Program:MainProgram.ProdCount.ACC'
         scale: 2
+
+      - name: '10R80 Off OP100' # 1530
+        type: ping
+        data_dir: "./data/mqtt/"
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        frequency: 5
+
+      - name: '1511 Good Part Count'
+        type: counter
+        data_dir: "./data/mqtt/"
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        # scale: 2 Scale set in jemes configuration
 
