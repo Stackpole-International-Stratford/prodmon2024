@@ -3,7 +3,11 @@ devices:
     frequency: 1
     driver: pylogix
     ip: 192.168.1.40
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: 1503
     part: "50-9341"
 
     tags:
@@ -14,16 +18,30 @@ devices:
 
       - name: '1503 Good Part Count'
         type: counter
-        data_dir: "./data/mysql1/"
         tag: 'Program:MainProgram.ProdCount.acc'
-        frequency: 1
-        machine: 1503
         scale: 2
 
       - type: reject
         reason: 'All rejects'
         tag: 'Program:MainProgram.ProdCountReject.acc'
-        machine: 1503
         scale: 2
 
+      # MQTT configuration
+      - name: '10R80 Main OP100 1503'
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.acc'
+        data_dir: "./data/mqtt/"
+        frequency: 5
+
+      - name: '1503 Good Part Count'
+        type: counter
+        tag: 'Program:MainProgram.ProdCount.acc'
+        data_dir: "./data/mqtt/"
+        scale: 2
+
+      - type: reject
+        reason: 'All rejects'
+        tag: 'Program:MainProgram.ProdCountReject.acc'
+        data_dir: "./data/mqtt/"
+        scale: 2
 
