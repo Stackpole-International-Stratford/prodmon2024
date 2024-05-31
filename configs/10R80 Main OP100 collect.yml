@@ -7,7 +7,7 @@ devices:
     organization: 'JEC'
     site: 'Stratford'
     line: '10R80'
-    machine: 1503
+    machine: '1503'
     part: "50-9341"
 
     tags:
@@ -34,7 +34,7 @@ devices:
         frequency: 5
 
       - name: '1503 Good Part Count'
-        type: counter1503
+        type: counter
         tag: 'Program:MainProgram.ProdCount.acc'
         data_dir: "./data/mqtt/"
         # Scale set in JEMES machine config
