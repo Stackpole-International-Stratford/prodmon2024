@@ -7,7 +7,7 @@ devices:
     organization: 'JEC'
     site: 'Stratford'
     line: '10R80'
-    machine: 1511
+    machine: '1511'
     part: "50-9341"
   
     tags:
@@ -36,7 +36,10 @@ devices:
     driver: pylogix
     ip: '192.168.1.170'
     data_dir: "./data/mysql/"
-    machine: 1530
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: '1530'
     part: "50-9341"
 
     tags:
