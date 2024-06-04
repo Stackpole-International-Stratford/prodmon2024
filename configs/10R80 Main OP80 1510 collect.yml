@@ -1,0 +1,34 @@
+devices:
+  - name: 10R80_Main_OP80_1510
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.10'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: 1510
+    part: "50-9341"
+
+    tags:
+      - name: '10R80 Main OP80 1510'
+        type: ping
+        tag: 'ProdCount.ACC'
+        frequency: 300
+
+      - name: '1510 Good Part Count'
+        type: counter
+        tag: 'ProdCount.ACC'
+  
+      # MQTT Configuration
+      - name: '10R80 Main OP80 1510'
+        type: ping
+        tag: 'ProdCount.ACC'
+        data_dir: "./data/mqtt/"
+        frequency: 5
+
+      - name: '1510 Good Part Count'
+        type: counter
+        tag: 'ProdCount.ACC'
+        data_dir: "./data/mqtt/"
+  
