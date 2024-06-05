@@ -1,0 +1,45 @@
+devices:
+  - name: 10R80_Offline_OP70_1531
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.150'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
+    machine: 1531
+    part: "50-9341"
+
+    tags:
+      - name: '10R80 Off OP70 1531'
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        frequency: 300
+
+      - name: '1531 Good Part Count'
+        type: counter
+        tag: 'Program:MainProgram.ProdCount.ACC'
+  
+      - name: '1531 Reject Count'
+        type: reject
+        reason: "All Rejects"
+        tag: 'Program:MainProgram.ProdCountReject.ACC'
+  
+      # MQTT Configuration
+      - name: '10R80 Offline OP70 1531'
+        type: ping
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        data_dir: "./data/mqtt/"
+        frequency: 5
+
+      - name: '1531 Good Part Count'
+        type: counter
+        tag: 'Program:MainProgram.ProdCount.ACC'
+        data_dir: "./data/mqtt/"
+
+      - name: '1531 Reject Count'
+        type: reject
+        reason: "All Rejects"
+        tag: 'Program:MainProgram.ProdCountReject.ACC'
+        data_dir: "./data/mqtt/"
+  
