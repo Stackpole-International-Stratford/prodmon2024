@@ -18,6 +18,7 @@ devices:
 
       - name: '1509 Good Part Count'
         type: counter
+        scale: 2
         tag: 'Program:MainProgram.ProdCount.ACC'
   
       # MQTT Configuration
@@ -29,6 +30,7 @@ devices:
 
       - name: '1509 Good Part Count'
         type: counter
+        scale: 2
         tag: 'Program:MainProgram.ProdCount.ACC'
         data_dir: "./data/mqtt/"
   
