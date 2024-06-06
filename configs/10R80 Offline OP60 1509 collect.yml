@@ -11,7 +11,7 @@ devices:
     part: "50-9341"
 
     tags:
-      - name: '10R80 Main OP60 1509'
+      - name: '10R80 Offline OP60 1509'
         type: ping
         tag: 'Program:MainProgram.ProdCount.ACC'
         frequency: 300
@@ -22,7 +22,7 @@ devices:
         tag: 'Program:MainProgram.ProdCount.ACC'
   
       # MQTT Configuration
-      - name: '10R80 Main OP60 1509'
+      - name: '10R80 Offline OP60 1509'
         type: ping
         tag: 'Program:MainProgram.ProdCount.ACC'
         data_dir: "./data/mqtt/"
