@@ -20,8 +20,9 @@ devices:
         type: counter
         tag: 'Program:MainProgram.ProdCount.acc'
 
-      - name: '1532 Good Part Count'
+      - name: '1532 Reject Count'
         type: reject
+        reason: "All Rejects"
         tag: 'Program:MainProgram.ProdCountReject.ACC'
   
       # MQTT Configuration
@@ -38,6 +39,7 @@ devices:
 
       - name: '1532 Reject Count'
         type: reject
+        reason: "All Rejects"
         tag: 'Program:MainProgram.ProdCountReject.ACC'
         data_dir: "./data/mqtt/"
   
