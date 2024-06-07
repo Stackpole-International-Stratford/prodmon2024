@@ -11,7 +11,7 @@ devices:
     part: "50-9341"
 
     tags:
-      - name: '10R80 Off OP70 1531'
+      - name: '10R80 Offline OP70 1531'
         type: ping
         tag: 'Program:MainProgram.ProdCount.ACC'
         frequency: 300
