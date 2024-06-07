@@ -1,34 +1,34 @@
 devices:
-  - name: 10R80_MainLine_OP40_1501
+  - name: 10R80_MainLine_OP40_1515
     frequency: 1
     driver: pylogix
-    ip: '192.168.1.80'
+    ip: '192.168.1.60'
     data_dir: "./data/mysql/"
     organization: 'JEC'
     site: 'Stratford'
     line: '10R80'
-    machine: 1501
+    machine: 1515
     part: "50-9341"
 
     tags:
-      - name: '10R80 Main OP40 1501'
+      - name: '10R80 Main OP40 1515'
         type: ping
         tag: 'ProdCountPalletSwap.acc'
         frequency: 300
 
-      - name: '1501 Good Part Count'
+      - name: '1515 Good Part Count'
         type: counter
         tag: 'ProdCountPalletSwap.acc'
         scale: 4  # Machine makes 4 parts on pallet swap
   
       # MQTT Configuration
-      - name: '10R80 Main OP40 1501'
+      - name: '10R80 Main OP40 1515'
         type: ping
         tag: 'ProdCountPalletSwap.acc'
         data_dir: "./data/mqtt/"
         frequency: 5
 
-      - name: '1501 Good Part Count'
+      - name: '1515 Good Part Count'
         type: counter
         tag: 'ProdCountPalletSwap.acc'
         data_dir: "./data/mqtt/"
