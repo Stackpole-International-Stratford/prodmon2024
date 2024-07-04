@@ -1,4 +1,61 @@
 devices:
+  - name: 10R80 OP30 Main 1504/06/19/20
+    frequency: 1
+    driver: modbus
+    ip: '10.4.42.183'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql1/"
+
+    tags:
+      - name: '10R80 OP30 Main 1504/06/19/20'
+        type: ping
+        register:
+          type: H
+          address: 6
+          length: 2
+        frequency: 300
+
+      - name: '1504 Counter'
+        type: ADAM_counter
+        machine: 1504
+        register:
+          type: H
+          address: 6 
+          length: 2
+        part: "50-9341"
+
+      - name: '1506 Counter'
+        type: ADAM_counter
+        machine: 1506
+        register:
+          type: H
+          address: 4
+          length: 2
+        part: "50-9341"
+
+      - name: '1519 Counter'
+        type: ADAM_counter
+        machine: 1519
+        register:
+          type: H
+          address: 0
+          length: 2
+        part: "50-9341"
+
+      - name: '1520 Counter'
+        type: ADAM_counter
+        machine: 1520
+        register:
+          type: H
+          address: 2
+          length: 2
+        part: "50-9341"
+
+
+
+
+
   - name: Press 245
     frequency: .5
     driver: modbus
@@ -197,3 +254,5 @@ devices:
           address: 6 
           length: 2
         part: "Magna"
+
+
