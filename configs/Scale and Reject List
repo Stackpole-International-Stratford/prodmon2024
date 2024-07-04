@@ -1,5 +1,10 @@
 
 Machine Scale (parts per cycle):
+(OP30)
+    1502 = 2
+    1507 = 2
+    1539 = 2
+    1540 = 2
 (OP40)
     1501 = 4
     1515 = 4
