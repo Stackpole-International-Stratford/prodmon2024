@@ -18,11 +18,13 @@ devices:
       - name: '1502 Good Part Count'
         type: counter
         tag: 'ProdCount1502.acc'
+        machine: 1502
         scale: 2
 
       - name: '1507 Good Part Count'
         type: counter
         tag: 'ProdCount1507.acc'
+        machine: 1507
         scale: 2
   
       # MQTT Configuration
@@ -35,6 +37,7 @@ devices:
       - name: '1502 Good Part Count'
         type: counter
         tag: 'ProdCount1502.acc'
+        machine: 1502
         data_dir: "./data/mqtt/"
 
       - name: '10R80 Main OP30 1507'
@@ -46,5 +49,6 @@ devices:
       - name: '1507 Good Part Count'
         type: counter
         tag: 'ProdCount1507.acc'
+        machine: 1507
         data_dir: "./data/mqtt/"
 
