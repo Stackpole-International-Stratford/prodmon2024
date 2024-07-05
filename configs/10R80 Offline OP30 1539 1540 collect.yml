@@ -2,7 +2,7 @@ devices:
   - name: 10R80_Offline_OP30_1539_1540
     frequency: 1
     driver: pylogix
-    ip: '192.168.1.120'
+    ip: '192.168.1.110'
     data_dir: "./data/mysql/"
     organization: 'JEC'
     site: 'Stratford'
