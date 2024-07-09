@@ -1,0 +1,107 @@
+devices:
+  - name: Trilobe_Taco_728
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.100.1'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: 'Trilobe'
+    part: "50-1467"
+
+    tags:
+      - name: '728 Trilobe Taco'
+        type: ping
+        tag: 'Program:MainProgram.ProdCountLine.ACC'
+        frequency: 300
+
+      - name: '728 Good Part Count'
+        type: counter
+        tag: 'Program:MainProgram.ProdCountLine.ACC'
+        machine: 728
+
+      - name: '728 Overflow Part Count'
+        type: counter
+        tag: 'Program:MainProgram.ProdCountOverflow.ACC'
+        machine: 728
+
+      # - type: counter
+      #   tag: 'Program:MainProgram.ProdCountReject.ACC'
+      #   scale: 1
+      #   part_number: '50-1467'
+      #   machine: 728R
+
+      - name: '644 count'
+        type: counter
+        tag: 'LinePanelRead[9]'
+        machine: 644
+
+      - name: '645 count'
+        type: counter
+        tag: 'LinePanelRead[8]'
+        machine: 645
+
+      - name: '646 count'
+        type: counter
+        tag: 'LinePanelRead[7]'
+        machine: 646
+
+      - name: '647 count'
+        type: counter
+        tag: 'LinePanelRead[3]'
+        machine: 647
+
+      - name: '649 count'
+        type: counter
+        tag: 'LinePanelRead[6]'
+        machine: 649
+
+      # # TODO: MATT Configs
+      # - name: '728 Trilobe Taco'
+      #   type: ping
+      #   tag: 'Program:MainProgram.ProdCountLine.ACC'
+      #   data_dir: "./data/mqtt/"
+      #   frequency: 5
+
+      # - name: '728 Good Part Count'
+      #   type: counter
+      #   tag: 'Program:MainProgram.ProdCountLine.ACC'
+      #   data_dir: "./data/mqtt/"
+      #   machine: 728
+
+      # - name: '728 Overflow Part Count'
+      #   type: counter
+      #   tag: 'Program:MainProgram.ProdCountOverflow.ACC'
+      #   data_dir: "./data/mqtt/"
+      #   machine: 728
+
+      # # - type: counter
+      # #   tag: 'Program:MainProgram.ProdCountReject.ACC'
+      # #   scale: 1
+      # #   part_number: '50-1467'
+      # #   machine: 728R
+
+      # - name: '644 count'
+      #   type: counter
+      #   tag: 'LinePanelRead[9]'
+      #   machine: 644
+
+      # - name: '645 count'
+      #   type: counter
+      #   tag: 'LinePanelRead[8]'
+      #   machine: 645
+
+      # - name: '646 count'
+      #   type: counter
+      #   tag: 'LinePanelRead[7]'
+      #   machine: 646
+
+      # - name: '647 count'
+      #   type: counter
+      #   tag: 'LinePanelRead[3]'
+      #   machine: 647
+
+      # - name: '649 count'
+      #   type: counter
+      #   tag: 'LinePanelRead[6]'
+      #   machine: 649

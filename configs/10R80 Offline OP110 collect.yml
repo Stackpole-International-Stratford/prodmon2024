@@ -24,7 +24,7 @@ devices:
         reason: 'Air Sensing'
         tag: 'ProdCountRej.acc'
         
-      # MATT Configs
+      # MQTT Configs
       - name: '10R80 Offline OP110'
         type: ping
         data_dir: "./data/mqtt/"
