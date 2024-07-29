@@ -1,0 +1,61 @@
+devices:
+  - name: 10R60_OP40_1804
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.9'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R60'
+    machine: 1804
+    part: "50-0455"
+
+    tags:
+      - name: '10R60 OP40 1804'
+        type: ping
+        tag: 'Program:MainProgram_Overhead.ProdCount.acc'
+        frequency: 300
+
+      - name: '1804 Good Part Count'
+        type: counter
+        tag: 'Program:MainProgram_Overhead.ProdCount.acc'
+        scale: 2
+  
+  - name: 10R60_OP40_1805
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R60'
+    machine: 1805
+    part: "50-0455"
+
+    tags:
+      - name: '10R60 OP40 1805'
+        type: ping
+        tag: 'Program:MainProgram_Overhead.ProdCount.acc'
+        frequency: 300
+
+      - name: '1805 Good Part Count'
+        type: counter
+        tag: 'Program:MainProgram_Overhead.ProdCount.acc'
+        scale: 2
+  
+
+
+
+
+      # # MQTT Configuration
+      # - name: '10R80 Main OP40 1515'
+      #   type: ping
+      #   tag: 'ProdCountPalletSwap.acc'
+      #   data_dir: "./data/mqtt/"
+      #   frequency: 5
+
+      # - name: '1515 Good Part Count'
+      #   type: counter
+      #   tag: 'ProdCountPalletSwap.acc'
+      #   data_dir: "./data/mqtt/"
+  

@@ -1,0 +1,77 @@
+devices:
+  - name: 10R60_OP30_776_1529
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.20'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R60'
+    part: "50-0455"
+
+    tags:
+      - name: '10R60 OP30 776 1529'
+        type: ping
+        tag: 'Program:MainProgram.ProdCount776.acc'
+        frequency: 300
+
+      - name: '776 Good Part Count'
+        type: counter
+        machine: 776
+        tag: 'Program:MainProgram.ProdCount776.acc'
+        
+      - name: '1529 Good Part Count'
+        type: counter
+        machine: 1529
+        tag: 'Program:MainProgram.ProdCount1529.acc'
+
+      # # MQTT Configuration
+      # - name: '10R80 Main OP40 1515'
+      #   type: ping
+      #   tag: 'ProdCountPalletSwap.acc'
+      #   data_dir: "./data/mqtt/"
+      #   frequency: 5
+
+      # - name: '1515 Good Part Count'
+      #   type: counter
+      #   tag: 'ProdCountPalletSwap.acc'
+      #   data_dir: "./data/mqtt/"
+        
+  - name: 10R60_OP30_1543_1824
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.30'
+    data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R60'
+    part: "50-0455"
+
+    tags:
+      - name: '10R60 OP30 1543 1824'
+        type: ping
+        tag: 'Program:MainProgram.ProdCount1543.acc'
+        frequency: 300
+
+      - name: '1543 Good Part Count'
+        type: counter
+        machine: 1543
+        tag: 'Program:MainProgram.ProdCount1543.acc'
+        
+      - name: '1824 Good Part Count'
+        type: counter
+        machine: 1824
+        tag: 'Program:MainProgram.ProdCount1824.acc'
+        
+      # # MQTT Configuration
+      # - name: '10R80 Main OP40 1515'
+      #   type: ping
+      #   tag: 'ProdCountPalletSwap.acc'
+      #   data_dir: "./data/mqtt/"
+      #   frequency: 5
+
+      # - name: '1515 Good Part Count'
+      #   type: counter
+      #   tag: 'ProdCountPalletSwap.acc'
+      #   data_dir: "./data/mqtt/"
+  
