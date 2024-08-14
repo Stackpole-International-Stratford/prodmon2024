@@ -279,7 +279,7 @@ devices:
 
       - name: '1801 Part Counter'
         type: ADAM_counter
-        machine: 1800
+        machine: 1801
         register:
           type: H
           address: 2 
@@ -288,7 +288,7 @@ devices:
 
       - name: '1802 Part Counter'
         type: ADAM_counter
-        machine: 1800
+        machine: 1802
         register:
           type: H
           address: 4 
