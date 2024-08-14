@@ -5,7 +5,7 @@ devices:
     ip: '10.4.42.183'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: '10R80 OP30 Main 1504/06/19/20'
@@ -58,7 +58,7 @@ devices:
     ip: '10.4.42.122'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: 'Press 245'
@@ -84,7 +84,7 @@ devices:
     ip: '10.4.45.50'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: 'Press 280'
@@ -109,7 +109,7 @@ devices:
     ip: '10.4.42.125'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: 'Carrier Line Presses'
@@ -152,7 +152,7 @@ devices:
     ip: '10.4.45.55'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: 'Press 272'
@@ -178,7 +178,7 @@ devices:
     ip: '10.4.45.56'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: 'Press 273'
@@ -204,7 +204,7 @@ devices:
     ip: '10.4.42.123'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: 'Optimized Machining'
@@ -257,7 +257,7 @@ devices:
     ip: '10.4.42.189'
     port: 502
     unit_id: 0              
-    data_dir: "./data/mysql1/"
+    data_dir: "./data/mysql/"
 
     tags:
       - name: '10R60 OP10-20 1800 1801 1802'
