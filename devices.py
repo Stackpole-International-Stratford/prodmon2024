@@ -73,6 +73,8 @@ class PylogixDevice(Device):
         
         parent = self
 
+        import pdb;pdb.set_trace()
+
         if tag_type == 'counter':
             scale = tag.get('scale', 1)
             part = tag.get('part', self.part)
@@ -108,7 +110,6 @@ class PylogixDevice(Device):
         new_tag_object.site = site
         new_tag_object.line = line
         new_tag_object.machine = machine
-        import pdb;pdb.set_trace()
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
