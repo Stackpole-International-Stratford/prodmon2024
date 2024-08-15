@@ -49,14 +49,14 @@ devices:
           address: 2
           length: 2
 
-      # #JEMES configs
-      # - name: '10R80 OP30 Main 1504/06/19/20'
-      #   type: ping
-      #   register:
-      #     type: H
-      #     address: 6
-      #     length: 2
-      #   frequency: 5
+      #JEMES configs
+      - name: '10R80 OP30 Main 1504/06/19/20'
+        type: ping
+        register:
+          type: H
+          address: 6
+          length: 2
+        frequency: 5
 
       # - name: '1504 Part Counter'
       #   type: ADAM_counter
