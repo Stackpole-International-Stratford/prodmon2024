@@ -9,7 +9,7 @@ devices:
     part: "50-9341"
 
     tags:
-      - name: '10R80 OP30 Main 1504/06/19/20'
+      - name: '10R80 OP20 Main 1504 1506 1519 1520'
         type: ping
         register:
           type: H
@@ -54,7 +54,7 @@ devices:
         part: "50-9341"
 
       #JEMES configs
-      - name: '10R80 OP30 Main 1504/06/19/20'
+      - name: '10R80 OP20 Main 1504 1506 1519 1520'
         type: ping
         register:
           type: H
