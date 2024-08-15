@@ -52,50 +52,50 @@ devices:
           length: 2
         part: "50-9341"
 
-      #JEMES configs
-      - name: '10R80 OP30 Main 1504/06/19/20'
-        type: ping
-        register:
-          type: H
-          address: 6
-          length: 2
-        frequency: 5
+      # #JEMES configs
+      # - name: '10R80 OP30 Main 1504/06/19/20'
+      #   type: ping
+      #   register:
+      #     type: H
+      #     address: 6
+      #     length: 2
+      #   frequency: 5
 
-      - name: '1504 Part Counter'
-        type: ADAM_counter
-        machine: 1504
-        register:
-          type: H
-          address: 6 
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1504 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1504
+      #   register:
+      #     type: H
+      #     address: 6 
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
  
-      - name: '1506 Part Counter'
-        type: ADAM_counter
-        machine: 1506
-        register:
-          type: H
-          address: 4 
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1506 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1506
+      #   register:
+      #     type: H
+      #     address: 4 
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
 
-      - name: '1519 Part Counter'
-        type: ADAM_counter
-        machine: 1519
-        register:
-          type: H
-          address: 0
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1519 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1519
+      #   register:
+      #     type: H
+      #     address: 0
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
 
-      - name: '1520 Part Counter'
-        type: ADAM_counter
-        machine: 1520
-        register:
-          type: H
-          address: 2
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1520 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1520
+      #   register:
+      #     type: H
+      #     address: 2
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
 
   - name: 10R80 OP10-20 Offline 1518 1521 1522 1523
     frequency: 1
@@ -150,50 +150,50 @@ devices:
           address: 6 
           length: 2
 
-      #JEMES configs
-      - name: '10R60 OP10-20 1518 1521 1522 1523'
-        type: ping
-        register:
-          type: H
-          address: 0
-          length: 2
-        frequency: 300
+      # #JEMES configs
+      # - name: '10R60 OP10-20 1518 1521 1522 1523'
+      #   type: ping
+      #   register:
+      #     type: H
+      #     address: 0
+      #     length: 2
+      #   frequency: 300
 
-      - name: '1523 Part Counter'
-        type: ADAM_counter
-        machine: 1523
-        register:
-          type: H
-          address: 0 
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1523 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1523
+      #   register:
+      #     type: H
+      #     address: 0 
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
  
-      - name: '1521 Part Counter'
-        type: ADAM_counter
-        machine: 1521
-        register:
-          type: H
-          address: 2 
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1521 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1521
+      #   register:
+      #     type: H
+      #     address: 2 
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
 
-      - name: '1518 Part Counter'
-        type: ADAM_counter
-        machine: 1518
-        register:
-          type: H
-          address: 4 
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1518 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1518
+      #   register:
+      #     type: H
+      #     address: 4 
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
 
-      - name: '1522 Part Counter'
-        type: ADAM_counter
-        machine: 1522
-        register:
-          type: H
-          address: 6 
-          length: 2
-        data_dir: "./data/mqtt/"
+      # - name: '1522 Part Counter'
+      #   type: ADAM_counter
+      #   machine: 1522
+      #   register:
+      #     type: H
+      #     address: 6 
+      #     length: 2
+      #   data_dir: "./data/mqtt/"
 
   - name: Press 245
     frequency: 1

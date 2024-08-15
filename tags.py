@@ -170,11 +170,78 @@ class RejectTag(CounterTag):
 
 class DataTag(Tag):
 
-    def __init__(self, parent, address, scale, frequency, db_table, machine, part_number):
-        raise NotImplementedError('Data Tags are not implemented')
-        super().__init__(parent, address, scale, frequency, db_table)
-        self.type = 'data'
+    def __init__(self, parent, address, scale, frequency, machine, part=None, part_number_tag=None, part_dict=None):
+        super().__init__(parent, address, frequency)
+        self.db_machine_data = machine
+        self.scale = scale
+        # used to set a fixed part number in config
+        self.part = part
+        # used to get the part number tag from the device (direct read)
+        self.part_number_tag = part_number_tag
+        # used to get the part number from a dictionary using a tag as an index 
+        self.part_dict = part_dict
 
     def poll(self):
-        pass
+        # pass
+        timestamp = int(time.time())
+        if self.next_read < timestamp:
+            # increment now so it doesn't get missed
+            self.next_read = timestamp + self.frequency
 
+            # build the listof tags to check
+            taglist = [self.address]
+            # if self.part is defined, part number is hard coded
+            # else, add the part_number_tag to the read list
+            if not self.part: 
+                taglist.append(self.part_number_tag)
+
+            values, error_flag = self.parent.read(taglist)
+            if error_flag:
+                return
+            # first return is the process value
+            process_value = values[0]
+            process_value *= self.scale
+
+            # if a second value returned, it is the part number tag
+            if len(values) == 2:
+                part = values[1]
+                # if we have a part_dict, then dereference the part number
+                if self.part_dict:
+                    part = self.part_dict.get(part, None)
+                    if not part:
+                        logger.error(f'Part not defined: {values[1]}:{self.part_dict}')
+            else:
+                part = self.part
+
+            # last_value is 0 or Null
+            if self.last_value is None:
+                logger.info(f'First pass through: Successfully read {self.parent.name}:{self.address} ({part}:{process_value})')
+                self.last_value = process_value
+                return
+
+            # no change
+            if process_value == self.last_value:
+                return
+
+            # create entry for new values
+            sys.stdout.flush()
+            file_path = f'{self.data_dir}{str(timestamp)}.dat'
+            with open(file_path, "a+") as file:
+                entry = self.format_output(process_value, part, int(timestamp))
+                logger.info(f'Create enrty for {self.db_machine_data} (Process Value:{process_value})')
+                file.write(entry)
+                self.last_value = process_value
+
+    def format_output(self, process_value, part, timestamp):
+        # create entry for new value
+        data = {
+            'organization': self.organization,
+            'site': self.site,
+            "line": self.line,
+            'asset': self.db_machine_data,
+            'part': part,
+            'timestamp': timestamp,
+            'name': self.name,
+            'process_value': process_value,
+        }
+        return f'DATA:{json.dumps(data)}\n'
