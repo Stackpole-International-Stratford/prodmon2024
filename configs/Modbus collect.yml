@@ -61,6 +61,7 @@ devices:
           address: 6
           length: 2
         frequency: 5
+        data_dir: "./data/mqtt/"
 
       # - name: '1504 Part Counter'
       #   type: ADAM_counter
