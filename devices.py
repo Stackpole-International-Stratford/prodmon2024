@@ -108,7 +108,7 @@ class PylogixDevice(Device):
         new_tag_object.site = site
         new_tag_object.line = line
         new_tag_object.machine = machine
-
+        import pdb;pdb.set_trace()
         super().add_data_point(new_tag_object)
 
     def read(self, tags):
