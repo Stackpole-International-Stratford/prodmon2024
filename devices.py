@@ -152,8 +152,6 @@ class ModbusDevice(Device):
         line = tag.get('line', self.line)
         machine = tag.get('machine', self.machine)
 
-        import pdb;pdb.set_trace()
-
         parent = self
 
         if tag_type == 'ping':
@@ -161,6 +159,9 @@ class ModbusDevice(Device):
 
         elif tag_type == 'ADAM_counter':
             machine = tag.get('machine', None)
+
+            import pdb;pdb.set_trace()
+
             part = tag.get('part', self.part)
             part_type = tag.get('part_type', None)
             part_type_register = tag.get('part_type_register', None)
