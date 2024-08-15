@@ -33,6 +33,7 @@ class PingTag(Tag):
         self.name = name
 
     def poll(self):
+        import pdb; pdb.set_trace()
         timestamp = int(time.time())
         if self.next_read < timestamp:
             # increment now so it doesn't get missed
