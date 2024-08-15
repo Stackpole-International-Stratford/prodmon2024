@@ -24,6 +24,7 @@ devices:
           type: H
           address: 6 
           length: 2
+        part: "50-9341"
 
       - name: '1506 Counter'
         type: ADAM_counter
@@ -32,6 +33,7 @@ devices:
           type: H
           address: 4
           length: 2
+        part: "50-9341"
 
       - name: '1519 Counter'
         type: ADAM_counter
@@ -40,6 +42,7 @@ devices:
           type: H
           address: 0
           length: 2
+        part: "50-9341"
 
       - name: '1520 Counter'
         type: ADAM_counter
@@ -48,6 +51,7 @@ devices:
           type: H
           address: 2
           length: 2
+        part: "50-9341"
 
       #JEMES configs
       - name: '10R80 OP30 Main 1504/06/19/20'
