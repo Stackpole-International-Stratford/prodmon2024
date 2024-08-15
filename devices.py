@@ -72,7 +72,7 @@ class PylogixDevice(Device):
         machine = tag.get('machine', self.machine)
         
         parent = self
-
+        print(self.part)
         import pdb;pdb.set_trace()
 
         if tag_type == 'counter':
@@ -152,6 +152,8 @@ class ModbusDevice(Device):
         line = tag.get('line', self.line)
         machine = tag.get('machine', self.machine)
 
+        import pdb;pdb.set_trace()
+
         parent = self
 
         if tag_type == 'ping':
@@ -159,7 +161,7 @@ class ModbusDevice(Device):
 
         elif tag_type == 'ADAM_counter':
             machine = tag.get('machine', None)
-            part = tag.get('part', None)
+            part = tag.get('part', self.part)
             part_type = tag.get('part_type', None)
             part_type_register = tag.get('part_type_register', None)
             part_dict = tag.get('part_dict', None)
