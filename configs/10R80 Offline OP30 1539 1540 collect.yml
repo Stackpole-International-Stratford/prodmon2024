@@ -30,6 +30,7 @@ devices:
       # MQTT Configuration
       - name: '10R80 Offline OP30 1539'
         type: ping
+        machine: 1539
         tag: 'ProdCount1539.acc'
         data_dir: "./data/mqtt/"
         frequency: 5
@@ -42,6 +43,7 @@ devices:
 
       - name: '10R80 Offline OP30 1540'
         type: ping
+        machine: 1540
         tag: 'ProdCount1540.acc'
         data_dir: "./data/mqtt/"
         frequency: 5

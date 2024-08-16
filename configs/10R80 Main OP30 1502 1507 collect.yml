@@ -27,9 +27,10 @@ devices:
         machine: 1507
         scale: 2
   
-      # MQTT Configuration
+      # JEMES Configuration
       - name: '10R80 Main OP30 1502'
         type: ping
+        machine: 1502
         tag: 'ProdCount1502.acc'
         data_dir: "./data/mqtt/"
         frequency: 5
@@ -42,6 +43,7 @@ devices:
 
       - name: '10R80 Main OP30 1507'
         type: ping
+        machine: 1507
         tag: 'ProdCount1507.acc'
         data_dir: "./data/mqtt/"
         frequency: 5
