@@ -59,6 +59,7 @@ devices:
       #JEMES configs
       - name: '10R80 OP20 Main 1504 1506 1519 1520'
         type: ping
+        machine: 1504
         register:
           type: H
           address: 6
@@ -158,6 +159,7 @@ devices:
       #JEMES configs
       - name: '10R60 OP10-20 1518 1521 1522 1523'
         type: ping
+        machine: 1518
         register:
           type: H
           address: 0
