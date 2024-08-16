@@ -73,7 +73,6 @@ class PylogixDevice(Device):
         
         parent = self
         print(self.part)
-        import pdb;pdb.set_trace()
 
         if tag_type == 'counter':
             scale = tag.get('scale', 1)
