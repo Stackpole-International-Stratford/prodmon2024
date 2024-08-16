@@ -6,6 +6,9 @@ devices:
     port: 502
     unit_id: 0              
     data_dir: "./data/mysql/"
+    organization: 'JEC'
+    site: 'Stratford'
+    line: '10R80'
     part: "50-9341"
 
     tags:
