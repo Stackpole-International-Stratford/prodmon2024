@@ -164,7 +164,7 @@ devices:
           type: H
           address: 0
           length: 2
-        frequency: 300
+        frequency: 5
         data_dir: "./data/mqtt/"
 
       - name: '1523 Part Counter'
