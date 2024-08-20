@@ -16,40 +16,82 @@ devices:
         data_dir: "./data/mysql1/"
         tag: 'AOI_0450_Laser_1750.Count'
         machine: 1750
-        part: "50-0450"     
+        part: "50-0450"
 
       - name: 'Good Part Count 0477'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_0477_Laser_1750.Count'
         machine: 1750
-        part: "50-0447"     
+        part: "50-0447"
 
       - name: 'Good Part Count 0519'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_0519_Laser_1750.Count'
         machine: 1750
-        part: "50-0519"     
+        part: "50-0519"
 
       - name: 'Good Part Count 5401'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_5401_Laser_1750.Count'
         machine: 1750
-        part: "50-5401"     
+        part: "50-5401"
 
       - name: 'Good Part Count 5404'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_5404_Laser_1750.Count'
         machine: 1750
-        part: "50-5404"     
-      
+        part: "50-5404"
+
       - name: 'Good Part Count 8670'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'AOI_8670_Laser_1750.Count'
         machine: 1750
-        part: "50-8670"     
+        part: "50-8670"
 
+    # Gauge counts
+      - name: 'Gauge Part Count 0450'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_0450_Gauge_1730.Count'
+        machine: 1730
+        part: "50-0450"
+
+      - name: 'Gauge Part Count 0477'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_0477_Gauge_1730.Count'
+        machine: 1730
+        part: "50-0447"
+
+      - name: 'Gauge Part Count 0519'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_0519_Gauge_1730.Count'
+        machine: 1730
+        part: "50-0519"
+
+      - name: 'Gauge Part Count 5401'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_5401_Gauge_1730.Count'
+        machine: 1730
+        part: "50-5401"
+
+      - name: 'Gauge Part Count 5404'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_5404_Gauge_1730.Count'
+        machine: 1730
+        part: "50-5404"
+
+      - name: 'Gauge Part Count 8670'
+        type: counter
+        data_dir: "./data/mysql1/"
+        tag: 'AOI_8670_Gauge_1730.Count'
+        machine: 1730
+        part: "50-8670"
