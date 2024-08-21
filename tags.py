@@ -52,6 +52,7 @@ class PingTag(Tag):
     def format_output(self, timestamp):
         data = {
             'organization': self.organization,
+            'name': self.name,
             'site': self.site,
             'line': self.line,
             'asset': self.machine,
