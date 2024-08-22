@@ -10,10 +10,12 @@ devices:
         type: ping
         tag: 'Press.Profile.Good_Parts'
         frequency: 300
+
       - name: '242 Part Count'
         type: counter
         data_dir: "./data/mysql1/"
         tag: 'Press.Profile.Good_Parts'
         machine: 242
-        part: compact
+        # part: compact
+        part_number_tag: 'Press.Profile.Tool_Name'
 
