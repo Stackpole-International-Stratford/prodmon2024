@@ -1,0 +1,21 @@
+devices:
+  - name: Compact Press 262
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.10.10'
+    data_dir: "./data/mysql/"
+
+    tags:
+      - name: 'Compact Press 262'
+        type: ping
+        tag: 'Press.Profile.Good_Parts'
+        frequency: 300
+
+      - name: '262 Part Count'
+        type: counter
+        data_dir: "./data/mysql/"
+        tag: 'Press.Profile.Good_Parts'
+        machine: 262
+        # part: compact
+        part_number_tag: 'Press.Profile.Tool_Name'
+
