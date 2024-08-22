@@ -279,14 +279,15 @@ devices:
           length: 2   # number of registers to read
         part: "compact"
 
-      - name: 'Press 262'  # name for data point
-        type: ADAM_counter
-        machine: 262        # machine number for database entry
-        register:     # the counter register
-          type: H     # Register type, H = Holding Reg, D = discrete input contact
-          address: 2  # 
-          length: 2   # number of registers to read
-        part: "compact"
+      # Moved to NanoPi on press
+      # - name: 'Press 262'  # name for data point
+      #   type: ADAM_counter
+      #   machine: 262        # machine number for database entry
+      #   register:     # the counter register
+      #     type: H     # Register type, H = Holding Reg, D = discrete input contact
+      #     address: 2  # 
+      #     length: 2   # number of registers to read
+      #   part: "compact"
 
       - name: 'Press 263'  # name for data point
         type: ADAM_counter
