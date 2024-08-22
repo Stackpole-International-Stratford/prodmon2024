@@ -15,7 +15,7 @@ devices:
         type: counter
         data_dir: "./data/mysql/"
         tag: 'Station1.PartCounts.TotalPartsPass'
-        machine: 859
+        machine: 992
         part_number_tag: 'Station1.PartSelected'
         part_dict:
           1: '50-3050'
