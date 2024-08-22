@@ -2,7 +2,7 @@ devices:
   - name: Compact Press 262
     frequency: 1
     driver: pylogix
-    ip: '192.168.10.10'
+    ip: '192.168.1.10'
     data_dir: "./data/mysql/"
 
     tags:
