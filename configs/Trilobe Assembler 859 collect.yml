@@ -23,12 +23,12 @@ devices:
         tag: 'good_part_counter_5710.ACC'
         machine: 859
         part: 50-5710
-      - name: '6549 Good Part Count'
+      - name: '3050 Good Part Count'
         type: counter
         data_dir: "./data/mysql/"
         tag: 'good_part_counter_6549.ACC'
         machine: 859
-        part: 50-6549
+        part: 50-3050
       - name: '7875 Good Part Count'
         type: counter
         data_dir: "./data/mysql/"
