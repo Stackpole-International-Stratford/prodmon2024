@@ -1,0 +1,23 @@
+devices:
+  - name: Trilobe Furnace Unload 992
+    frequency: 1
+    driver: pylogix
+    ip: '192.168.1.1'
+    data_dir: "./data/mysql/"
+
+    tags:
+      - name: 'Trilobe Furnace Unload 992'
+        type: ping
+        tag: 'good_part_counter_5810.ACC'
+        frequency: 300
+
+      - name: '1467 Good Part Count'
+        type: counter
+        data_dir: "./data/mysql/"
+        tag: 'Station1.PartCounts.TotalPartsPass'
+        machine: 859
+        part_number_tag: 'Station1.PartSelected'
+        part_dict:
+          1: '50-3050'
+          2: '50-1467'
+
