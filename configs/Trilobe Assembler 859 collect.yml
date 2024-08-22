@@ -8,7 +8,7 @@ devices:
     tags:
       - name: 'Trilobe Assembler 859'
         type: ping
-        tag: 'Press.Profile.Good_Parts'
+        tag: 'good_part_counter_5810.ACC'
         frequency: 300
         # counters are miss labled in plc
       - name: '1467 Good Part Count'
