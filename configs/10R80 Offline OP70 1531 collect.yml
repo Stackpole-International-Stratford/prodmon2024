@@ -18,6 +18,7 @@ devices:
 
       - name: '1531 Good Part Count'
         type: counter
+        scale: 2
         tag: 'Program:MainProgram.ProdCount.ACC'
   
       - name: '1531 Reject Count'
@@ -34,12 +35,12 @@ devices:
 
       - name: '1531 Good Part Count'
         type: counter
-        tag: 'Program:MainProgram.ProdCount.ACC'
+        tag: 'PalletSwapCounter.ACC'
         data_dir: "./data/mqtt/"
 
-      - name: '1531 Reject Count'
-        type: reject
-        reason: "All Rejects"
-        tag: 'Program:MainProgram.ProdCountReject.ACC'
-        data_dir: "./data/mqtt/"
+      # - name: '1531 Reject Count'
+      #   type: reject
+      #   reason: "All Rejects"
+      #   tag: 'Program:MainProgram.ProdCountReject.ACC'
+      #   data_dir: "./data/mqtt/"
   
