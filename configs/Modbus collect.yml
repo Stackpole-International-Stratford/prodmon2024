@@ -350,6 +350,58 @@ devices:
           length: 2
         part: "compact"
 
+  - name: Press 277
+    frequency: 1
+    driver: modbus
+    ip: '10.4.45.57'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql/"
+
+    tags:
+      - name: 'Press 277'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+          length: 2
+        frequency: 300
+
+      - name: 'Press 277 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 277
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0 
+          length: 2
+        part: "compact"
+  
+  - name: Press 278
+    frequency: 1
+    driver: modbus
+    ip: '10.4.45.58'
+    port: 502
+    unit_id: 0              
+    data_dir: "./data/mysql/"
+
+    tags:
+      - name: 'Press 278'
+        type: ping
+        register:
+          type: H  # Register type, H = Holding Reg, D = discrete input contact
+          address: 0
+          length: 2
+        frequency: 300
+
+      - name: 'Press 278 Counter'  # name for data point
+        type: ADAM_counter
+        machine: 278
+        register:
+          type: H     # Register type, H = Holding Reg, D = discrete input contact
+          address: 0 
+          length: 2
+        part: "compact"
+
   - name: Optimized Machining
     frequency: 1
     driver: modbus
